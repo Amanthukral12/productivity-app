@@ -1,15 +1,10 @@
 import './App.css';
+import Signup from './LoginLogout/Signup';
 
 function App() {
   return (
     <div className="App">
-    
-    Login  
-    Home
-    Todo
-    Notes
-    Drive
-    Movie
+    <Signup />
     </div>
   );
 }
