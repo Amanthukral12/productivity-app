@@ -7,7 +7,7 @@ export const useAuth = () => {
     return useContext(AuthContext)
 }
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     
     const [currentUser, setCurrentUser] = useState();
     const signup = ( email, password) => {
