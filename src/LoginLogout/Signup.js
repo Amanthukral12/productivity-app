@@ -34,7 +34,6 @@ const Signup = () => {
            <Grid>
             <h2>Signup</h2>
             {error && <h1>{error}</h1>}
-           
             <form onSubmit={handleSubmit}>
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required />
             <br/>
