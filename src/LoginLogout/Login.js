@@ -29,8 +29,7 @@ const Login = () => {
         <>
            <Grid>
             <h2>Login</h2>
-            {error && <h1>{error}</h1>}
-            {currentUser.email}
+            {error && <h1>{error}</h1>}           
             <form onSubmit={handleSubmit}>
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required />
             <br/>
