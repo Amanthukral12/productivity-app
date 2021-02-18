@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const Dashboard = () => {
@@ -21,7 +21,9 @@ const Dashboard = () => {
             Dashboard
             {error && <h1>{error}</h1>}
             <div>Email: {currentUser.email}</div>
-            
+            <div>
+            <Link to="/update-profile">Update Profile</Link>
+        </div>
         </div>
         <div onClick={handleLogout}>Logout</div>
         </>
