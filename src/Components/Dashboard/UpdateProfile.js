@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom';
 const UpdateProfile = () => {
     const emailRef = useRef();

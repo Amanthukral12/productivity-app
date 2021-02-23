@@ -1,8 +1,8 @@
-import './App.css';
+import '../App.css';
 import Signup from './LoginLogout/Signup';
 import Dashboard from './Dashboard/Dashboard'
 import Login from './LoginLogout/Login'
-import { AuthProvider } from './contexts/AuthContext'
+import { AuthProvider } from '../contexts/AuthContext'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './LoginLogout/PrivateRoute';
 import ForgotPassword from './LoginLogout/ForgotPassword';

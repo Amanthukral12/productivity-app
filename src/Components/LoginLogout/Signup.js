@@ -2,25 +2,31 @@ import React, { useRef, useState } from 'react'
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom';
-const Login = () => {
+const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login, currentUser } = useAuth();
+    const passwordConfirmRef = useRef();
+    const { signup } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory()
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (passwordRef.current.value !== passwordConfirmRef.current.value){
+            
+            return setError("Passwords do not match")
+            
+        }
         try{
             setError("")
             setLoading(true);
-            await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/")
+            await signup(emailRef.current.value, passwordRef.current.value)
+            history.push("/login")
         } catch {
-            setError('Failed to sign in')
+            setError('Failed to create an account')
         }
         setLoading(false)
         
@@ -28,22 +34,21 @@ const Login = () => {
     return (
         <>
            <Grid>
-            <h2>Login</h2>
-            {error && <h1>{error}</h1>}           
+            <h2>Signup</h2>
+            {error && <h1>{error}</h1>}
             <form onSubmit={handleSubmit}>
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required />
             <br/>
             <TextField label='Password' placeholder='Enter Password' type='password' inputRef={passwordRef} required />
             <br/>
-            <Button disabled={loading} type="submit">Login</Button>
-            <div>
-                <Link to="/forgot-password">Forgot Password?</Link>
-            </div>
+            <TextField label='Confirm Password' placeholder='Enter Password again' type='password' inputRef={passwordConfirmRef} required />
+            <br/>
+            <Button disabled={loading} type="submit">Signup</Button>
             </form>
-            <h3>New user? <Link to="/signup"> Signup </Link></h3>
+            <h3>Already have an account? <Link to="/login">Log In</Link></h3>
            </Grid>
         </>
     )
 }
 
-export default Login
+export default Signup
