@@ -23,6 +23,8 @@ const Dashboard = () => {
             <div>Email: {currentUser.email}</div>
             <div>
             <Link to="/update-profile">Update Profile</Link>
+            <br />
+            <Link to="/todo-list">Todo List</Link>
         </div>
         </div>
         <div onClick={handleLogout}>Logout</div>

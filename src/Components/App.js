@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './LoginLogout/PrivateRoute';
 import ForgotPassword from './LoginLogout/ForgotPassword';
 import UpdateProfile from './Dashboard/UpdateProfile';
+import TodoList from './ToDoList/TodoList';
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
     <Switch>
       <PrivateRoute exact path="/" component={Dashboard} />
       <PrivateRoute exact path="/update-profile" component={UpdateProfile} />
+      <PrivateRoute exact path="/todo-list" component={TodoList} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
