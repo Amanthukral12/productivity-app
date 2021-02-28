@@ -1,16 +1,43 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
+import { db } from '../../firebase';
+import firebase from 'firebase'
+import { useAuth } from '../../contexts/AuthContext';
 const TodoList = () => {
 
     const [todoInput, setTodoInput] = useState("");
+    const [todos, setTodos] = useState([]);
+    const { currentUser } = useAuth();
     const addTodo = (e) => {
         e.preventDefault();
-        console.log("Adding a todo")
+        db.collection("users").doc(currentUser.uid).collection("todos").add({
+            inprogress: true,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            todo: todoInput,
+        });
+        setTodoInput("");
     }
+    const getTodos = (e) => {
+        db.collection("users").doc(currentUser.uid).collection("todos").onSnapshot((querySnapshot) => {
+           setTodos(
+            querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                todo: doc.data().todo,
+                inprogress: doc.data().inprogress
+            }))
+           )
+        })
+    }
+    useEffect(() => {
+        getTodos();
+    },[])
+
+    
     return (
         <div>
            <h1>Your Todo List 🎉</h1>
+           <form>
            <TextField 
            id="standard-basic" 
            label="Add your ToDo" 
@@ -20,7 +47,11 @@ const TodoList = () => {
             }} 
            value={todoInput}
             />
-           <Button style={{display: "none"}} type="submit" onClick={addTodo}>Enter</Button> 
+           <Button style={{display: "none"}} type="submit" onClick={addTodo}>Enter</Button>
+           </form> 
+           {todos.map((todo) => (
+               <p>{todo.todo}</p>
+           ))}
         </div>
     )
 }

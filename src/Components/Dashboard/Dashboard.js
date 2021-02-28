@@ -21,6 +21,7 @@ const Dashboard = () => {
             Dashboard
             {error && <h1>{error}</h1>}
             <div>Email: {currentUser.email}</div>
+            {currentUser.uid}
             <div>
             <Link to="/update-profile">Update Profile</Link>
             <br />
