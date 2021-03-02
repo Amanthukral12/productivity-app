@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { db } from '../../firebase';
 import firebase from 'firebase'
 import { useAuth } from '../../contexts/AuthContext';
+import TodoListItem from './TodoListItem';
 const TodoList = () => {
 
     const [todoInput, setTodoInput] = useState("");
@@ -50,7 +51,7 @@ const TodoList = () => {
            <Button style={{display: "none"}} type="submit" onClick={addTodo}>Enter</Button>
            </form> 
            {todos.map((todo) => (
-               <p>{todo.todo}</p>
+               <TodoListItem todo={todo.todo} inprogress={todo.inprogress} id={todo.id} currentUser={currentUser} />
            ))}
         </div>
     )
