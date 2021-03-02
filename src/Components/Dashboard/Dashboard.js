@@ -26,6 +26,8 @@ const Dashboard = () => {
             <Link to="/update-profile">Update Profile</Link>
             <br />
             <Link to="/todo-list">Todo List</Link>
+            <br/>
+            <Link to="/notes-app">Notes App</Link>
         </div>
         </div>
         <div onClick={handleLogout}>Logout</div>

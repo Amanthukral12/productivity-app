@@ -11,7 +11,6 @@ const Note = ({title, content, id, currentUser}) => {
             <h1>{title}</h1>
             <br />
             <h3 style={{whiteSpace: "pre-line"}}>{content}</h3>
-            
             <Button onClick={deleteNote}>X</Button>
         </div>
     )

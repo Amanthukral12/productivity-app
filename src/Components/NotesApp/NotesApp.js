@@ -49,10 +49,6 @@ const NotesApp = () => {
            )
         })
     }
-
-    const updateNote = () => {
-        db.collection("users").doc(currentUser.uid).collection("notes").doc(id).update({title, content});
-    }
     useEffect(() => {
         getNotes();
     },[])
@@ -78,8 +74,7 @@ const NotesApp = () => {
                     onChange={handleChange} 
                 />
             </div>
-            <Button onClick={addNote}>Add</Button>  
-            <Button onClick={updateNote}>Update</Button>      
+            <Button onClick={addNote}>Add</Button>        
         </form>
         {notes.map((note) => (
             <Note title={note.title} content={note.content} id={note.id} key={note.id} currentUser={currentUser} />
