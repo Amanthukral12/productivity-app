@@ -18,7 +18,7 @@ const Login = () => {
             setError("")
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/")
+            history.push("/update-profile")
         } catch {
             setError('Failed to sign in')
         }

@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import Quotes from './Components/Quotes/Quotes';
 
 const Dashboard = () => {
     const [error, setError] = useState("");
+    
     const { currentUser, logout } = useAuth();
     const history=useHistory
     const handleLogout = async () => {
@@ -15,13 +17,25 @@ const Dashboard = () => {
             setError('Can not log out!');
         }
     }
+
+    
+
     return (
         <>
         <div>
-            Dashboard
+            Producto
+            {currentUser.displayName}
+            {/* Time */}
+            {/* Good Afternoon */}
+            {/* Name */}
+            
+            
+            {/* todo */}
+            
+
             {error && <h1>{error}</h1>}
-            <div>Email: {currentUser.email}</div>
-            {currentUser.uid}
+            
+            
             <div>
             <Link to="/update-profile">Update Profile</Link>
             <br />
@@ -31,6 +45,7 @@ const Dashboard = () => {
         </div>
         </div>
         <div onClick={handleLogout}>Logout</div>
+        <Quotes />
         </>
     )
 }

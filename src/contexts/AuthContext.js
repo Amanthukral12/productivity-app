@@ -27,6 +27,10 @@ export const AuthProvider = ({ children }) => {
         return auth.sendPasswordResetEmail(email);
     }
 
+    const updateName = (displayName) => {
+        return currentUser.updateProfile({displayName});
+    }
+
     const updateEmail = (email) => {
         return currentUser.updateEmail(email);
     }
@@ -50,7 +54,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        updateName
     }
     return (
        <AuthContext.Provider value={value}>

@@ -5,10 +5,11 @@ import Button from '@material-ui/core/Button'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom';
 const UpdateProfile = () => {
+    const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { currentUser, updatePassword, updateEmail } = useAuth();
+    const { currentUser, updatePassword, updateEmail, updateName } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -22,6 +23,9 @@ const UpdateProfile = () => {
         const promises = [];
         setLoading(true);
         setError("")
+        if(nameRef.current.value) {
+            promises.push(updateName(nameRef.current.value))
+        }
         if(emailRef.current.value !== currentUser.email) {
             promises.push(updateEmail(emailRef.current.value))
         }
@@ -47,6 +51,8 @@ const UpdateProfile = () => {
             <h2>Update Profile</h2>
             {error && <h1>{error}</h1>}
             <form onSubmit={handleSubmit}>
+            <TextField label='Name' placeholder='Enter Name' type='text' inputRef={nameRef} required />
+            <br/>
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required defaultValue={currentUser.email} />
             <br/>
             <TextField label='Password' placeholder='Leave Blank to keep it same' type='password' inputRef={passwordRef} />
