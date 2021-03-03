@@ -5,7 +5,9 @@ import Quotes from './Components/Quotes/Quotes';
 
 const Dashboard = () => {
     const [error, setError] = useState("");
-    
+    const [tick, setTick] = useState("");
+    const [hours, setHours] = useState("");
+    const [message, setMessage] =useState("");
     const { currentUser, logout } = useAuth();
     const history=useHistory
     const handleLogout = async () => {
@@ -17,16 +19,39 @@ const Dashboard = () => {
             setError('Can not log out!');
         }
     }
+    const getTick = () => {
+  
+        const element = new Date().toLocaleTimeString();
+        setTick(element);
+    }
+     
+    const getHours = () => {
+        const today = new Date();
+        let hours = today.getHours();
+        setHours(hours);
+        if(hours > 12 && hours<16){
+            setMessage("Good Afternoon")   
+        } else if(hours > 4 && hours < 12){
+            setMessage("Good Morning")
+        } else {
+            setMessage("Good Evening!")
+        } 
+    }
 
-    
+    setTimeout(getHours,1000);
+
+    setInterval(getTick,1000)
+   
 
     return (
         <>
         <div>
             Producto
             {currentUser.displayName}
-            {/* Time */}
-            {/* Good Afternoon */}
+            <div>{tick}</div>
+            <div>{message}</div>
+            <div>{currentUser.displayName}</div>
+            
             {/* Name */}
             
             
