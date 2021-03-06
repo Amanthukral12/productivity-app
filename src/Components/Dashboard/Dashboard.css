@@ -1,0 +1,57 @@
+.root {
+  background-color: #070d2d;
+  height: 100vh;
+  color: white;
+}
+
+.time {
+  font-size: 8vw;
+  font-weight: 900;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  margin-bottom: 10px;
+}
+
+.greeting {
+  font-size: 6vw;
+  font-weight: 700;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #161a37;
+  font-family: sans-serif;
+  -webkit-text-stroke: 2px white;
+  -webkit-text-fill-color: transparent;
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.name {
+  font-size: 3vw;
+  font-weight: 500;
+  position: absolute;
+  top: 64%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.quote {
+  font-size: 3vh;
+  font-weight: lighter;
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  transform: translate(-50%, 10%);
+}
+
+.author {
+  font-size: 2vh;
+  font-weight: lighter;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}

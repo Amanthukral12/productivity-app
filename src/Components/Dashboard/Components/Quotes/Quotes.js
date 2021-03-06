@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
+import "../../Dashboard.css"
 const Quotes = () => {
     const [quote, setQuote] = useState('');
     const [author, setAuthor] = useState('');
@@ -21,8 +21,9 @@ const Quotes = () => {
       }, []);
     return (
         <div>
-        <div><p>{quote}</p></div>
-        <div><p>{author}</p></div>
+        <div className="quote">{quote}</div>
+        <div className="author">{author}</div>
+        
         </div>
     )
 }

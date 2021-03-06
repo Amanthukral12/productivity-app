@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import Quotes from './Components/Quotes/Quotes';
-
+import "./Dashboard.css"
 const Dashboard = () => {
     const [error, setError] = useState("");
-    const [tick, setTick] = useState("");
+    const [hour, setHour] = useState("");
+    const [minutes, setMinutes] = useState("");
     const [hours, setHours] = useState("");
     const [message, setMessage] =useState("");
+    
     const { currentUser, logout } = useAuth();
     const history=useHistory
     const handleLogout = async () => {
@@ -19,10 +21,14 @@ const Dashboard = () => {
             setError('Can not log out!');
         }
     }
-    const getTick = () => {
+    const getTime = () => {
   
-        const element = new Date().toLocaleTimeString();
-        setTick(element);
+        let element = new Date(),
+        hour = element.getHours();
+        let minutes = element.getMinutes();
+        
+        setHour(hour);
+        setMinutes(minutes);
     }
      
     const getHours = () => {
@@ -40,17 +46,17 @@ const Dashboard = () => {
 
     setTimeout(getHours,1000);
 
-    setInterval(getTick,1000)
+    setInterval(getTime,1000)
    
 
     return (
-        <>
-        <div>
-            Producto
-            {currentUser.displayName}
-            <div>{tick}</div>
-            <div>{message}</div>
-            <div>{currentUser.displayName}</div>
+        <div className="root">
+        
+            <h1>App Name</h1>
+            
+            <h1 className="time">{hour}:{minutes<10?"0"+minutes:minutes}</h1>
+            <div className="greeting">{message}</div>
+            <div className="name">{currentUser.displayName}</div>
             
             {/* Name */}
             
@@ -62,16 +68,16 @@ const Dashboard = () => {
             
             
             <div>
-            <Link to="/update-profile">Update Profile</Link>
+            {/* <Link to="/update-profile">Update Profile</Link>
             <br />
             <Link to="/todo-list">Todo List</Link>
             <br/>
-            <Link to="/notes-app">Notes App</Link>
+            <Link to="/notes-app">Notes App</Link> */}
         </div>
-        </div>
+        
         <div onClick={handleLogout}>Logout</div>
         <Quotes />
-        </>
+        </div>
     )
 }
 
