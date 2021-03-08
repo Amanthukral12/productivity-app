@@ -1,7 +1,8 @@
 .root {
-  background-color: #070d2d;
+  background-color: #172166;
+  background-size: cover;
   height: 100vh;
-  color: white;
+  color: rgb(248, 244, 244);
 }
 
 .time {
@@ -19,7 +20,7 @@
   font-weight: 700;
   padding: 10px;
   border-radius: 15px;
-  background-color: #161a37;
+
   font-family: sans-serif;
   -webkit-text-stroke: 2px white;
   -webkit-text-fill-color: transparent;
@@ -54,4 +55,22 @@
   bottom: 5%;
   left: 50%;
   transform: translate(-50%, 50%);
+}
+
+.todoIcon {
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+  background-color: rgb(168, 24, 144);
+  position: absolute;
+  top: 50%;
+}
+
+.notesIcon {
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+  background-color: rgb(24, 168, 168);
+  position: absolute;
+  top: 60%;
 }
