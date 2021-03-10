@@ -31,6 +31,12 @@ export const AuthProvider = ({ children }) => {
         return currentUser.updateProfile({displayName});
     }
 
+    const updateProfileImage = (photoURL) => {
+        return currentUser.updateProfile({
+            photoURL: "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+        })
+    }
+
     const updateEmail = (email) => {
         return currentUser.updateEmail(email);
     }
@@ -55,7 +61,8 @@ export const AuthProvider = ({ children }) => {
         resetPassword,
         updateEmail,
         updatePassword,
-        updateName
+        updateName,
+        updateProfileImage
     }
     return (
        <AuthContext.Provider value={value}>

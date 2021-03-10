@@ -9,7 +9,7 @@ const UpdateProfile = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { currentUser, updatePassword, updateEmail, updateName } = useAuth();
+    const { currentUser, updatePassword, updateEmail, updateName, updateProfileImage } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -34,6 +34,8 @@ const UpdateProfile = () => {
             promises.push(updatePassword(passwordRef.current.value))
         }
 
+        promises.push(updateProfileImage(currentUser.photoURL));
+
         Promise.all(promises).then(() => {
             history.push('/')
         }).catch(() => {
@@ -51,7 +53,7 @@ const UpdateProfile = () => {
             <h2>Update Profile</h2>
             {error && <h1>{error}</h1>}
             <form onSubmit={handleSubmit}>
-            <TextField label='Name' placeholder='Enter Name' type='text' inputRef={nameRef} required />
+            <TextField label='Name' placeholder='Enter Name' type='text' inputRef={nameRef} required defaultValue={currentUser.displayName} />
             <br/>
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required defaultValue={currentUser.email} />
             <br/>

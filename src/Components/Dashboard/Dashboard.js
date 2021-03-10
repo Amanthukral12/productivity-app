@@ -4,13 +4,16 @@ import { useAuth } from '../../contexts/AuthContext';
 import Quotes from './Components/Quotes/Quotes';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
 import "./Dashboard.css"
 const Dashboard = () => {
     const [error, setError] = useState("");
     const [hour, setHour] = useState("");
-    const [minutes, setMinutes] = useState("");
     const [hours, setHours] = useState("");
-    const [message, setMessage] =useState("");
+    const [message, setMessage] = useState("");
+    const [anchorEl, setAnchorEl] = useState(null);
     const { currentUser, logout } = useAuth();
     const history=useHistory
     const handleLogout = async () => {
@@ -24,12 +27,8 @@ const Dashboard = () => {
     }
     const getTime = () => {
   
-        let element = new Date(),
-        hour = element.getHours();
-        let minutes = element.getMinutes();
-        
-        setHour(hour);
-        setMinutes(minutes);
+        let element = new Date().toLocaleTimeString();
+        setHour(element);
     }
      
     const getHours = () => {
@@ -49,13 +48,39 @@ const Dashboard = () => {
 
     setInterval(getTime,1000)
    
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
 
     return (
         <div className="root" >
-        
-            <h1>App Name</h1>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <h1>App Name</h1>
+                <img src={currentUser.photoURL}
+                      alt="Profile Image"
+                      onClick={handleClick}
+                      className="profile"
+                />
+                <Menu 
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    TransitionComponent={Fade}
+                >
+                    <MenuItem onClick={handleClose}><Link to="/update-profile">Update Profile</Link></MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    
+                </Menu>
+                
+                {/* <div onClick={handleLogout} style={{width: "50px", cursor:"pointer"}}>Logout</div> */}
+            </div>
             
-            <h1 className="time">{hour}:{minutes<10?"0"+minutes:minutes}</h1>
+            <h1 className="time">{hour}</h1>
             <div className="greeting">{message}</div>
             <div className="name">{currentUser.displayName}</div>
             
@@ -70,16 +95,16 @@ const Dashboard = () => {
             
             
             <div>
-           {/*  <div className="todoIcon"><Link to="/todo-list"><PlaylistAddCheckIcon style={{color: "white", height: "80px", width: "80px", padding: "15px"}} /></Link></div>
+           <div className="todoIcon"><Link to="/todo-list"><PlaylistAddCheckIcon style={{color: "white", height: "80px", width: "80px", padding: "15px"}} /></Link></div>
             <div className="notesIcon"><Link to="/notes-app"><NoteAddIcon style={{color: "white", height: "80px", width: "80px", padding: "15px"}} /></Link></div>
- */}            {/* <Link to="/update-profile">Update Profile</Link>
+            {/* <Link to="/update-profile">Update Profile</Link>
             <br />
             <Link to="/todo-list">Todo List</Link>
             <br/>
             <Link to="/notes-app">Notes App</Link> */}
         </div>
         
-        <div onClick={handleLogout}>Logout</div>
+        
         <Quotes />
         </div>
     )
