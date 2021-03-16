@@ -1,8 +1,17 @@
 .todoRoot {
-  background: linear-gradient(to right bottom, #172166, #5365db);
-  background-size: cover;
-  height: 100vh;
-  justify-content: center;
+  background-color: #062b57;
+  min-height: 100vh;
+}
+
+.todoHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menuIcon {
+  color: aliceblue;
+  height: 2rem !important;
+  width: 2rem !important;
 }
 
 .heading {
@@ -16,17 +25,18 @@
 .inputTodo {
   background: rgba(180, 180, 238, 0.753);
   display: flex;
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 50%;
-  line-height: 48px;
-  font-size: 40px;
+  line-height: 3vh;
+  font-size: 2vh;
   padding: 10px;
   border-radius: 35px;
   outline-width: 0;
   border: 0;
   color: #172166d8;
+  margin-bottom: 1rem;
 }
 
 ::placeholder { /* Microsoft Edge */
@@ -34,12 +44,17 @@
 }
 
 .numberTodo {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -25%);
-  font-size: 1.5vw;
+  font-size: 2vh;
   color: rgb(177, 210, 238);
+  margin-bottom: 25px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
 
+.todoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
