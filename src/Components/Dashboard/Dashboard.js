@@ -72,14 +72,14 @@ const Dashboard = () => {
                     onClose={handleClose}
                     TransitionComponent={Fade}
                 >
-                    <MenuItem onClick={handleClose}><Link to="/update-profile">Update Profile</Link></MenuItem>
+                    <MenuItem style={{width: "300px"}} onClick={handleClose}><Link to="/update-profile">Update Profile</Link></MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     
                 </Menu>
                 
                 {/* <div onClick={handleLogout} style={{width: "50px", cursor:"pointer"}}>Logout</div> */}
             </div>
-            
+            <div className="backgroundTile"></div>
             <h1 className="time">{hour}</h1>
             <div className="greeting">{message}</div>
             <div className="name">{currentUser.displayName}</div>

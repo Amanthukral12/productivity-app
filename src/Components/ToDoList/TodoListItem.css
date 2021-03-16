@@ -1,0 +1,12 @@
+.rootItem {
+   display: flex;
+   justify-content: space-around;
+   width: 30%;
+   position: absolute;
+   top: 40%;
+   left: 50%;
+   transform: translate(-50%, -40%);
+   background: rgba(255, 255, 255, 0.61);
+   border-radius: 20px;
+   box-shadow: 5px 5px rgb(0, 0, 0);
+}

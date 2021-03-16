@@ -1,0 +1,45 @@
+.todoRoot {
+  background: linear-gradient(to right bottom, #172166, #5365db);
+  background-size: cover;
+  height: 100vh;
+  justify-content: center;
+}
+
+.heading {
+  display: flex;
+  justify-content: center;
+  font-size: 3vw;
+  margin-bottom: 2rem;
+  color: rgb(177, 210, 238);
+}
+
+.inputTodo {
+  background: rgba(180, 180, 238, 0.753);
+  display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 50%;
+  line-height: 48px;
+  font-size: 40px;
+  padding: 10px;
+  border-radius: 35px;
+  outline-width: 0;
+  border: 0;
+  color: #172166d8;
+}
+
+::placeholder { /* Microsoft Edge */
+  color: #172166d8;
+}
+
+.numberTodo {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  font-size: 1.5vw;
+  color: rgb(177, 210, 238);
+
+}
+
