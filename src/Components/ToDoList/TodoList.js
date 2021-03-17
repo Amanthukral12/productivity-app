@@ -11,11 +11,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import MenuIcon from '@material-ui/icons/Menu';
+import Drawer from '@material-ui/core/Drawer'
+import { Gradient } from '@material-ui/icons';
+import Sidebar from '../Sidebar/Sidebar';
 const TodoList = () => {
     const [todoInput, setTodoInput] = useState("");
     const [todos, setTodos] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
     const [error, setError] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
     const { currentUser, logout } = useAuth();
     const history=useHistory
     const handleLogout = async () => {
@@ -57,11 +61,32 @@ const TodoList = () => {
       const handleClose = () => {
         setAnchorEl(null);
       };
+
+      const onAddPopupClose = () => {
+		setIsOpen(false);
+	  };
     
     return (
         <div className="todoRoot">
             <div className="todoHeader">
-            <MenuIcon className="menuIcon" />
+            <Drawer
+						open={isOpen}
+						onClose={() => setIsOpen(false)}
+						anchor="left"
+						PaperProps={{
+						  style: {
+							width: "15%",
+                            /* background: "linear-gradient(to top, rgba(145, 178, 248, 0.3), rgba(145, 178, 248, 0.1))", */
+                            backgroundColor: "rgba(255, 255, 255, 0.3)",
+                            backdropFilter: "blur(4px)"
+                            
+						  },
+						}}
+					  >
+						<Sidebar />
+					  </Drawer>	
+            <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
+            <div>App Name</div>
             <img src={currentUser.photoURL}
             alt="Profile Image"
             onClick={handleClick}
