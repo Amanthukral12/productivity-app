@@ -7,6 +7,9 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
+import Drawer from '@material-ui/core/Drawer'
+import Sidebar from '../Sidebar/Sidebar';
+import MenuIcon from '@material-ui/icons/Menu';
 import "./Dashboard.css"
 const Dashboard = () => {
     const [error, setError] = useState("");
@@ -14,6 +17,7 @@ const Dashboard = () => {
     const [hours, setHours] = useState("");
     const [message, setMessage] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
     const { currentUser, logout } = useAuth();
     const history=useHistory
     const handleLogout = async () => {
@@ -56,9 +60,31 @@ const Dashboard = () => {
         setAnchorEl(null);
       };
 
+      const onAddPopupClose = () => {
+		setIsOpen(false);
+	  };
+
     return (
         <div className="root" >
             <div style={{display: "flex", justifyContent: "space-between"}}>
+            <Drawer
+						open={isOpen}
+						onClose={() => setIsOpen(false)}
+						anchor="left"
+                        className="sidebar"
+						PaperProps={{
+						  style: {
+							width: "30vh",
+                            /* background: "linear-gradient(to top, rgba(145, 178, 248, 0.3), rgba(145, 178, 248, 0.1))", */
+                            backgroundColor: "rgba(255, 255, 255, 0.4)",
+                            backdropFilter: "blur(4px)"
+                            
+						  },
+						}}
+					  >
+						<Sidebar />
+					  </Drawer>	
+            <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
                 <h1>App Name</h1>
                 <img src={currentUser.photoURL}
                       alt="Profile Image"
@@ -95,8 +121,7 @@ const Dashboard = () => {
             
             
             <div>
-           <div className="todoIcon"><Link to="/todo-list"><PlaylistAddCheckIcon style={{color: "white", height: "80px", width: "80px", padding: "15px"}} /></Link></div>
-            <div className="notesIcon"><Link to="/notes-app"><NoteAddIcon style={{color: "white", height: "80px", width: "80px", padding: "15px"}} /></Link></div>
+           
             {/* <Link to="/update-profile">Update Profile</Link>
             <br />
             <Link to="/todo-list">Todo List</Link>

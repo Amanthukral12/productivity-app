@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer'
-import { Gradient } from '@material-ui/icons';
 import Sidebar from '../Sidebar/Sidebar';
 const TodoList = () => {
     const [todoInput, setTodoInput] = useState("");
@@ -73,11 +72,12 @@ const TodoList = () => {
 						open={isOpen}
 						onClose={() => setIsOpen(false)}
 						anchor="left"
+                        className="sidebar"
 						PaperProps={{
 						  style: {
-							width: "15%",
+							width: "30vh",
                             /* background: "linear-gradient(to top, rgba(145, 178, 248, 0.3), rgba(145, 178, 248, 0.1))", */
-                            backgroundColor: "rgba(255, 255, 255, 0.3)",
+                            backgroundColor: "rgba(255, 255, 255, 0.4)",
                             backdropFilter: "blur(4px)"
                             
 						  },

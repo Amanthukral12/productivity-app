@@ -8,10 +8,7 @@
   justify-content: space-between;
 }
 
-.menuDrawer {
-  background: linear-gradient(to right bottom, #172166, #5365db);
-  width: 200px;
-}
+
 
 .menuIcon {
   color: aliceblue;
