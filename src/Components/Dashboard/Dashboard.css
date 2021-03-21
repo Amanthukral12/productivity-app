@@ -4,27 +4,36 @@
   height: 100vh;
   color: rgb(248, 244, 244);
 }
-.backgroundTile {
-  background: linear-gradient(
-    to right bottom,
-    rgba(145, 178, 248, 0.7),
-    rgba(145, 178, 248, 0.1)
-  );
-  width: 70vh;
-  height: 70vh;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  border-radius: 50%;
-  z-index: 2;
-  backdrop-filter: blur(2rem);
+
+.appName {
+  color: rgb(43, 37, 99);
+  font-size: 2.5vw;
+  border-radius: 15px;
+  z-index: 3;
+}
+
+.menuIcon {
+  z-index: 3;
 }
 
 .profile {
   width: 4vh;
   height: 4vh;
   padding: 5px 10px;
+  z-index: 3;
+}
+
+.profileMenuHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.menuProfileImage {
+  width: 8vh;
+  height: 8vh;
 }
 
 .time {
@@ -61,13 +70,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
+  text-decoration: underline;
 }
 
 .quote {
   font-size: 2vw;
   font-weight: lighter;
   position: absolute;
-  bottom: 7%;
+  bottom: 20%;
   left: 50%;
   transform: translate(-50%, 10%);
 }
@@ -76,25 +86,113 @@
   font-size: 1vw;
   font-weight: lighter;
   position: absolute;
-  bottom: 5%;
+  bottom: 17%;
   left: 50%;
   transform: translate(-50%, 50%);
 }
 
-.todoIcon {
-  width: 100px;
-  height: 100px;
-  border-radius: 15px;
-  background-color: rgb(168, 24, 144);
+.custom-shape-divider-top-1616160906 {
   position: absolute;
-  top: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
 }
 
-.notesIcon {
-  width: 100px;
-  height: 100px;
-  border-radius: 15px;
-  background-color: rgb(24, 168, 168);
+.custom-shape-divider-top-1616160906 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 171px;
+}
+
+.custom-shape-divider-top-1616160906 .shape-fill {
+  fill: #ffffff6c;
+}
+
+.custom-shape-divider-bottom-1616160906 {
   position: absolute;
-  top: 60%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1616160906 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 171px;
+}
+
+.custom-shape-divider-bottom-1616160906 .shape-fill {
+  fill: #ffffff6c;
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+}
+
+@media (max-width: 990px) {
+  .appName {
+    font-size: 3vh;
+  }
+  .custom-shape-divider-bottom-1616160906 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 12vh;
+  }
+
+  .custom-shape-divider-top-1616160906 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 12vh;
+  }
+
+  .time {
+    width: 100%;
+    font-size: 7vh;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    z-index: 3;
+  }
+
+  .greeting {
+    width: 100%;
+    font-size: 6vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name {
+    width: 100%;
+    font-size: 3.5vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .quote {
+    width: 80%;
+    font-size: 2vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .author {
+    width: 100%;
+    font-size: 1.5vh;
+    display: flex;
+    justify-content: center;
+  }
 }
