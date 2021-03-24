@@ -8,8 +8,8 @@ const Sidebar = () => {
     return (
         <div className="sidebarRoot">
             <div className="sidebarHeader">
-                <div>App logo</div>
-                <div>App Name</div>
+            <img src="./logo1024.png" alt="" className="logo"/> 
+                <div className="appName">Producto</div>
             </div>
             <hr className="horizontalLine"/>
             <div className="menu">

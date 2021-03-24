@@ -5,13 +5,6 @@
   color: rgb(248, 244, 244);
 }
 
-.appName {
-  color: rgb(43, 37, 99);
-  font-size: 2.5vw;
-  border-radius: 15px;
-  z-index: 3;
-}
-
 .menuIcon {
   z-index: 3;
 }
@@ -36,11 +29,20 @@
   height: 8vh;
 }
 
+.welcome {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  font-size: 3vw;
+  font-weight: 600;
+}
+
 .time {
   font-size: 8vw;
   font-weight: 900;
   position: absolute;
-  top: 40%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -60%);
   margin-bottom: 10px;
@@ -56,7 +58,7 @@
   -webkit-text-stroke: 2px white;
   -webkit-text-fill-color: transparent;
   position: absolute;
-  top: 53%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -66,7 +68,7 @@
   font-size: 3vw;
   font-weight: 500;
   position: absolute;
-  top: 64%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -74,7 +76,7 @@
 }
 
 .quote {
-  font-size: 2vw;
+  font-size: 1.5vw;
   font-weight: lighter;
   position: absolute;
   bottom: 20%;
@@ -157,6 +159,14 @@
     display: block;
     width: calc(100% + 1.3px);
     height: 12vh;
+  }
+
+  .welcome {
+    width: 100%;
+    font-size: 3.5vh;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
   }
 
   .time {

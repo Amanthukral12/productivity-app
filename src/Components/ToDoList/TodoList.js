@@ -86,7 +86,7 @@ const TodoList = () => {
 						<Sidebar />
 					  </Drawer>	
             <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
-            <div>App Name</div>
+            <div style={{color: "white", fontSize:"25px"}}>Producto</div>
             <img src={currentUser.photoURL}
             alt="Profile Image"
             onClick={handleClick}

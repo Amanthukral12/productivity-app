@@ -1,44 +1,59 @@
 .sidebarHeader {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 70px;
-    color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.logo {
+  height: 7vh;
+  width: 7vh;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+.appName {
+  font-size: 5vh;
 }
 
 .menu {
-    padding: 10%;
-    display: flex;
-    flex-direction: column; 
+  padding: 10%;
+  display: flex;
+  flex-direction: column;
 }
 
 .menuItems {
-    padding: 10px;
-    font-size: 3vh;
-    text-decoration: none;
-    font-weight: 700;
-    display: flex;
-    justify-content: end;
-    color: rgb(255, 255, 255);
+  padding: 10px;
+  font-size: 3vh;
+  text-decoration: none;
+  font-weight: 700;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: rgb(255, 255, 255);
 }
 
 .horizontalLine {
-    width: 80%;
-    position: relative;
-    left: 10%;
-    background-color: white;
+  width: 80%;
+  position: relative;
+  left: 10%;
+  background-color: white;
 }
 
 .icons {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    margin-right: 10px;
-    height: 3vh;
-    width: 3vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-right: 10px;
+  height: 3vh;
+  width: 3vh;
 }
 
 .selected {
-    background-color:  rgb(145, 178, 248);
-    border-radius: 15px;
-    color: rgb(33, 14, 207);
+  background-color: rgb(145, 178, 248);
+  border-radius: 15px;
+  color: rgb(33, 14, 207);
 }
