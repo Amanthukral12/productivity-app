@@ -76,7 +76,6 @@ const TodoList = () => {
 						PaperProps={{
 						  style: {
 							width: "30vh",
-                            /* background: "linear-gradient(to top, rgba(145, 178, 248, 0.3), rgba(145, 178, 248, 0.1))", */
                             backgroundColor: "rgba(255, 255, 255, 0.4)",
                             backdropFilter: "blur(4px)"
                             
@@ -86,7 +85,7 @@ const TodoList = () => {
 						<Sidebar />
 					  </Drawer>	
             <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
-            <div style={{color: "white", fontSize:"25px"}}>Producto</div>
+            <div style={{color: "white", fontSize:"35px"}}>Producto</div>
             <img src={currentUser.photoURL}
             alt="Profile Image"
             onClick={handleClick}
