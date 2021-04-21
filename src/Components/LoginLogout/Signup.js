@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react'
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom';
+import "./Login.css";
+import photo from './photo1.jpg'
 const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -32,22 +33,30 @@ const Signup = () => {
         
     }
     return (
-        <>
-           <Grid>
-            <h2>Signup</h2>
-            {error && <h1>{error}</h1>}
-            <form onSubmit={handleSubmit}>
+           <Grid className="loginRoot">
+           <div className="ground">
+            <div className="loginPhoto">
+                <img src={photo} className="loginImage" alt=""/>
+            </div>
+            <div className="loginRight">
+            <h2 className="loginHeading">Produkto</h2>
+            {error && <h1 className="error">{error}</h1>}
+            <h3 className="welcomeMessage">Welcome to Produkto</h3>           
+            <form onSubmit={handleSubmit} className="loginForm">
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required />
             <br/>
             <TextField label='Password' placeholder='Enter Password' type='password' inputRef={passwordRef} required />
             <br/>
             <TextField label='Confirm Password' placeholder='Enter Password again' type='password' inputRef={passwordConfirmRef} required />
             <br/>
-            <Button disabled={loading} type="submit">Signup</Button>
+            <button disabled={loading} type="submit" className="signin">Signup</button>
             </form>
-            <h3>Already have an account? <Link to="/login">Log In</Link></h3>
+            <h3 className="newUser">Already have an account? <Link to="/login" className="newUser">Log In</Link></h3>
+            </div>
+            </div>
+            
            </Grid>
-        </>
+        
     )
 }
 
