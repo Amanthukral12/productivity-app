@@ -31,7 +31,6 @@
   text-decoration: none;
   font-weight: 700;
   display: flex;
-  justify-content: end;
   align-items: center;
   color: rgb(255, 255, 255);
 }
@@ -53,7 +52,7 @@
 }
 
 .selected {
-  background-color: rgb(145, 178, 248);
+  background-color: rgb(248, 145, 145);
   border-radius: 15px;
-  color: rgb(33, 14, 207);
+  color: #661717;
 }
