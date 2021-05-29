@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
   padding: 0px;
   margin: 0px;
-  font-family: "Caveat", cursive;
+  font-family: "Poppins", sans-serif;
 }

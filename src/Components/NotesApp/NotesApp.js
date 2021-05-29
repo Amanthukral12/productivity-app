@@ -1,44 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import TextField from '@material-ui/core/TextField'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import Note from './Note';
-import Button from '@material-ui/core/Button';
+import ManageNotes from './ManageNotes';
+import NotesList from './NotesList';
 import { useAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
 import firebase from 'firebase'
 const NotesApp = () => {
-    const [note, setNote] = useState({
-        title:"",
-        content:"",
-    })
     const [notes, setNotes] = useState([]);
+    const [currentNote, setCurrentNote] = useState(null);
+    const [formType, setFormType] = useState("Add");
     const { currentUser } = useAuth();
-    const handleChange = (e) => {
-        const {name, value } = e.target;
-        setNote((preValue) => {
-            return {
-                ...preValue,
-                [name] : value,
-            }
-        })
-    }
-
     
-    const addNote = (e) => {
-        e.preventDefault();
+    const addNote = (noteObj) => {
         db.collection("users").doc(currentUser.uid).collection("notes").add({
-            title: note.title,
-            content: note.content,
+            title: noteObj.title,
+            content: noteObj.content,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
-        setNote({
-            title:"",
-            content: ""
-        });
-        console.log(notes);
+      
+        
     }
 
-    const getNotes = (e) => {
+    const getNotes = () => {
         db.collection("users").doc(currentUser.uid).collection("notes").onSnapshot((querySnapshot) => {
            setNotes(
             querySnapshot.docs.map((doc) => ({
@@ -48,37 +30,50 @@ const NotesApp = () => {
             }))
            )
         })
+        
     }
     useEffect(() => {
         getNotes();
-    },[])
+    },[]);
+
+    const deleteNote = (id) => {
+        db.collection("users").doc(currentUser.uid).collection("notes").doc(id).delete();
+    }
+
+    const selectNote = (index) => {
+        setFormType("Update");
+        const note = notes[index];
+        note.id = notes[index].id;
+        note.index=index;
+        setCurrentNote(note);
+    }
+    
+    const updateNote = (noteObj, id, index) => {
+          let newNotes = [...notes];
+          newNotes[index] = noteObj;
+            
+          setNotes(newNotes);
+            console.log(id);
+          db.collection("users").doc(currentUser.uid).collection("notes").doc(id).update({
+              id: id,
+              title: newNotes[index].title,
+              content: newNotes[index].content,
+
+          });
+          setFormType("Add");   
+    }
+
+
+    
+   
 
     return (
         <div>
         <h1>Your Notes App 🎉</h1>
-        <form>
-            <TextField 
-                id="standard-basic" 
-                label="Title"
-                name="title" 
-                onChange={handleChange}
-                value={note.title} 
-            />
-            <div>
-                <TextareaAutosize 
-                    aria-label="minimum height" 
-                    rowsMin={4} 
-                    placeholder="Add a Note..." 
-                    name="content"
-                    value={note.content} 
-                    onChange={handleChange} 
-                />
-            </div>
-            <Button onClick={addNote}>Add</Button>        
-        </form>
-        {notes.map((note) => (
-            <Note title={note.title} content={note.content} id={note.id} key={note.id} currentUser={currentUser} />
-        ))}
+        <ManageNotes formType={formType} updateNote={updateNote} currentNote={currentNote} addNote={addNote} />
+        <NotesList notes={notes} deleteNote={deleteNote} selectNote={selectNote}/>
+        
+        
         </div>
     )
 }

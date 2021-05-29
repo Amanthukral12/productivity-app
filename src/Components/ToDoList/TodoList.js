@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import { db } from '../../firebase';
 import firebase from 'firebase'
@@ -52,7 +51,7 @@ const TodoList = () => {
     }
     useEffect(() => {
         getTodos();
-    },[])
+    })
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
       };
@@ -61,9 +60,7 @@ const TodoList = () => {
         setAnchorEl(null);
       };
 
-      const onAddPopupClose = () => {
-		setIsOpen(false);
-	  };
+
     
     return (
         <div className="todoRoot">
@@ -87,11 +84,11 @@ const TodoList = () => {
             <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
             <div style={{color: "white", fontSize:"35px"}}>Producto</div>
             <img src={currentUser.photoURL}
-            alt="Profile Image"
+            alt="Profile"
             onClick={handleClick}
             className="profile"
       />
-      <Menu 
+                <Menu 
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
@@ -119,7 +116,7 @@ const TodoList = () => {
            <div className="numberTodo">You have {todos.length} todo left</div>
            <div className="todoItem">
            {todos.map((todo) => (
-            <TodoListItem todo={todo.todo} inprogress={todo.inprogress} id={todo.id} currentUser={currentUser} />
+            <TodoListItem todo={todo.todo} inprogress={todo.inprogress} key={todo.id} id={todo.id} currentUser={currentUser} />
         ))}
            </div>
            
