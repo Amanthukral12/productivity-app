@@ -82,7 +82,7 @@ const Dashboard = () => {
 					  </Drawer>	
             <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
                 <img src={currentUser.photoURL}
-                      alt="Profile Image"
+                      alt="Profile"
                       onClick={handleClick}
                       className="profile"
                 />
@@ -95,7 +95,7 @@ const Dashboard = () => {
                 >
                     <div className="profileMenuHead">
                         <img src={currentUser.photoURL}
-                            alt="Profile Image"
+                            alt="Profile"
                             onClick={handleClick}
                             className="menuProfileImage"
                         />
