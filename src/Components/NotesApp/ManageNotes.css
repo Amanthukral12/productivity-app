@@ -1,0 +1,56 @@
+.manageNotesRoot {
+  display: flex;
+  width: 50%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px !important;
+  box-shadow: 5px 5px rgb(0, 0, 0) !important;
+}
+
+.manageNotesForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid rgb(51, 46, 46);
+  border-radius: 15px;
+  outline-width: 0;
+  box-shadow: 5px 5px rgb(0, 0, 0) !important;
+}
+
+.titleInput {
+  line-height: 3vh;
+  font-size: 2vh;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  outline-width: 0;
+  border: 1px solid rgb(51, 46, 46);
+}
+
+.contentInput {
+  font-size: 1.5vh;
+  padding: 10px;
+  outline-width: 0;
+  border-radius: 15px;
+  border: 1px solid rgb(51, 46, 46);
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.addbutton {
+  color: white;
+  display: flex;
+  position: relative;
+  width: 30%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  justify-content: center;
+  align-items: center;
+  background-color: #830d0de0;
+  border-radius: 25px;
+  font-size: 2vh;
+  line-height: 4vh;
+}
