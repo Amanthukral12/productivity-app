@@ -4,5 +4,11 @@
   padding: 0px;
   margin: 0px;
   font-family: "Poppins", sans-serif;
-  overflow: hidden;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }

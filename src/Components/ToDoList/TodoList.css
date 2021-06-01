@@ -1,6 +1,9 @@
 .todoRoot {
   background-color: #830d0de0;
   min-height: 100vh;
+  overflow-y: scroll;
+  padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+  box-sizing: content-box;
 }
 
 .todoHeader {

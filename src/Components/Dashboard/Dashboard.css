@@ -3,6 +3,7 @@
   background-size: cover;
   height: 100vh;
   color: rgb(248, 244, 244);
+  overflow: hidden;
 }
 
 .menuIcon {

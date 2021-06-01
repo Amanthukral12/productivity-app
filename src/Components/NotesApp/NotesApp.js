@@ -49,7 +49,7 @@ const NotesApp = () => {
     }
 
     const getNotes = () => {
-        db.collection("users").doc(currentUser.uid).collection("notes").onSnapshot((querySnapshot) => {
+        db.collection("users").doc(currentUser.uid).collection("notes").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
            setNotes(
             querySnapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -91,7 +91,7 @@ const NotesApp = () => {
           setFormType("Add");   
     }
 
-
+    
     
    
 
@@ -135,7 +135,9 @@ const NotesApp = () => {
         </div>
        <h1 className="heading">{currentUser.displayName}&apos;s Notes App 🎉</h1>
         <ManageNotes formType={formType} updateNote={updateNote} currentNote={currentNote} addNote={addNote} />
+        <div className="notesList">
         <NotesList notes={notes} deleteNote={deleteNote} selectNote={selectNote}/>
+        </div>
         </div>
     )
 }
