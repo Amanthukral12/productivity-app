@@ -9,6 +9,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Sidebar from '../Sidebar/Sidebar';
 import MenuIcon from '@material-ui/icons/Menu';
 import "./Dashboard.css"
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 const Dashboard = () => {
     const [error, setError] = useState("");
     const [hour, setHour] = useState("");
@@ -61,7 +62,7 @@ const Dashboard = () => {
       const onAddPopupClose = () => {
 		setIsOpen(false);
 	  };
-
+     const photoUrl = "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     return (
         <div className="root" >
             <div style={{display: "flex", justifyContent: "space-between", zIndex: 3}}>
@@ -81,7 +82,8 @@ const Dashboard = () => {
 						<Sidebar />
 					  </Drawer>	
             <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
-                <img src={currentUser.photoURL}
+            
+                <img src={photoUrl}
                       alt="Profile"
                       onClick={handleClick}
                       className="profile"
@@ -94,7 +96,7 @@ const Dashboard = () => {
                     TransitionComponent={Fade}
                 >
                     <div className="profileMenuHead">
-                        <img src={currentUser.photoURL}
+                        <img src={photoUrl}
                             alt="Profile"
                             onClick={handleClick}
                             className="menuProfileImage"

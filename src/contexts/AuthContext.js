@@ -12,7 +12,13 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
     const signup = (email, password) => {
-        return auth.createUserWithEmailAndPassword(email, password)
+         auth.createUserWithEmailAndPassword(email, password)
+         .then((userCredential)=>{
+          userCredential.user.sendEmailVerification();
+          auth.signOut();
+          alert("Email sent! Please Verify Your Account");
+        })
+        .catch(alert);
     }
 
     const login = (email, password) => {

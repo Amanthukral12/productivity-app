@@ -19,7 +19,12 @@ const Login = () => {
             setError("")
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/")
+            if(currentUser.displayName === null) {
+                history.push("/update-profile")
+            } else {
+                history.push("/")
+            }
+            
         } catch {
             setError('Failed to sign in')
         }
