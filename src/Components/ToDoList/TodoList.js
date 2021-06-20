@@ -51,7 +51,7 @@ const TodoList = () => {
     }
     useEffect(() => {
         getTodos();
-    })
+    },[])
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
       };

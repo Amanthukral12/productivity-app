@@ -21,8 +21,8 @@
 }
 
 .titleInput {
-  line-height: 3vh;
-  font-size: 2vh;
+  line-height: 1.5rem;
+  font-size: 1rem;
   padding: 10px;
   margin-bottom: 5px;
   border-radius: 15px;
@@ -31,7 +31,7 @@
 }
 
 .contentInput {
-  font-size: 1.5vh;
+  font-size: 1rem;
   padding: 10px;
   outline-width: 0;
   border-radius: 15px;
@@ -44,13 +44,13 @@
   color: white;
   display: flex;
   position: relative;
-  width: 30%;
+  width: 50%;
   left: 50%;
   transform: translate(-50%, 0%);
   justify-content: center;
   align-items: center;
   background-color: #830d0de0;
   border-radius: 25px;
-  font-size: 2vh;
+  font-size: 1rem;
   line-height: 4vh;
 }

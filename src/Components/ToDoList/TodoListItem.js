@@ -18,17 +18,8 @@ const TodoListItem = ({todo, inprogress, id, currentUser}) => {
 
     return (
         <div className="rootItem">
-        <div className="listItemRoot">
-        <ListItem className="listItem">
-        <ListItemText primary={todo} secondary={inprogress ? "inprogress" : "completed"} />
-        </ListItem>
-        <div className="listItemRight">
-        <button className="button" onClick={toggleInProgress}>{inprogress ? "Done" : "Undone"}</button>
-        <button className="button" onClick={deleteTodo}><DeleteIcon /></button>
-        </div>
-        </div>
-           
-           
+            <div className="listItem">{todo}</div>
+            <button className="button" onClick={deleteTodo}><DeleteIcon /></button>
         </div>
     )
 }

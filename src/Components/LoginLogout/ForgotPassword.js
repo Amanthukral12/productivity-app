@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link } from 'react-router-dom';
 import "../LoginLogout/Login.css";
 import photo from '../LoginLogout/photo1.jpg'
+import photo2 from './photo2.jpg';
 const ForgotPassword = () => {
     const emailRef = useRef();
     const { resetPassword } = useAuth();
@@ -30,9 +31,10 @@ const ForgotPassword = () => {
         <>
         <Grid className="loginRoot">
         <div className="ground">
-         <div className="loginPhoto">
-             <img src={photo} className="loginImage" alt=""/>
-         </div>
+        <picture className="loginPhoto">
+        <source srcSet={photo2} className="loginImage" media="(max-width: 990px)" />
+        <img src={photo} className="loginImage" alt=""/>
+    </picture>
          <div className="loginRight">
          <h2 className="loginHeading">Produkto</h2>
          {error && <h1 className="error">{error}</h1>}

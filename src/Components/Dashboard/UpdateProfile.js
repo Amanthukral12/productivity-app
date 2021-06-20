@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom';
 import "../LoginLogout/Login.css";
 import photo from '../LoginLogout/photo1.jpg'
+import photo2 from '../LoginLogout/photo2.jpg';
 const UpdateProfile = () => {
     const nameRef = useRef();
     const emailRef = useRef();
@@ -51,21 +52,22 @@ const UpdateProfile = () => {
     return (
            <Grid className="loginRoot">
            <div className="ground">
-            <div className="loginPhoto">
+           <picture className="loginPhoto">
+                <source srcSet={photo2} className="loginImage" media="(max-width: 990px)" />
                 <img src={photo} className="loginImage" alt=""/>
-            </div>
+            </picture>
             <div className="loginRight">
             <h2 className="loginHeading">Produkto</h2>
             {error && <h1 className="error">{error}</h1>}
             <h3 className="welcomeMessage">Update Profile</h3>           
             <form onSubmit={handleSubmit} className="loginForm">
-            <TextField label='Name' placeholder='Enter Name' type='text' inputRef={nameRef} required defaultValue={currentUser.displayName} />
+            <TextField  placeholder='Enter Name' type='text' inputRef={nameRef} required defaultValue={currentUser.displayName} />
             <br/>
-            <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required defaultValue={currentUser.email} />
+            <TextField  placeholder='Enter Email' type='email' inputRef={emailRef} required defaultValue={currentUser.email} />
             <br/>
-            <TextField label='Password' placeholder='Leave Blank to keep it same' type='password' inputRef={passwordRef} />
+            <TextField  placeholder='Password' type='password' inputRef={passwordRef} />
             <br/>
-            <TextField label='Confirm Password' placeholder='Leave Blank to keep it same' type='password' inputRef={passwordConfirmRef} />
+            <TextField  placeholder='Confirm Password' type='password' inputRef={passwordConfirmRef} />
             <br/>
             <button disabled={loading} type="submit" className="signin">Update Profile</button>
             </form>

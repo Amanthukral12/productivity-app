@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom';
 import "./Login.css";
 import photo from './photo1.jpg'
+import photo2 from './photo2.jpg';
 const Signup = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -35,18 +36,19 @@ const Signup = () => {
     return (
            <Grid className="loginRoot">
            <div className="ground">
-            <div className="loginPhoto">
-                <img src={photo} className="loginImage" alt=""/>
-            </div>
+           <picture className="loginPhoto">
+           <source srcSet={photo2} className="loginImage" media="(max-width: 990px)" />
+           <img src={photo} className="loginImage" alt=""/>
+           </picture>
             <div className="loginRight">
             <h2 className="loginHeading">Produkto</h2>
             {error && <h1 className="error">{error}</h1>}
             <h3 className="welcomeMessage">Welcome to Produkto</h3>           
             <form onSubmit={handleSubmit} className="loginForm">
             <TextField label='Email' placeholder='Enter Email' type='email' inputRef={emailRef} required />
-            <br/>
+            
             <TextField label='Password' placeholder='Enter Password' type='password' inputRef={passwordRef} required />
-            <br/>
+           
             <TextField label='Confirm Password' placeholder='Enter Password again' type='password' inputRef={passwordConfirmRef} required />
             <br/>
             <button disabled={loading} type="submit" className="signin">Signup</button>
