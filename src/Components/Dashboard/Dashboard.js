@@ -120,7 +120,7 @@ const Dashboard = () => {
                     </svg>
             </div>}
             
-            <div className="welcome">Welcome to Producto</div>
+            <div className="welcome">Welcome to Produkto</div>
             <h1 className="time">{hour}</h1>
             <div className="greeting">{message}</div>
             <div className="name">{currentUser.displayName}</div>

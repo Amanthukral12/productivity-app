@@ -1,9 +1,9 @@
 {
-  "short_name": "Produckto",
-  "name": "Produckto",
+  "short_name": "Produkto",
+  "name": "Produkto",
   "icons": [
     {
-      "src": "/assets/logo1024.png",
+      "src": "/assets/logo512.png",
       "type": "image/png",
       "sizes": "1024x1024",
       "purpose": "any maskable"
@@ -12,5 +12,30 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "shortcuts": [
+
+    {
+ 
+       "name": "Produkto Home",
+ 
+       "url": "/",
+ 
+       "icons": [
+ 
+          {
+ 
+             "src": "/assets/logo512.png",
+ 
+             "type": "image/png",
+ 
+             "purpose": "any maskable"
+ 
+          }
+ 
+       ]
+ 
+    }
+ 
+ ]
 }

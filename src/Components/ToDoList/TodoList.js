@@ -82,7 +82,7 @@ const TodoList = () => {
 						<Sidebar />
 					  </Drawer>	
             <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
-            <div style={{color: "white", fontSize:"35px"}}>Producto</div>
+            <div style={{color: "white", fontSize:"35px"}}>Produkto</div>
             <img src={currentUser.photoURL}
             alt="Profile"
             onClick={handleClick}

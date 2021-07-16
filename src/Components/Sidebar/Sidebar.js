@@ -4,12 +4,13 @@ import "./Sidebar.css"
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import HomeIcon from '@material-ui/icons/Home';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import photo from './logo1024.png'
 const Sidebar = () => {
     return (
         <div className="sidebarRoot">
             <div className="sidebarHeader">
-            <img src="./logo1024.png" alt="" className="logo"/> 
-                <div className="appName">Producto</div>
+            <img src={photo} alt="" className="logo"/> 
+                <div className="appName">Produkto</div>
             </div>
             <hr className="horizontalLine"/>
             <div className="menu">
