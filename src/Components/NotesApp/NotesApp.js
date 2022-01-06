@@ -74,6 +74,10 @@ const NotesApp = () => {
         note.id = notes[index].id;
         note.index=index;
         setCurrentNote(note);
+        window.scrollTo({
+            top:0,
+            behavior: 'smooth'
+        })
     }
     
     const updateNote = (noteObj, id, index) => {

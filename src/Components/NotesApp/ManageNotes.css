@@ -1,6 +1,6 @@
 .manageNotesRoot {
   display: flex;
-  width: 50%;
+  width: 80%;
   position: relative;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -37,7 +37,6 @@
   border-radius: 15px;
   border: 1px solid rgb(51, 46, 46);
   margin-bottom: 5px;
-  overflow: hidden;
 }
 
 .addbutton {

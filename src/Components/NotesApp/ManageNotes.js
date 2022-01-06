@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import "./ManageNotes.css"
@@ -70,7 +68,7 @@ const ManageNotes = ({addNote, currentNote, formType, updateNote }) => {
             
         />
             <textarea  
-                rows={5} 
+                rows={10} 
                 placeholder="Add a Note..." 
                 name="content"
                 value={content} 
