@@ -1,5 +1,5 @@
 .notesRoot {
-  background-color: #830d0de0;
+  background: linear-gradient(to right bottom, #141d3d, #3a4d8f);
   min-height: 100vh;
   overflow: hidden;
 }

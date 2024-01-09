@@ -1,5 +1,5 @@
 .todoRoot {
-  background-color: #830d0de0;
+  background: linear-gradient(to right bottom, #141d3d, #3a4d8f);
   min-height: 100vh;
   overflow-y: scroll;
   /* Increase/decrease this value for cross-browser compatibility */
@@ -44,7 +44,7 @@
 
 ::placeholder {
   /* Microsoft Edge */
-  color: #661717d8;
+  color: #172166d8;
 }
 
 .numberTodo {
