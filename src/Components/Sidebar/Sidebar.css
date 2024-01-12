@@ -52,7 +52,7 @@
 }
 
 .selected {
-  background-color: rgb(248, 145, 145);
+  background-color: #3a4d8f;
   border-radius: 15px;
-  color: #661717;
+  color: white;
 }

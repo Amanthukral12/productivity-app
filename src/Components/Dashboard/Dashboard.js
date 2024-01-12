@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import Quotes from "./Components/Quotes/Quotes";
 import Menu from "@material-ui/core/Menu";
@@ -8,7 +8,10 @@ import Fade from "@material-ui/core/Fade";
 import Drawer from "@material-ui/core/Drawer";
 import Sidebar from "../Sidebar/Sidebar";
 import MenuIcon from "@material-ui/icons/Menu";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
 import "./Dashboard.css";
+
 const Dashboard = () => {
   const [error, setError] = useState("");
   const [hour, setHour] = useState("");
@@ -16,7 +19,6 @@ const Dashboard = () => {
   const [message, setMessage] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [stop, setStop] = useState(true);
   const { currentUser, logout } = useAuth();
   const history = useHistory();
   if (currentUser.displayName === null) {
@@ -150,6 +152,14 @@ const Dashboard = () => {
       <h1 className="time">{hour}</h1>
       <div className="greeting">{message}</div>
       <div className="name">{currentUser.displayName}</div>
+      <div className="appIconsDiv">
+        <NavLink to="/todo-list" className="appIcons" title="Todo List">
+          <PlaylistAddCheckIcon className="icons" />
+        </NavLink>
+        <NavLink to="/notes-app" className="appIcons" title="Notes">
+          <NoteAddIcon className="icons" />
+        </NavLink>
+      </div>
       {error && <h1>{error}</h1>}
       <div></div>
       <Quotes />
