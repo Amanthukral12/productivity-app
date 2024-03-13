@@ -6,14 +6,15 @@ import { Link, useHistory } from "react-router-dom";
 import "../LoginLogout/Login.css";
 import photo from "../../assets/logo.png";
 const UpdateProfile = () => {
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+
   const {
     currentUser,
-    updatePassword,
-    updateEmail,
+    changePassword,
+    changeEmail,
     updateName,
     updateProfileImage,
   } = useAuth();
@@ -23,25 +24,25 @@ const UpdateProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (password !== confirmPassword) {
       return setError("Passwords do not match");
     }
 
     const promises = [];
     setLoading(true);
     setError("");
-    if (nameRef.current.value) {
-      promises.push(updateName(nameRef.current.value));
+    if (name) {
+      promises.push(updateName(name));
     }
-    if (emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail(emailRef.current.value));
-    }
-
-    if (passwordRef.current.value) {
-      promises.push(updatePassword(passwordRef.current.value));
+    if (email !== currentUser.email) {
+      promises.push(changeEmail(email));
     }
 
-    promises.push(updateProfileImage(currentUser.photoURL));
+    if (password) {
+      promises.push(changePassword(password));
+    }
+
+    promises.push(updateProfileImage());
 
     Promise.all(promises)
       .then(() => {
@@ -66,7 +67,7 @@ const UpdateProfile = () => {
             <TextField
               placeholder="Enter Name"
               type="text"
-              inputRef={nameRef}
+              onChange={(e) => setName(e.target.value)}
               required
               defaultValue={currentUser.displayName}
             />
@@ -74,7 +75,9 @@ const UpdateProfile = () => {
             <TextField
               placeholder="Enter Email"
               type="email"
-              inputRef={emailRef}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               required
               defaultValue={currentUser.email}
             />
@@ -82,13 +85,17 @@ const UpdateProfile = () => {
             <TextField
               placeholder="Password"
               type="password"
-              inputRef={passwordRef}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
             <br />
             <TextField
               placeholder="Confirm Password"
               type="password"
-              inputRef={passwordConfirmRef}
+              onChange={(e) => {
+                setconfirmPassword(e.target.value);
+              }}
             />
             <br />
             <button disabled={loading} type="submit" className="signin">

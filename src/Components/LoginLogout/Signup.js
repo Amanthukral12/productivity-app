@@ -6,9 +6,9 @@ import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
 import photo from "../../assets/logo.png";
 const Signup = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,13 +16,13 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (password !== confirmPassword) {
       return setError("Passwords do not match");
     }
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(email, password);
       history.push("/login");
     } catch {
       setError("Failed to create an account");
@@ -42,7 +42,10 @@ const Signup = () => {
               label="Email"
               placeholder="Enter Email"
               type="email"
-              inputRef={emailRef}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               required
             />
 
@@ -50,7 +53,10 @@ const Signup = () => {
               label="Password"
               placeholder="Enter Password"
               type="password"
-              inputRef={passwordRef}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               required
             />
 
@@ -58,7 +64,10 @@ const Signup = () => {
               label="Confirm Password"
               placeholder="Enter Password again"
               type="password"
-              inputRef={passwordConfirmRef}
+              value={confirmPassword}
+              onChange={(e) => {
+                setconfirmPassword(e.target.value);
+              }}
               required
             />
             <br />

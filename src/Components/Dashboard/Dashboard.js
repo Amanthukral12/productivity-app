@@ -27,7 +27,7 @@ const Dashboard = () => {
     setError("");
     try {
       await logout();
-      history.pushState("/login");
+      history.push("/login");
     } catch {
       setError("Can not log out!");
     }
