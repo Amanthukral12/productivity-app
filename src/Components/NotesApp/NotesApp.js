@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ManageNotes from "./ManageNotes";
 import NotesList from "./NotesList";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { firestore } from "../../firebase";
 import {
   addDoc,
@@ -30,12 +30,12 @@ const NotesApp = () => {
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser, logout } = useAuth();
-  const history = useHistory;
+  const navigate = useNavigate();
   const handleLogout = async () => {
     setError("");
     try {
       await logout();
-      history.push("/login");
+      navigate("/login");
     } catch {
       setError("Can not log out!");
     }

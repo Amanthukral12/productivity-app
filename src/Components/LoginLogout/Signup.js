@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import photo from "../../assets/logo.png";
 const Signup = () => {
@@ -12,7 +12,7 @@ const Signup = () => {
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,7 +23,7 @@ const Signup = () => {
       setError("");
       setLoading(true);
       await signup(email, password);
-      history.push("/login");
+      navigate("/login");
     } catch {
       setError("Failed to create an account");
     }

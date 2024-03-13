@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, Link, NavLink } from "react-router-dom";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -19,15 +19,15 @@ const Dashboard = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser, logout } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
   if (currentUser.displayName === null) {
-    history.push("/update-profile");
+    navigate("/update-profile");
   }
   const handleLogout = async () => {
     setError("");
     try {
       await logout();
-      history.push("/login");
+      navigate("/login");
     } catch {
       setError("Can not log out!");
     }

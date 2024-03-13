@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../LoginLogout/Login.css";
 import photo from "../../assets/logo.png";
 const UpdateProfile = () => {
@@ -20,7 +20,7 @@ const UpdateProfile = () => {
   } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -46,7 +46,7 @@ const UpdateProfile = () => {
 
     Promise.all(promises)
       .then(() => {
-        history.push("/");
+        navigate("/");
       })
       .catch(() => {
         setError("Failed to update account");

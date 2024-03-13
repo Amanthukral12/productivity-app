@@ -10,7 +10,7 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const AuthContext = React.createContext({
   currentUser: null,
   signup: async () => {},
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const signup = async (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
         doSendEmailVerification();
         alert("verify email");
         logout().then(() => {
-          history.push("/login");
+          navigate("/login");
         });
         setLoading(true);
       }
