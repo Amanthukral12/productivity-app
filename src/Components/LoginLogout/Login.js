@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
@@ -7,9 +7,9 @@ import "./Login.css";
 import photo from "../../assets/logo.png";
 
 const Login = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const { login, currentUser } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -19,7 +19,7 @@ const Login = () => {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
+      await login(email, password);
       history.push("/");
     } catch {
       setError("Failed to sign in");
@@ -29,14 +29,6 @@ const Login = () => {
   return (
     <Grid className="loginRoot">
       <div className="ground">
-        {/* <div className="loginPhoto">
-                <img src={photo} className="loginImage" alt=""/>
-            </div> */}
-        {/* <picture className="loginPhoto">
-                <source srcSet={photo2} className="loginImage" media="(max-width: 990px)" />
-                <img src={photo} className="loginImage" alt=""/>
-            </picture> */}
-
         <div className="loginSection">
           <img src={photo} alt="" className="logoImage" />
           <h2 className="loginHeading">Produkto</h2>
@@ -47,14 +39,20 @@ const Login = () => {
               label="Email"
               placeholder="Enter Email"
               type="email"
-              inputRef={emailRef}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               required
             />
             <TextField
               label="Password"
               placeholder="Enter Password"
               type="password"
-              inputRef={passwordRef}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               required
             />
             <br />

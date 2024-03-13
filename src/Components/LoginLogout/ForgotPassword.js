@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "../LoginLogout/Login.css";
 import photo from "../../assets/logo.png";
 const ForgotPassword = () => {
-  const emailRef = useRef();
+  const [email, setEmail] = useState("");
   const { resetPassword } = useAuth();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ const ForgotPassword = () => {
       setMessage("");
       setError("");
       setLoading(true);
-      await resetPassword(emailRef.current.value);
+      await resetPassword(email);
       setMessage("Check your inbox for further instructions");
     } catch {
       setError("Failed to reset password");
@@ -40,11 +40,14 @@ const ForgotPassword = () => {
                 label="Email"
                 placeholder="Enter Email"
                 type="email"
-                inputRef={emailRef}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 required
               />
               <br />
-              <button type="submit" className="signin">
+              <button type="submit" className="signin" disabled={loading}>
                 Reset Password
               </button>
               <div>
