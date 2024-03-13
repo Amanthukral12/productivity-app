@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import photo from "../../assets/logo.png";
 
@@ -12,7 +12,7 @@ const Login = () => {
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,7 +20,7 @@ const Login = () => {
       setError("");
       setLoading(true);
       await login(email, password);
-      history.push("/");
+      navigate("/");
     } catch {
       setError("Failed to sign in");
     }
