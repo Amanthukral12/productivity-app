@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import Menu from "@material-ui/core/Menu";

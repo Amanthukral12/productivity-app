@@ -95,10 +95,13 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(null);
       setLoading(true);
     }
+
+    setLoading(false);
   }
 
   const value = {
     currentUser,
+
     setCurrentUser,
     signup,
     login,
