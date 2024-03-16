@@ -1,10 +1,58 @@
-import React, { useCallback, useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment/moment";
 import Calendar from "./Calendar";
 import { momentLocalizer } from "react-big-calendar";
+import { useAuth } from "../../contexts/AuthContext";
+
+import { firestore } from "../../firebase";
+import {
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  onSnapshot,
+  collection,
+  deleteDoc,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import EventForm from "./EventForm";
 const localizer = momentLocalizer(moment);
 const MyCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showForm, setShowForm] = useState(false);
+  const [events, setEvents] = useState([]);
+  const { currentUser } = useAuth();
+
+  const userEventsCollectionRef = collection(
+    firestore,
+    `users/${currentUser.uid}/eventReminder`
+  );
+
+  useEffect(() => {
+    let isMounted = true;
+    const getEvents = () => {
+      const eventsData = query(
+        userEventsCollectionRef,
+        orderBy("start", "desc")
+      );
+      return onSnapshot(eventsData, (querySnapshot) => {
+        const updatedEvents = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title,
+          start: doc.data().start,
+          end: doc.data().end,
+          allDay: doc.data().allDay,
+        }));
+        if (isMounted) setEvents(updatedEvents);
+      });
+    };
+    getEvents();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const handleDateChange = (event) => {
     const { name, value } = event.target;
     if (name === "month") {
@@ -13,11 +61,12 @@ const MyCalendar = () => {
       setSelectedDate(moment(selectedDate).year(value).toDate());
     }
   };
+
   const handleNavigate = (newDate) => {
     setSelectedDate(newDate);
   };
   return (
-    <div style={{ height: "95vh" }}>
+    <>
       <div>
         <select name="month" onChange={handleDateChange}>
           {moment.months().map((month, index) => (
@@ -37,7 +86,7 @@ const MyCalendar = () => {
         </select>
       </div>
       <Calendar
-        // events={events}
+        events={events}
         localizer={localizer}
         defaultDate={selectedDate}
         date={selectedDate}
@@ -45,7 +94,9 @@ const MyCalendar = () => {
         style={{ height: "50vh", width: "50%" }}
         onNavigate={handleNavigate}
       />
-    </div>
+      <button onClick={() => setShowForm(!showForm)}>Add New</button>
+      <EventForm shown={showForm} close={() => setShowForm(!showForm)} />
+    </>
   );
 };
 
