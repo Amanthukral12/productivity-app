@@ -1,17 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 import { firestore } from "../../firebase";
-import {
-  addDoc,
-  serverTimestamp,
-  query,
-  orderBy,
-  onSnapshot,
-  collection,
-  deleteDoc,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
+import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 const EventForm = ({ shown, close }) => {
   const [title, setTitle] = useState("");

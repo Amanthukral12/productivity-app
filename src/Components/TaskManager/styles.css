@@ -1,3 +1,8 @@
+.calendarRoot {
+    min-height: 110vh;
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
 .sidebar-backdrop {
     position: fixed;
     top: 0;
@@ -33,3 +38,11 @@
 .heading {
     color: black;
 }
+
+.rbc-event-content {
+    height: 3px;
+}
+
+
+
+
