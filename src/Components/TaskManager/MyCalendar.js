@@ -4,7 +4,14 @@ import Calendar from "./Calendar";
 import { momentLocalizer } from "react-big-calendar";
 import { useAuth } from "../../contexts/AuthContext";
 import { firestore } from "../../firebase";
-import { query, orderBy, onSnapshot, collection } from "firebase/firestore";
+import {
+  query,
+  orderBy,
+  onSnapshot,
+  collection,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import EventForm from "./EventForm";
 import Event from "./Event";
 import "./styles.css";
@@ -83,6 +90,17 @@ const MyCalendar = () => {
     eventsforSelectedDay();
   }, [events, slotInfo, selectedDate]);
 
+  const addNewEvent = async (newEventData) => {
+    try {
+      await addDoc(userEventsCollectionRef, {
+        ...newEventData,
+        timestamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="calendarRoot">
       <div>
@@ -125,19 +143,28 @@ const MyCalendar = () => {
         popup={true}
       />
       <button onClick={() => setShowForm(!showForm)}>Add New</button>
-      <EventForm shown={showForm} close={() => setShowForm(!showForm)} />
+      <EventForm
+        shown={showForm}
+        close={() => setShowForm(!showForm)}
+        handleSubmit={addNewEvent}
+      />
       <>
         {selectedDateEvents.length === 0 ? (
-          <div>No Events for {moment(selectedDate).format("YYYY-MM-DD")}</div>
+          <div>No Events for {moment(selectedDate).format("DD-MM-YYYY")}</div>
         ) : (
-          selectedDateEvents.map((event) => (
-            <Event
-              key={event.id}
-              event={event}
-              showForm={showForm}
-              setShowForm={setShowForm}
-            />
-          ))
+          <>
+            <div>
+              <div> Events for {moment(selectedDate).format("DD-MM-YYYY")}</div>
+            </div>
+            {selectedDateEvents.map((event) => (
+              <Event
+                key={event.id}
+                event={event}
+                showForm={showForm}
+                setShowForm={setShowForm}
+              />
+            ))}
+          </>
         )}
       </>
     </div>

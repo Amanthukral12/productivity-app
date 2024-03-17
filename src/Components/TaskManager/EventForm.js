@@ -1,37 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
-import { firestore } from "../../firebase";
-import { addDoc, serverTimestamp, collection } from "firebase/firestore";
-import { useAuth } from "../../contexts/AuthContext";
-const EventForm = ({ shown, close }) => {
+import moment from "moment/moment";
+const EventForm = ({ shown, close, event, handleSubmit }) => {
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [error, setError] = useState("");
-  const { currentUser } = useAuth();
-  const userEventsCollectionRef = collection(
-    firestore,
-    `users/${currentUser.uid}/eventReminder`
-  );
-  const handleSubmit = async (e) => {
+
+  useEffect(() => {
+    if (event) {
+      setTitle(event.title);
+      setStartDate(moment(event.start).format("YYYY-MM-DD"));
+      setEndDate(moment(event.end).format("YYYY-MM-DD"));
+    }
+  }, [event]);
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      await addDoc(userEventsCollectionRef, {
-        allDay: true,
-        end: endDate,
-        start: startDate,
-        timestamp: serverTimestamp(),
-        title: title,
-      });
+      if (event) {
+        await handleSubmit({
+          title,
+          start: startDate,
+          end: endDate,
+        });
+      } else {
+        await handleSubmit({
+          allDay: true,
+          end: endDate,
+          start: startDate,
+          title: title,
+        });
+      }
       setTitle("");
-      setStartDate("");
-      setEndDate("");
       close();
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
+
   return shown ? (
     <div
       className="sidebar-backdrop"
@@ -45,8 +53,8 @@ const EventForm = ({ shown, close }) => {
           e.stopPropagation();
         }}
       >
-        <form onSubmit={handleSubmit} className="eventForm">
-          <h1 className="heading">Form</h1>
+        <form onSubmit={handleFormSubmit} className="eventForm">
+          <h1 className="heading">{event ? "Update Event" : "Add Event"}</h1>
           <input
             type="text"
             value={title}
@@ -55,15 +63,16 @@ const EventForm = ({ shown, close }) => {
           />
           <input
             type="date"
-            value={startDate}
+            value={moment(startDate).format("YYYY-MM-DD")}
             onChange={(e) => setStartDate(e.target.value)}
           ></input>
           <input
             type="date"
-            value={endDate}
+            value={moment(endDate).format("YYYY-MM-DD")}
             onChange={(e) => setEndDate(e.target.value)}
           ></input>
-          <button>Submit</button>
+          <button type="submit">{event ? "Update" : "Submit"}</button>
+          {error && <div className="error">{error}</div>}
         </form>
       </div>
     </div>

@@ -1,12 +1,15 @@
 import React from "react";
 import { firestore } from "../../firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import DeleteIcon from "@material-ui/icons/Delete";
 import "./styles.css";
-
-const Event = ({ event, showForm, setShowForm }) => {
+import { useState } from "react";
+import EditIcon from "@material-ui/icons/Edit";
+import EventForm from "./EventForm";
+const Event = ({ event }) => {
   const { currentUser } = useAuth();
+  const [showForm, setShowForm] = useState(false);
   const deleteEvent = async (id) => {
     try {
       const userDeleteEventDoc = doc(
@@ -19,14 +22,32 @@ const Event = ({ event, showForm, setShowForm }) => {
     }
   };
 
+  const updateEvent = async (updatedEventData) => {
+    try {
+      const userUpdateEventDoc = doc(
+        firestore,
+        `users/${currentUser.uid}/eventReminder/${event.id}`
+      );
+      await updateDoc(userUpdateEventDoc, updatedEventData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div>
         {event.title}
         {event.start}
       </div>
-
+      <EditIcon onClick={() => setShowForm(true)} />
       <DeleteIcon onClick={() => deleteEvent(event.id)} />
+      <EventForm
+        shown={showForm}
+        close={() => setShowForm(false)}
+        event={event}
+        handleSubmit={updateEvent}
+      />
     </div>
   );
 };
