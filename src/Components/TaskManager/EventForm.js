@@ -21,7 +21,8 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
     try {
       if (event) {
         await handleSubmit({
-          title,
+          allDay: true,
+          title: title,
           start: startDate,
           end: endDate,
         });

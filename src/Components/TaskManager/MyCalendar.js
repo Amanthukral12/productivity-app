@@ -30,28 +30,54 @@ const MyCalendar = () => {
     `users/${currentUser.uid}/eventReminder`
   );
 
+  const CACHE_EXPIRATION_TIME = 60000;
+  let lastCacheTime = 0;
+  let cachedEvents = [];
+
+  const getEventsFromCache = () => {
+    const currentTime = new Date().getTime();
+    if (currentTime - lastCacheTime < CACHE_EXPIRATION_TIME) {
+      return cachedEvents;
+    } else {
+      return null;
+    }
+  };
+
+  const cacheEvents = (events) => {
+    cachedEvents = events;
+    lastCacheTime = new Date().getTime();
+  };
+
+  const getEvents = (setEvents) => {
+    const cachedData = getEventsFromCache();
+    if (cachedData !== null) {
+      setEvents(cachedData);
+    }
+
+    const eventsData = query(
+      userEventsCollectionRef,
+      orderBy("timestamp", "desc")
+    );
+
+    return onSnapshot(eventsData, (querySnapshot) => {
+      const updatedEvents = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        title: doc.data().title,
+        start: doc.data().start,
+        end: doc.data().end,
+        allDay: doc.data().allDay,
+      }));
+
+      cacheEvents(updatedEvents);
+      setEvents(updatedEvents);
+    });
+  };
+
   useEffect(() => {
-    let isMounted = true;
-    const getEvents = () => {
-      const eventsData = query(
-        userEventsCollectionRef,
-        orderBy("timestamp", "desc")
-      );
-      return onSnapshot(eventsData, (querySnapshot) => {
-        const updatedEvents = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          title: doc.data().title,
-          start: doc.data().start,
-          end: doc.data().end,
-          allDay: doc.data().allDay,
-        }));
-        if (isMounted) setEvents(updatedEvents);
-      });
-    };
-    getEvents();
+    const unsubscribe = getEvents(setEvents);
 
     return () => {
-      isMounted = false;
+      unsubscribe();
     };
   }, []);
 
