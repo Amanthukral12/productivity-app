@@ -1,0 +1,236 @@
+.calendarRoot {
+    min-height: 110vh;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.monthYear {
+    width: 70%;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.month, .year {
+    border: none;
+    font-size: 1.25rem;   
+}
+.rbc-calendar {
+    height: 50vh !important;
+    width: 70%;
+    background-color: #dbeafa;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.rbc-month-view {
+    border: none !important;
+}
+
+.rbc-header {
+    border: none !important;
+    padding: 0px;
+    font-weight: normal !important;
+    height: 30px;
+    font-size: 1.15rem !important;
+}
+
+.rbc-date-cell {
+    text-align: center !important;
+}
+
+.rbc-off-range-bg  {
+    background-color: #dbeafa !important;
+}
+
+.rbc-month-row, .rbc-day-bg {
+    border: none !important; 
+}
+
+/* .rbc-day-bg {
+    border: none !important;  
+} */
+
+.rbc-today {
+    background-color: #dbeafa !important;
+}
+
+.rbc-button-link {
+    font-weight: bold;
+}
+
+.rbc-current .rbc-button-link {
+    background-color: #2b5db9 !important;
+    border-radius: 50%;
+    padding: 2px 4px;
+    color: white;
+}
+
+.rbc-event {
+    background-color: #2b5db9 !important;
+}
+
+.rbc-event-content {
+    height: 12px;
+    font-size: 10px;
+}
+
+.form-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.form-content {
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    min-height: 50vh;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.eventForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    border-radius: 10px;
+    border: 1px solid #bdbdbd;
+    padding: 2px 5px;
+    height: 2rem;
+}
+
+.heading {
+    color: black;
+}
+
+.submitButton {
+    background-color: #2b5db9;
+    padding: 3px 10px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.15rem;
+}
+
+
+.addNewButton {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 1.5rem;
+    float: right;
+    font-size: 1rem;
+    background-color: #2b5db9;
+    border: none;
+    padding: 2px 10px;
+    color: white;
+    border-radius: 10px;
+}
+
+.message {
+    width: 70%;
+    margin-left: auto;
+    margin-right: 1.5;
+    font-size: 1.25rem;
+}
+
+.eventRoot {
+    width: 69%;
+    height: 10vh;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    background-color: #dbeafa;
+    border-left: 5px solid #2b5db9;
+    border-radius: 10px;
+    padding: 4px 3px;
+    margin-bottom: 10px;
+}
+
+.eventInfo {
+    display: flex;
+    width: 80%;
+}
+
+.eventDate {
+    width: 40%;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.eventTitle {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.iconDiv {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 600px) {
+    .rbc-calendar {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .form-content {
+        background-color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        min-height: 50vh;
+        color: white;
+        padding: 10px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 2;
+    }
+
+    .monthYear {
+        width: 90%;
+    }
+
+    .message {
+        width: 90%;
+       
+    }
+    
+    .eventRoot {
+        width: 85%;
+        
+    }
+  
+}
+
+
+
