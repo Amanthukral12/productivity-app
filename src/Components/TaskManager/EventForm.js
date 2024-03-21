@@ -43,13 +43,13 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
 
   return shown ? (
     <div
-      className="sidebar-backdrop"
+      className="form-backdrop"
       onClick={() => {
         close();
       }}
     >
       <div
-        className="sidebar-content"
+        className="form-content"
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -61,18 +61,23 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter Your Title"
+            className="input"
           />
           <input
             type="date"
             value={moment(startDate).format("YYYY-MM-DD")}
             onChange={(e) => setStartDate(e.target.value)}
+            className="input"
           ></input>
           <input
             type="date"
             value={moment(endDate).format("YYYY-MM-DD")}
             onChange={(e) => setEndDate(e.target.value)}
+            className="input"
           ></input>
-          <button type="submit">{event ? "Update" : "Submit"}</button>
+          <button className="submitButton" type="submit">
+            {event ? "Update" : "Submit"}
+          </button>
           {error && <div className="error">{error}</div>}
         </form>
       </div>

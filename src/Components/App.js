@@ -20,7 +20,7 @@ function App() {
           <Route path="/update-profile" element={<UpdateProfile />} />
           <Route path="/todo-list" element={<TodoList />} />
           <Route path="/notes-app" element={<NotesApp />} />
-          <Route path="/eventReminder" element={<MyCalendar />} />
+          <Route path="/event-reminder" element={<MyCalendar />} />
         </Route>
         <Route element={<PrivateRoute2 />}>
           <Route path="/signup" element={<Signup />} />

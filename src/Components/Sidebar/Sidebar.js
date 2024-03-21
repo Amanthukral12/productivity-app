@@ -4,6 +4,7 @@ import "./Sidebar.css";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import HomeIcon from "@material-ui/icons/Home";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
+import EventIcon from "@material-ui/icons/Event";
 import photo from "./logo1024.png";
 const Sidebar = () => {
   return (
@@ -40,6 +41,15 @@ const Sidebar = () => {
         >
           <NoteAddIcon className="icons" />
           Notes App
+        </NavLink>
+        <NavLink
+          to="/event-reminder"
+          className={({ isActive }) =>
+            "menuItems" + (isActive ? " selected" : "")
+          }
+        >
+          <EventIcon className="icons" />
+          Event Reminder
         </NavLink>
       </div>
     </div>

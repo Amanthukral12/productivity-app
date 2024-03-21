@@ -35,13 +35,16 @@ const Event = ({ event }) => {
   };
 
   return (
-    <div>
-      <div>
-        {event.title}
-        {event.start}
+    <div className="eventRoot">
+      <div className="eventInfo">
+        <span className="eventDate">{event.start}</span>
+        <span className="eventTitle">{event.title}</span>
       </div>
-      <EditIcon onClick={() => setShowForm(true)} />
-      <DeleteIcon onClick={() => deleteEvent(event.id)} />
+      <div className="iconDiv">
+        <EditIcon onClick={() => setShowForm(true)} />
+        <DeleteIcon onClick={() => deleteEvent(event.id)} />
+      </div>
+
       <EventForm
         shown={showForm}
         close={() => setShowForm(false)}

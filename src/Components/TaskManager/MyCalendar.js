@@ -90,6 +90,11 @@ const MyCalendar = () => {
     }
   };
 
+  let formats = {
+    weekdayFormat: (date, culture, localizer) =>
+      localizer.format(date, "dd", culture),
+  };
+
   useEffect(() => {
     const eventsforSelectedDay = () => {
       let { start, end } = slotInfo;
@@ -129,11 +134,12 @@ const MyCalendar = () => {
 
   return (
     <div className="calendarRoot">
-      <div>
+      <div className="monthYear">
         <select
           name="month"
           value={moment(selectedDate).month()}
           onChange={handleDateChange}
+          className="month"
         >
           {moment.months().map((month, index) => (
             <option key={index} value={index}>
@@ -145,6 +151,7 @@ const MyCalendar = () => {
           name="year"
           value={moment(selectedDate).year()}
           onChange={handleDateChange}
+          className="year"
         >
           {Array.from({ length: 30 }, (_, i) => moment().year() + i).map(
             (year) => (
@@ -159,16 +166,26 @@ const MyCalendar = () => {
         events={events}
         localizer={localizer}
         defaultDate={selectedDate}
+        toolbar={false}
         views={["month"]}
-        style={{ height: "50vh", width: "50%" }}
         onSelectSlot={(info) => {
           setSlotInfo(info);
           setSelectedDate(info.start);
         }}
+        formats={formats}
+        date={selectedDate}
         selectable
-        popup={true}
+        onNavigate={(date, view) => {
+          setSelectedDate(date);
+        }}
+        popup={false}
       />
-      <button onClick={() => setShowForm(!showForm)}>Add New</button>
+      <div>
+        <button onClick={() => setShowForm(!showForm)} className="addNewButton">
+          Add New
+        </button>
+      </div>
+
       <EventForm
         shown={showForm}
         close={() => setShowForm(!showForm)}
@@ -176,12 +193,11 @@ const MyCalendar = () => {
       />
       <>
         {selectedDateEvents.length === 0 ? (
-          <div>No Events for {moment(selectedDate).format("DD-MM-YYYY")}</div>
+          <div className="message">
+            No Events for {moment(selectedDate).format("DD-MM-YYYY")}
+          </div>
         ) : (
           <>
-            <div>
-              <div> Events for {moment(selectedDate).format("DD-MM-YYYY")}</div>
-            </div>
             {selectedDateEvents.map((event) => (
               <Event
                 key={event.id}
