@@ -98,24 +98,21 @@ const MyCalendar = () => {
   useEffect(() => {
     const eventsforSelectedDay = () => {
       let { start, end } = slotInfo;
-      const s = moment().startOf("day")._d;
-      const e = moment().add(1, "day").startOf("day")._d;
 
-      if (
-        start === undefined &&
-        end === undefined &&
-        moment(selectedDate).format("YYYY-MM-DD") ===
-          moment(new Date()).format("YYYY-MM-DD")
-      ) {
+      const s = moment(selectedDate).startOf("day")._d;
+      const e = moment(selectedDate).endOf("day")._d;
+
+      if (start === undefined && end === undefined) {
         start = s;
         end = e;
       }
 
       const eventsForThisDay = events.filter(
         (event) =>
-          event.start >= moment(start).format("YYYY-MM-DD") &&
-          event.start < moment(end).format("YYYY-MM-DD")
+          moment(event.start).isSameOrBefore(moment(end), "day") &&
+          moment(event.end).isSameOrAfter(moment(start), "day")
       );
+
       setSeletedDateEvents(eventsForThisDay);
     };
     eventsforSelectedDay();
@@ -172,6 +169,8 @@ const MyCalendar = () => {
           setSlotInfo(info);
           setSelectedDate(info.start);
         }}
+        longPressThreshold={1}
+        onDrillDown={(newDate) => setSelectedDate(newDate)}
         formats={formats}
         date={selectedDate}
         selectable
