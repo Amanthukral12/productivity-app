@@ -72,7 +72,10 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
           <input
             type="date"
             value={moment(endDate).format("YYYY-MM-DD")}
-            onChange={(e) => setEndDate(e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setEndDate(e.target.value);
+            }}
             className="input"
           ></input>
           <button className="submitButton" type="submit">
