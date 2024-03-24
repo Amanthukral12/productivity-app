@@ -6,26 +6,27 @@
   overflow: hidden;
 }
 
-.menuIcon {
-  z-index: 3;
+.dashboardNavigation {
+  width: 20%;
+  z-index: 5;
+}
+
+.dashboardMenuIcon {
   padding: 1rem;
- 
+  height: 2rem;
+  width: 2rem;
 }
 
-.profile {
-  width: 4vh;
-  height: 4vh;
-  padding: 5px 10px;
-  z-index: 3;
+.hidden {
+  display: none;
 }
 
-.profileMenuHead {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 25px;
+
+
+.alignLeft {
+  margin-left: auto;
 }
+
 
 .menuProfileImage {
   width: 8vh;
@@ -91,99 +92,24 @@
 
 }
 
-
-
 .icons {
   color: white;
   font-size: 3rem !important;
 }
 
-.quote {
-  font-size: 1vw;
-  font-weight: lighter;
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translate(-50%, 10%);
+
+@media screen and (min-width: 992px) {
+  .dashboardMenuIcon {
+    display: none;
+   
+  }
 }
 
-.author {
-  font-size: 1vw;
-  font-weight: lighter;
-  position: absolute;
-  bottom: 17%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-}
 
-.custom-shape-divider-top-1616160906 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-
-.custom-shape-divider-top-1616160906 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 171px;
-}
-
-.custom-shape-divider-top-1616160906 .shape-fill {
-  fill: #ffffff6c;
-}
-
-.custom-shape-divider-bottom-1616160906 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1616160906 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 171px;
-}
-
-.custom-shape-divider-bottom-1616160906 .shape-fill {
-  fill: #ffffff6c;
-}
-
-.box {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background-color: black;
-}
 
 @media (max-width: 990px) {
-  .appName {
-    font-size: 3vh;
-  }
-  .custom-shape-divider-bottom-1616160906 svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 12vh;
-  }
-
-  .custom-shape-divider-top-1616160906 svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 12vh;
-  }
-
+ 
+ 
   .welcome {
     width: 100%;
     font-size: 3.5vh;
@@ -215,17 +141,4 @@
     justify-content: center;
   }
 
-  .quote {
-    width: 80%;
-    font-size: 2vh;
-    display: flex;
-    justify-content: center;
-  }
-
-  .author {
-    width: 100%;
-    font-size: 1.5vh;
-    display: flex;
-    justify-content: center;
-  }
 }

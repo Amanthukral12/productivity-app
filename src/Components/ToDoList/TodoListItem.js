@@ -2,7 +2,7 @@ import React from "react";
 import { deleteDoc, collection, doc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import "./TodoListItem.css";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { MdDelete } from "react-icons/md";
 const TodoListItem = ({ todo, inprogress, id, currentUser }) => {
   const deleteTodo = async () => {
     try {
@@ -20,7 +20,7 @@ const TodoListItem = ({ todo, inprogress, id, currentUser }) => {
     <div className="rootItem">
       <div className="listItem">{todo}</div>
       <button className="button" onClick={deleteTodo}>
-        <DeleteIcon />
+        <MdDelete />
       </button>
     </div>
   );

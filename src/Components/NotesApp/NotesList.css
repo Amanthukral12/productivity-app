@@ -43,7 +43,10 @@
   border-radius: 50%;
   padding: 10px;
 }
-
+.notesIcon {
+  height: 1.5rem;
+   width: 1.5rem;
+}
 button:hover {
   background-color: rgb(175, 175, 175);
 }

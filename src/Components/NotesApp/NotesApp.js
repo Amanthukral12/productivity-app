@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ManageNotes from "./ManageNotes";
 import NotesList from "./NotesList";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
+
 import { firestore } from "../../firebase";
 import {
   addDoc,
@@ -15,38 +15,17 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Fade from "@material-ui/core/Fade";
-import MenuIcon from "@material-ui/icons/Menu";
-import Drawer from "@material-ui/core/Drawer";
+import { IoMenu } from "react-icons/io5";
 import Sidebar from "../Sidebar/Sidebar";
 import "./NotesApp.css";
+import NavigationBar from "../NavigationMenu/NavigationBar";
 const NotesApp = () => {
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState(null);
   const [formType, setFormType] = useState("Add");
-  const [anchorEl, setAnchorEl] = useState(null);
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUser, logout } = useAuth();
-  const navigate = useNavigate();
-  const handleLogout = async () => {
-    setError("");
-    try {
-      await logout();
-      navigate("/login");
-    } catch {
-      setError("Can not log out!");
-    }
-  };
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { currentUser } = useAuth();
 
   const userNotesCollectionRef = collection(
     firestore,
@@ -136,58 +115,34 @@ const NotesApp = () => {
 
   return (
     <div className="notesRoot">
-      <div className="notesHeader">
-        <Drawer
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          anchor="left"
-          className="sidebar"
-          PaperProps={{
-            style: {
-              width: "30vh",
-              backgroundColor: "rgba(255, 255, 255, 0.4)",
-              backdropFilter: "blur(4px)",
-            },
-          }}
-        >
-          <Sidebar />
-        </Drawer>
-        <MenuIcon onClick={() => setIsOpen(true)} className="menuIcon" />
-        <div style={{ color: "white", fontSize: "35px" }}>Produkto</div>
-        <img
-          src={currentUser.photoURL}
-          alt="Profile"
-          onClick={handleClick}
-          className="profile"
+      <div className="navigation">
+        <IoMenu
+          onClick={() => setIsOpen(true)}
+          className={"menuIcon" + (isOpen ? " hidden" : "")}
         />
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          TransitionComponent={Fade}
-        >
-          <MenuItem style={{ width: "300px" }} onClick={handleClose}>
-            <Link to="/update-profile">Update Profile</Link>
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </Menu>
+        <Sidebar shown={isOpen} close={() => setIsOpen(!isOpen)}></Sidebar>
+        <NavigationBar />
       </div>
-      <h1 className="heading">{currentUser.displayName}&apos;s Notes App 🎉</h1>
-      <ManageNotes
-        formType={formType}
-        updateNote={updateNote}
-        currentNote={currentNote}
-        addNote={addNote}
-      />
-      <div className="notesList">
-        <NotesList
-          notes={notes}
-          deleteNote={deleteNote}
-          selectNote={selectNote}
-        />
-      </div>
-      {error && <h1>{error}</h1>}
+      <section className="notesSection">
+        <h1 className="notesHeading">
+          {currentUser.displayName}&apos;s Notes App 🎉
+        </h1>
+        <div>
+          <ManageNotes
+            formType={formType}
+            updateNote={updateNote}
+            currentNote={currentNote}
+            addNote={addNote}
+          />
+          <div className="notesList">
+            <NotesList
+              notes={notes}
+              deleteNote={deleteNote}
+              selectNote={selectNote}
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

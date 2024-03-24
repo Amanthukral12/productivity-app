@@ -15,6 +15,9 @@ import {
 import EventForm from "./EventForm";
 import Event from "./Event";
 import "./styles.css";
+import { IoMenu } from "react-icons/io5";
+import NavigationBar from "../NavigationMenu/NavigationBar";
+import Sidebar from "../Sidebar/Sidebar";
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
@@ -23,6 +26,7 @@ const MyCalendar = () => {
   const [events, setEvents] = useState([]);
   const [selectedDateEvents, setSeletedDateEvents] = useState([]);
   const [slotInfo, setSlotInfo] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useAuth();
 
   const userEventsCollectionRef = collection(
@@ -131,83 +135,96 @@ const MyCalendar = () => {
 
   return (
     <div className="calendarRoot">
-      <div className="monthYear">
-        <select
-          name="month"
-          value={moment(selectedDate).month()}
-          onChange={handleDateChange}
-          className="month"
-        >
-          {moment.months().map((month, index) => (
-            <option key={index} value={index}>
-              {month}
-            </option>
-          ))}
-        </select>
-        <select
-          name="year"
-          value={moment(selectedDate).year()}
-          onChange={handleDateChange}
-          className="year"
-        >
-          {Array.from({ length: 30 }, (_, i) => moment().year() + i).map(
-            (year) => (
-              <option key={year} value={year}>
-                {year}
+      <div className="calendarNavigation">
+        <IoMenu
+          onClick={() => setIsOpen(true)}
+          className={"calendarMenuIcon" + (isOpen ? " hidden" : "")}
+        />
+        <Sidebar shown={isOpen} close={() => setIsOpen(!isOpen)}></Sidebar>
+        <NavigationBar />
+      </div>
+      <div className="calendarSection">
+        <div className="monthYear">
+          <select
+            name="month"
+            value={moment(selectedDate).month()}
+            onChange={handleDateChange}
+            className="month"
+          >
+            {moment.months().map((month, index) => (
+              <option key={index} value={index}>
+                {month}
               </option>
-            )
-          )}
-        </select>
-      </div>
-      <Calendar
-        events={events}
-        localizer={localizer}
-        defaultDate={selectedDate}
-        toolbar={false}
-        views={["month"]}
-        onSelectSlot={(info) => {
-          setSlotInfo(info);
-          setSelectedDate(info.start);
-        }}
-        longPressThreshold={1}
-        onDrillDown={(newDate) => setSelectedDate(newDate)}
-        formats={formats}
-        date={selectedDate}
-        selectable
-        onNavigate={(date, view) => {
-          setSelectedDate(date);
-        }}
-        popup={false}
-      />
-      <div>
-        <button onClick={() => setShowForm(!showForm)} className="addNewButton">
-          Add New
-        </button>
-      </div>
-
-      <EventForm
-        shown={showForm}
-        close={() => setShowForm(!showForm)}
-        handleSubmit={addNewEvent}
-      />
-      <>
-        {selectedDateEvents.length === 0 ? (
-          <div className="message">
-            No Events for {moment(selectedDate).format("DD-MM-YYYY")}
-          </div>
-        ) : (
-          <>
-            {selectedDateEvents.map((event) => (
-              <Event
-                key={event.id}
-                event={event}
-                showForm={showForm}
-                setShowForm={setShowForm}
-              />
             ))}
-          </>
-        )}
-      </>
+          </select>
+          <select
+            name="year"
+            value={moment(selectedDate).year()}
+            onChange={handleDateChange}
+            className="year"
+          >
+            {Array.from({ length: 30 }, (_, i) => moment().year() + i).map(
+              (year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              )
+            )}
+          </select>
+        </div>
+        <Calendar
+          events={events}
+          localizer={localizer}
+          defaultDate={selectedDate}
+          toolbar={false}
+          views={["month"]}
+          onSelectSlot={(info) => {
+            setSlotInfo(info);
+            setSelectedDate(info.start);
+          }}
+          longPressThreshold={1}
+          onDrillDown={(newDate) => setSelectedDate(newDate)}
+          formats={formats}
+          date={selectedDate}
+          selectable
+          onNavigate={(date, view) => {
+            setSelectedDate(date);
+          }}
+          popup={false}
+        />
+        <div className="buttonRoot">
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="addNewButton"
+          >
+            Add New
+          </button>
+        </div>
+
+        <EventForm
+          shown={showForm}
+          close={() => setShowForm(!showForm)}
+          handleSubmit={addNewEvent}
+        />
+        <>
+          {selectedDateEvents.length === 0 ? (
+            <div className="message">
+              No Events for {moment(selectedDate).format("DD-MM-YYYY")}
+            </div>
+          ) : (
+            <>
+              {selectedDateEvents.map((event) => (
+                <Event
+                  key={event.id}
+                  event={event}
+                  showForm={showForm}
+                  setShowForm={setShowForm}
+                />
+              ))}
+            </>
+          )}
+        </>
+      </div>
     </div>
   );
 };

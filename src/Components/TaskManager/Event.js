@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { firestore } from "../../firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
-import DeleteIcon from "@material-ui/icons/Delete";
 import "./styles.css";
-import { useState } from "react";
-import EditIcon from "@material-ui/icons/Edit";
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import EventForm from "./EventForm";
 const Event = ({ event }) => {
   const { currentUser } = useAuth();
@@ -41,8 +40,8 @@ const Event = ({ event }) => {
         <span className="eventTitle">{event.title}</span>
       </div>
       <div className="iconDiv">
-        <EditIcon onClick={() => setShowForm(true)} />
-        <DeleteIcon onClick={() => deleteEvent(event.id)} />
+        <MdEdit onClick={() => setShowForm(true)} className="eventIcon" />
+        <MdDelete onClick={() => deleteEvent(event.id)} className="eventIcon" />
       </div>
 
       <EventForm
