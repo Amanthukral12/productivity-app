@@ -1,24 +1,33 @@
 .notesRoot {
   background: linear-gradient(to right bottom, #141d3d, #3a4d8f);
-  min-height: 100vh;
+  height: 100vh;
+  background-size: cover;
   overflow: hidden;
+  display: flex;
 }
 
-.notesHeader {
-  display: flex;
-  justify-content: space-between;
+.navigation {
+  width: 20%;
+ 
+}
+
+.notesSection {
+  width: 80%;
+  margin-top: 1.5rem;
 }
 
 .menuIcon {
-  color: aliceblue;
-  height: 2rem !important;
-  width: 2rem !important;
+  display: none;
 }
 
-.heading {
+.hidden {
+  display: none;
+}
+
+.notesHeading {
   display: flex;
   justify-content: center;
-  font-size: 2.5vw;
+  font-size: 1.5rem;
   margin-bottom: 2rem;
   color: rgb(177, 210, 238);
 }
@@ -26,4 +35,30 @@
 .notesList {
   margin-top: 20px;
   padding: 20px;
+}
+
+@media screen and (max-width: 992px) {
+  .notesRoot {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  .navigation {
+   padding: 1rem;
+
+  }
+  .notesSection {
+    width: 100%;
+    margin-top: 0;
+  }
+  .menuIcon {
+    height: 2rem;
+    width: 2rem;
+    display: inline-block;
+    color: white;
+    margin-bottom: 3rem;
+  }
+
 }

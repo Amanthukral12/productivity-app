@@ -1,26 +1,34 @@
 .todoRoot {
   background: linear-gradient(to right bottom, #141d3d, #3a4d8f);
-  min-height: 100vh;
-  overflow-y: scroll;
-  /* Increase/decrease this value for cross-browser compatibility */
-  box-sizing: content-box;
-}
-
-.todoHeader {
+  height: 100vh;
+  background-size: cover;
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
 }
 
-.menuIcon {
-  color: aliceblue;
-  height: 2rem !important;
-  width: 2rem !important;
+
+.todoNavigation {
+  width: 20%;
 }
 
-.heading {
+
+.todoSection {
+  width: 80%;
+  margin-top: 1.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.todoMenuIcon {
+  display: none;
+}
+
+.todoHeading {
   display: flex;
   justify-content: center;
-  font-size: 3vw;
+  font-size: 1.5rem;
   margin-bottom: 2rem;
   color: rgb(177, 210, 238);
 }
@@ -38,7 +46,7 @@
   padding-left: 20px;
   border-radius: 35px;
   outline-width: 0;
-  border: 0;
+  border: none;
   color: #172166d8;
   margin-bottom: 1rem;
 }
@@ -63,8 +71,27 @@
   align-items: center;
 }
 
-@media (max-width: 990px) {
-  .heading {
-    font-size: 1rem !important;
-  }
+@media (max-width: 992px) {
+ .todoRoot {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+ }
+
+ .todoNavigation {
+  padding: 1rem;
+ }
+
+ .todoSection {
+  width: 100%;
+  margin-top: 0;
+ }
+
+ .todoMenuIcon {
+  height: 2rem;
+  width: 2rem;
+  display: inline-block;
+  color: white;
+ }
 }
