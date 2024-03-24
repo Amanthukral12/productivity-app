@@ -1,0 +1,79 @@
+.navigationRoot {
+    background-color: rgba(255, 255, 255, 0.4);
+    margin: 0.75rem;
+    min-height: 93vh;
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    
+}
+
+.navigationIcons {
+    color: white;
+    height: 2rem;
+    width: 2rem;
+    margin-right: 10px;
+}
+
+.navigationItems {
+    padding: 10px;
+  width: 90%;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 700;
+ display: flex;
+ align-items: center;
+  color: white;
+}
+
+.navigationHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.appName {
+    font-size: 2.5rem;
+  }
+
+.profileRoot {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+.profileMenuHead {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+.displayName {
+    color: white;
+}
+
+.horizontalLine {
+    width: 90%;
+}
+
+.menuItems {
+    width: 90%;
+    font-size: 1.15rem;
+}
+
+@media screen and (max-width: 992px) {
+    .navigationRoot {
+      display: none;
+    }
+  }

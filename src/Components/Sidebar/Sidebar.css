@@ -1,3 +1,30 @@
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.sidebar-content {
+  background-color: rgba(255, 255, 255, 0.616);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  min-height: 98vh;
+  color: #3a4d8f;
+  padding: 10px;
+  border-radius: 15px;
+  border-top-left-radius: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+
 .sidebarHeader {
   display: flex;
   flex-direction: column;
@@ -5,7 +32,7 @@
   align-items: center;
   margin-top: 30px;
   margin-bottom: 30px;
-  color: white;
+  color: #3a4d8f;
 }
 
 .logo {
@@ -27,28 +54,36 @@
 
 .menuItems {
   padding: 10px;
-  font-size: 3vh;
+  font-size: 2rem;
   text-decoration: none;
   font-weight: 700;
   display: flex;
   align-items: center;
-  color: rgb(255, 255, 255);
+  color: #3a4d8f;
 }
 
 .horizontalLine {
   width: 80%;
-  position: relative;
-  left: 10%;
-  background-color: white;
+  background-color: #3a4d8f;
+  margin-bottom: 1rem;
 }
 
-.icons {
+.sidebarIcons {
   display: flex;
   align-content: center;
   justify-content: center;
   margin-right: 10px;
-  height: 3vh;
-  width: 3vh;
+  height: 2rem;
+  width: 2rem;
+  color: #3a4d8f;
+}
+
+.sidebarDisplayName {
+  color: #3a4d8f;
+}
+
+.selected .sidebarIcons {
+  color: white;
 }
 
 .selected {
