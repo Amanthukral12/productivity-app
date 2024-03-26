@@ -4,6 +4,7 @@
   height: 100vh;
   color: rgb(248, 244, 244);
   overflow: hidden;
+  display: flex;
 }
 
 .dashboardNavigation {
@@ -11,17 +12,17 @@
   z-index: 5;
 }
 
+.dashboardSection {
+  width: 80%;
+}
+
 .dashboardMenuIcon {
-  padding: 1rem;
-  height: 2rem;
-  width: 2rem;
+  display: none;
 }
 
 .hidden {
   display: none;
 }
-
-
 
 .alignLeft {
   margin-left: auto;
@@ -34,111 +35,196 @@
 }
 
 .welcome {
-  position: absolute;
-  top: 23%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  font-size: 2vw;
+  width: 100%;
+  font-size: 2rem;
   font-weight: 600;
+  margin: 1rem 1.5rem;
 }
 
-.time {
-  font-size: 7vw;
-  font-weight: 900;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  margin-bottom: 10px;
-  z-index: 3;
+.greetingSection {
+  width: 97%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 1.5rem;
+  padding: 0 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  box-sizing: border-box;
 }
+
+
 
 .greeting {
-  font-size: 6vw;
+  font-size: 3rem;
   font-weight: 700;
-  padding: 10px;
-  border-radius: 15px;
-  -webkit-text-stroke: 1px white;
-  -webkit-text-fill-color: transparent;
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  display: flex; 
 }
 
 .name {
-  font-size: 3vw;
+  font-size: 2rem;
   font-weight: 500;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  text-decoration: underline;
 }
 
-.appIconsDiv {
-  
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+.dashboardMessage {
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.summarySection {
   display: flex;
-
+  width: 100%;
 }
 
-.icons {
+.eventsNotesSection {
+  width: 70%;
+}
+
+.dashboardEventsSection, .dashboardNotesSection {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  width: 95%;
+  margin: 1rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 0 1.5rem;
+}
+
+.quickLinksSection {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  width: 97%;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 0 1.5rem;
+  margin: 0rem 1.5rem 1.5rem 1.5rem;
+}
+
+.dashboardTodoSection {
+  width: 30%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 0 1.15rem;
+  margin: 1rem 1.5rem 1.5rem 0rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dashboardIcon {
+  height: 2rem;
+  width: 2rem;
   color: white;
-  font-size: 3rem !important;
+}
+
+.singleEvent {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.singleNote {
+  margin-bottom: 1rem;
+  
+}
+
+.singleTodo {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.todo {
+  text-wrap: pretty;
+  word-break: break-all;
 }
 
 
-@media screen and (min-width: 992px) {
+.eventTitle {
+  font-size: 1.25rem;
+}
+
+.noteTitle {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.quickHeading {
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.links {
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.quickLink {
+  color: white;
+}
+
+
+
+@media screen and (max-width: 992px) {
+  .root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    
+  }
+  .dashboardNavigation {
+    padding: 1rem;
+  }
+
+  .dashboardSection {
+    width: 100%;
+  }
+  
   .dashboardMenuIcon {
-    display: none;
-   
-  }
-}
-
-
-
-@media (max-width: 990px) {
- 
- 
-  .welcome {
-    width: 100%;
-    font-size: 3.5vh;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
   }
 
-  .time {
-    width: 100%;
-    font-size: 7vh;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-    z-index: 3;
+  .greetingSection {
+    width: 90%;
   }
-
   .greeting {
-    width: 100%;
-    font-size: 5vh;
-    display: flex;
-    justify-content: center;
+    font-size: 1.15rem;
   }
-
   .name {
-    width: 100%;
-    font-size: 3.5vh;
-    display: flex;
-    justify-content: center;
+    font-size: 1rem;
+  }
+  
+  .summarySection {
+    width: 90%;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
   }
 
+  .eventsNotesSection {
+    width: 100%;
+  }
+
+  .dashboardEventsSection, .dashboardNotesSection, .dashboardTodoSection{
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .quickLinksSection {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+ 
 }
+

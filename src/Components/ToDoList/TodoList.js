@@ -10,7 +10,6 @@ import {
   collection,
 } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
 import TodoListItem from "./TodoListItem";
 import "./TodoList.css";
 
@@ -20,16 +19,12 @@ import { IoMenu } from "react-icons/io5";
 const TodoList = () => {
   const [todoInput, setTodoInput] = useState("");
   const [todos, setTodos] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUser, logout } = useAuth();
-  const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const userTodosCollectionRef = collection(
     firestore,
-    "users",
-    currentUser.uid,
-    "todos"
+    `users/${currentUser.uid}/todos`
   );
 
   const addTodo = async (e) => {
