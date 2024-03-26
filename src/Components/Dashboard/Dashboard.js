@@ -176,7 +176,9 @@ const Dashboard = () => {
                   <IoMdAddCircleOutline className="dashboardIcon" />
                 </Link>
               </header>
-
+              {events.length === 0 && (
+                <h1 className="dashboardMessage">No Events found...</h1>
+              )}
               {events.map((event) => (
                 <div key={event.id} className="singleEvent">
                   <p className="eventTitle">{event.title}</p>
@@ -194,6 +196,9 @@ const Dashboard = () => {
                   <IoMdAddCircleOutline className="dashboardIcon" />
                 </Link>
               </header>
+              {notes.length === 0 && (
+                <h1 className="dashboardMessage">No Notes found...</h1>
+              )}
               {notes.map((note) => (
                 <div key={note.id} className="singleNote">
                   <p className="noteTitle">{note.title}</p>
@@ -214,6 +219,9 @@ const Dashboard = () => {
                 <IoMdAddCircleOutline className="dashboardIcon" />
               </Link>
             </header>
+            {todos.length === 0 && (
+              <h1 className="dashboardMessage">No Todos found...</h1>
+            )}
             {todos.map((todo, index) => (
               <div key={todo.id} className="singleTodo">
                 <p className="todo">
@@ -222,6 +230,41 @@ const Dashboard = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </section>
+        <section className="quickLinksSection">
+          <h1 className="quickHeading">Quick Links for my other apps:</h1>
+          <div className="links">
+            <p>
+              <a
+                href="https://rgb-pallete.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quickLink"
+              >
+                RGB Pallete - Extract colors from an Image
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://program-space.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quickLink"
+              >
+                ProgramSpace - Read latest blogs
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://blogview.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quickLink"
+              >
+                BlogView - Download Banner for your Blogs
+              </a>
+            </p>
           </div>
         </section>
       </section>

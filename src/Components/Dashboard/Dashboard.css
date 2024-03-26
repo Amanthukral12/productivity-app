@@ -17,9 +17,7 @@
 }
 
 .dashboardMenuIcon {
-  padding: 1rem;
-  height: 2rem;
-  width: 2rem;
+  display: none;
 }
 
 .hidden {
@@ -55,12 +53,7 @@
   box-sizing: border-box;
 }
 
-.time {
-  font-size: 2rem;
-  font-weight: 900;
-  margin-bottom: 10px;
-  z-index: 3;
-}
+
 
 .greeting {
   font-size: 3rem;
@@ -72,6 +65,11 @@
 .name {
   font-size: 2rem;
   font-weight: 500;
+}
+
+.dashboardMessage {
+  margin-bottom: 1rem;
+  font-weight: 400;
 }
 
 .summarySection {
@@ -92,16 +90,23 @@
   padding: 0 1.5rem;
 }
 
+.quickLinksSection {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  width: 97%;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 0 1.5rem;
+  margin: 0rem 1.5rem 1.5rem 1.5rem;
+}
+
 .dashboardTodoSection {
   width: 30%;
   border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 15px;
   box-sizing: border-box;
   padding: 0 1.15rem;
-  margin: 1rem 1.5rem 1.5rem 1.5rem;
+  margin: 1rem 1.5rem 1.5rem 0rem;
 }
-
-
 
 .header {
   display: flex;
@@ -149,12 +154,77 @@
   margin-bottom: 0.75rem;
 }
 
+.quickHeading {
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.links {
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.quickLink {
+  color: white;
+}
 
 
-@media screen and (min-width: 992px) {
-  .dashboardMenuIcon {
-    display: none;
-   
+
+@media screen and (max-width: 992px) {
+  .root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    
   }
+  .dashboardNavigation {
+    padding: 1rem;
+  }
+
+  .dashboardSection {
+    width: 100%;
+  }
+  
+  .dashboardMenuIcon {
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .greetingSection {
+    width: 90%;
+  }
+  .greeting {
+    font-size: 1.15rem;
+  }
+  .name {
+    font-size: 1rem;
+  }
+  
+  .summarySection {
+    width: 90%;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .eventsNotesSection {
+    width: 100%;
+  }
+
+  .dashboardEventsSection, .dashboardNotesSection, .dashboardTodoSection{
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .quickLinksSection {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+ 
 }
 
