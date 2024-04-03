@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser({ ...user });
         setLoading(false);
       } else {
-        doSendEmailVerification();
+        await doSendEmailVerification();
         alert("verify email");
         logout().then(() => {
           navigate("/login");
