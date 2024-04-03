@@ -27,9 +27,12 @@ const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  if (currentUser.displayName === null) {
-    navigate("/update-profile");
-  }
+
+  useEffect(() => {
+    if (currentUser && currentUser.displayName === null) {
+      navigate("/update-profile");
+    }
+  }, [currentUser, navigate]);
 
   const today = moment(new Date()).format("YYYY-MM-DD");
 

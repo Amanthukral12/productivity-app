@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
@@ -21,7 +21,14 @@ const UpdateProfile = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  useEffect(() => {
+    if (currentUser && currentUser.displayName !== null) {
+      setName(currentUser.displayName);
+    }
+  }, [currentUser]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -31,14 +38,14 @@ const UpdateProfile = () => {
     const promises = [];
     setLoading(true);
     setError("");
-    if (name) {
-      promises.push(updateName(name));
-    }
+
+    await updateName(name);
+
     if (email !== currentUser.email) {
       promises.push(changeEmail(email));
     }
 
-    if (password) {
+    if (password !== "") {
       promises.push(changePassword(password));
     }
 
@@ -69,7 +76,7 @@ const UpdateProfile = () => {
               type="text"
               onChange={(e) => setName(e.target.value)}
               required
-              defaultValue={currentUser.displayName}
+              value={name || currentUser.displayName}
             />
             <br />
             <TextField

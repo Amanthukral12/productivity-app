@@ -48,26 +48,33 @@ export const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  const updateName = (displayName) => {
-    return updateProfile(auth.currentUser, { displayName });
+  const updateName = async (displayName) => {
+    if (currentUser) {
+      await updateProfile(auth.currentUser, {
+        displayName: displayName,
+        photoURL:
+          "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
+      });
+    }
+    setCurrentUser({ ...currentUser, displayName });
   };
 
-  const updateProfileImage = () => {
+  const updateProfileImage = async () => {
     return updateProfile(auth.currentUser, {
       photoURL:
         "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
     });
   };
 
-  const changeEmail = (email) => {
+  const changeEmail = async (email) => {
     return updateEmail(auth.currentUser, email);
   };
 
-  const changePassword = (password) => {
+  const changePassword = async (password) => {
     return updatePassword(auth.currentUser, password);
   };
 
-  const doSendEmailVerification = () => {
+  const doSendEmailVerification = async () => {
     return sendEmailVerification(auth.currentUser, {
       url: `${window.location.origin}/`,
     });
@@ -101,7 +108,6 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     currentUser,
-
     setCurrentUser,
     signup,
     login,
