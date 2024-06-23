@@ -7,17 +7,14 @@
   justify-content: center;
   align-items: center;
   border-radius: 15px !important;
-  box-shadow: 5px 5px rgb(0, 0, 0) !important;
+  
 }
 
 .manageNotesForm {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid rgb(51, 46, 46);
   border-radius: 15px;
-  outline-width: 0;
-  box-shadow: 5px 5px rgb(0, 0, 0) !important;
 }
 
 .titleInput {
@@ -48,9 +45,12 @@
   transform: translate(-50%, 0%);
   justify-content: center;
   align-items: center;
-  background-color: #1c274e;
+  background-color: #3A4D8F;
   border-radius: 25px;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 4vh;
   margin-top: 15px;
+  border: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

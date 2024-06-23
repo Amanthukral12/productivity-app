@@ -29,7 +29,7 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
       } else {
         await handleSubmit({
           allDay: true,
-          end: endDate,
+          end: moment(endDate).endOf("day").toDate().toString(),
           start: startDate,
           title: title,
         });
@@ -73,7 +73,6 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
             type="date"
             value={moment(endDate).format("YYYY-MM-DD")}
             onChange={(e) => {
-              console.log(e.target.value);
               setEndDate(e.target.value);
             }}
             className="input"

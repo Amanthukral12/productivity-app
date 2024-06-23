@@ -46,7 +46,6 @@ const MyCalendar = () => {
       return null;
     }
   };
-
   const cacheEvents = (events) => {
     cachedEvents = events;
     lastCacheTime = new Date().getTime();
@@ -94,9 +93,12 @@ const MyCalendar = () => {
     }
   };
 
-  let formats = {
-    weekdayFormat: (date, culture, localizer) =>
-      localizer.format(date, "dd", culture),
+  const formats = {
+    dateFormat: "D",
+    dayFormat: (date, culture, localizer) =>
+      localizer.format(date, "DDD", culture),
+    monthHeaderFormat: (date, culture, localizer) =>
+      localizer.format(date, "MMMM YYYY", culture),
   };
 
   useEffect(() => {
@@ -110,7 +112,6 @@ const MyCalendar = () => {
         start = s;
         end = e;
       }
-
       const eventsForThisDay = events.filter(
         (event) =>
           moment(event.start).isSameOrBefore(moment(end), "day") &&

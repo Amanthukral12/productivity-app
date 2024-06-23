@@ -8,8 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Masonry from "react-masonry-css";
 const NotesList = ({ notes, deleteNote, selectNote }) => {
   const breakpoints = {
-    default: 3,
-    1100: 2,
+    default: 1,
+    1100: 1,
     700: 1,
   };
   const noteList = notes.map((note, index) => {
