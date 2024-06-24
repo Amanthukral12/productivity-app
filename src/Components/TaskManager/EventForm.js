@@ -73,6 +73,7 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
       >
         <form onSubmit={handleFormSubmit} className="eventForm">
           <h1 className="heading">{event ? "Update Event" : "Add Event"}</h1>
+          <label className="label">Title</label>
           <input
             type="text"
             value={title}
@@ -80,12 +81,14 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
             placeholder="Enter Your Title"
             className="input"
           />
+          <label className="label">Start Date</label>
           <input
             type="date"
             value={moment(startDate).format("YYYY-MM-DD")}
             onChange={(e) => setStartDate(e.target.value)}
             className="input"
           ></input>
+          <label className="label">End Date</label>
           <input
             type="date"
             value={moment(endDate).format("YYYY-MM-DD")}
@@ -103,22 +106,28 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
                 setIsRecurring(!isRecurring);
               }}
             />
-            <label htmlFor="isRecurring">Recurring Event</label>
+            <label htmlFor="isRecurring" className="isRecurring">
+              Recurring Event
+            </label>
           </div>
           {isRecurring && (
             <>
+              <label className="label">Recurrence Frequency</label>
               <select
                 value={recurrenceFrequency}
                 onChange={(e) => setRecurrenceFrequency(e.target.value)}
+                className="input"
               >
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
               </select>
+              <label className="label">Recurrence End Date</label>
               <input
                 type="date"
                 value={recurrenceEndDate}
                 onChange={(e) => setRecurrenceEndDate(e.target.value)}
+                className="input"
               />
             </>
           )}
