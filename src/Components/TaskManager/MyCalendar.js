@@ -18,12 +18,14 @@ import "./styles.css";
 import { IoMenu } from "react-icons/io5";
 import NavigationBar from "../NavigationMenu/NavigationBar";
 import Sidebar from "../Sidebar/Sidebar";
+import { expandRecurringEvent } from "./eventUtils.js";
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showForm, setShowForm] = useState(false);
   const [events, setEvents] = useState([]);
+  const [expandedEvents, setExpandedEvents] = useState([]);
   const [selectedDateEvents, setSeletedDateEvents] = useState([]);
   const [slotInfo, setSlotInfo] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -69,6 +71,9 @@ const MyCalendar = () => {
         start: doc.data().start,
         end: doc.data().end,
         allDay: doc.data().allDay,
+        isRecurring: doc.data().isRecurring || false,
+        recurrenceFrequency: doc.data().recurrenceFrequency,
+        recurrenceEndDate: doc.data().recurrenceEndDate,
       }));
 
       cacheEvents(updatedEvents);
@@ -83,6 +88,16 @@ const MyCalendar = () => {
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    const start = moment().startOf("year");
+    const end = moment().endOf("year");
+    const expanded = events.flatMap((event) =>
+      expandRecurringEvent(event, start, end)
+    );
+
+    setExpandedEvents(expanded);
+  }, [events]);
 
   const handleDateChange = (event) => {
     const { name, value } = event.target;
@@ -115,7 +130,7 @@ const MyCalendar = () => {
       const eventsForThisDay = events.filter(
         (event) =>
           moment(event.start).isSameOrBefore(moment(end), "day") &&
-          moment(event.end).isSameOrAfter(moment(start), "day")
+          moment(event.recurrenceEndDate).isSameOrAfter(moment(start), "day")
       );
 
       setSeletedDateEvents(eventsForThisDay);
@@ -125,10 +140,16 @@ const MyCalendar = () => {
 
   const addNewEvent = async (newEventData) => {
     try {
-      await addDoc(userEventsCollectionRef, {
+      const eventToAdd = {
         ...newEventData,
         timestamp: serverTimestamp(),
-      });
+      };
+
+      if (newEventData.isRecurring) {
+        eventToAdd.recurrenceFrequency = newEventData.recurrenceFrequency;
+        eventToAdd.recurrenceEndDate = newEventData.recurrenceEndDate;
+      }
+      await addDoc(userEventsCollectionRef, eventToAdd);
     } catch (error) {
       console.log(error);
     }
@@ -174,7 +195,7 @@ const MyCalendar = () => {
           </select>
         </div>
         <Calendar
-          events={events}
+          events={expandedEvents}
           localizer={localizer}
           defaultDate={selectedDate}
           toolbar={false}
