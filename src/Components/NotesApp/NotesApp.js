@@ -105,6 +105,7 @@ const NotesApp = () => {
         id: id,
         title: newNotes[index].title,
         content: newNotes[index].content,
+        timestamp: serverTimestamp(),
       });
 
       setFormType("Add");

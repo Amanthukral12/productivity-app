@@ -5,6 +5,9 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [recurrenceFrequency, setRecurrenceFrequency] = useState("daily");
+  const [recurrenceEndDate, setRecurrenceEndDate] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -12,6 +15,13 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
       setTitle(event.title);
       setStartDate(moment(event.start).format("YYYY-MM-DD"));
       setEndDate(moment(event.end).format("YYYY-MM-DD"));
+      setIsRecurring(event.isRecurring || false);
+      setRecurrenceFrequency(event.recurrenceFrequency || "daily");
+      setRecurrenceEndDate(
+        event.recurrenceEndDate
+          ? moment(event.recurrenceEndDate).format("YYYY-MM-DD")
+          : ""
+      );
     }
   }, [event]);
 
@@ -19,22 +29,29 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
     e.preventDefault();
     setError("");
     try {
+      const eventData = {
+        allDay: true,
+        title: title,
+        start: startDate,
+        end: endDate,
+        isRecurring: isRecurring,
+        recurrenceFrequency: isRecurring ? recurrenceFrequency : null,
+        recurrenceEndDate: isRecurring ? recurrenceEndDate : endDate,
+      };
       if (event) {
         await handleSubmit({
-          allDay: true,
-          title: title,
-          start: startDate,
-          end: endDate,
+          ...eventData,
+          end: moment(endDate).endOf("day").toDate().toString(),
         });
       } else {
         await handleSubmit({
-          allDay: true,
-          end: endDate,
-          start: startDate,
-          title: title,
+          ...eventData,
+          end: moment(endDate).endOf("day").toDate().toString(),
         });
       }
       setTitle("");
+      setStartDate("");
+      setEndDate("");
       close();
     } catch (error) {
       setError(error.message);
@@ -56,6 +73,7 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
       >
         <form onSubmit={handleFormSubmit} className="eventForm">
           <h1 className="heading">{event ? "Update Event" : "Add Event"}</h1>
+          <label className="label">Title</label>
           <input
             type="text"
             value={title}
@@ -63,21 +81,56 @@ const EventForm = ({ shown, close, event, handleSubmit }) => {
             placeholder="Enter Your Title"
             className="input"
           />
+          <label className="label">Start Date</label>
           <input
             type="date"
             value={moment(startDate).format("YYYY-MM-DD")}
             onChange={(e) => setStartDate(e.target.value)}
             className="input"
           ></input>
+          <label className="label">End Date</label>
           <input
             type="date"
             value={moment(endDate).format("YYYY-MM-DD")}
             onChange={(e) => {
-              console.log(e.target.value);
               setEndDate(e.target.value);
             }}
             className="input"
           ></input>
+          <div>
+            <input
+              type="checkbox"
+              id="isRecurring"
+              checked={isRecurring}
+              onChange={(e) => {
+                setIsRecurring(!isRecurring);
+              }}
+            />
+            <label htmlFor="isRecurring" className="isRecurring">
+              Recurring Event
+            </label>
+          </div>
+          {isRecurring && (
+            <>
+              <label className="label">Recurrence Frequency</label>
+              <select
+                value={recurrenceFrequency}
+                onChange={(e) => setRecurrenceFrequency(e.target.value)}
+                className="input"
+              >
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+              <label className="label">Recurrence End Date</label>
+              <input
+                type="date"
+                value={recurrenceEndDate}
+                onChange={(e) => setRecurrenceEndDate(e.target.value)}
+                className="input"
+              />
+            </>
+          )}
           <button className="submitButton" type="submit">
             {event ? "Update" : "Submit"}
           </button>

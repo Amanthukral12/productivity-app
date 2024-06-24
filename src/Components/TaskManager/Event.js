@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { firestore } from "../../firebase";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import "./styles.css";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import EventForm from "./EventForm";
-const Event = ({ event }) => {
+import moment from "moment";
+const Event = ({ event, selectedDate }) => {
   const { currentUser } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const deleteEvent = async (id) => {
@@ -27,7 +28,10 @@ const Event = ({ event }) => {
         firestore,
         `users/${currentUser.uid}/eventReminder/${event.id}`
       );
-      await updateDoc(userUpdateEventDoc, updatedEventData);
+      await updateDoc(userUpdateEventDoc, {
+        ...updatedEventData,
+        lastUpdated: serverTimestamp(),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +40,11 @@ const Event = ({ event }) => {
   return (
     <div className="eventRoot">
       <div className="eventInfo">
-        <span className="eventDate">{event.start}</span>
+        <span className="eventDate">
+          {event.start < moment(selectedDate).format("YYYY-MM-DD")
+            ? moment(selectedDate).format("YYYY-MM-DD")
+            : event.start}
+        </span>
         <span className="eventTitle">{event.title}</span>
       </div>
       <div className="iconDiv">
