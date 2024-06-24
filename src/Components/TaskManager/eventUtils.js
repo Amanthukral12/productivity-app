@@ -10,7 +10,6 @@ export const expandRecurringEvent = (event, rangeStart, rangeEnd) => {
   let currentStart = moment(start);
   let currentEnd = moment(end);
   const eventEnd = recurrenceEndDate ? moment(recurrenceEndDate) : rangeEnd;
-  console.log(eventEnd);
   while (
     currentStart.isSameOrBefore(eventEnd) &&
     currentStart.isSameOrBefore(rangeEnd)

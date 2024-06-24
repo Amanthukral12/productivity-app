@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { firestore } from "../../firebase";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 import "./styles.css";
 import { MdDelete } from "react-icons/md";
@@ -27,7 +27,10 @@ const Event = ({ event }) => {
         firestore,
         `users/${currentUser.uid}/eventReminder/${event.id}`
       );
-      await updateDoc(userUpdateEventDoc, updatedEventData);
+      await updateDoc(userUpdateEventDoc, {
+        ...updatedEventData,
+        lastUpdated: serverTimestamp(),
+      });
     } catch (error) {
       console.log(error);
     }
