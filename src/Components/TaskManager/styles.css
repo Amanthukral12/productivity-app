@@ -35,7 +35,7 @@
     border-radius: 5px;   
 }
 .rbc-calendar {
-    height: 50vh !important;
+    height: 60vh !important;
     width: 95%;
     background-color: #dbeafa;
     border-radius: 10px;
@@ -49,7 +49,7 @@
 .rbc-header {
     border: none !important;
     padding: 0px;
-    font-weight: normal !important;
+    font-weight: bold !important;
     height: 30px;
     font-size: 1.15rem !important;
 }
@@ -64,18 +64,19 @@
 
 .rbc-month-row, .rbc-day-bg {
     border: none !important; 
+   
 }
 
-/* .rbc-day-bg {
-    border: none !important;  
-} */
+.rbc-day-bg {
+    height: 4rem !important;
+}
 
 .rbc-today {
     background-color: #dbeafa !important;
 }
 
 .rbc-button-link {
-    font-weight: bold;
+    font-weight: normal;
     font-size: 1.25rem;
 }
 
@@ -84,6 +85,7 @@
     border-radius: 50%;
     padding: 2px 6px;
     color: white;
+    margin-bottom: 5px;
 }
 
 .rbc-event {

@@ -239,6 +239,7 @@ const MyCalendar = () => {
                 <Event
                   key={event.id}
                   event={event}
+                  selectedDate={selectedDate}
                   showForm={showForm}
                   setShowForm={setShowForm}
                 />

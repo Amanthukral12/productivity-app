@@ -6,7 +6,8 @@ import "./styles.css";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import EventForm from "./EventForm";
-const Event = ({ event }) => {
+import moment from "moment";
+const Event = ({ event, selectedDate }) => {
   const { currentUser } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const deleteEvent = async (id) => {
@@ -39,7 +40,11 @@ const Event = ({ event }) => {
   return (
     <div className="eventRoot">
       <div className="eventInfo">
-        <span className="eventDate">{event.start}</span>
+        <span className="eventDate">
+          {event.start < moment(selectedDate).format("YYYY-MM-DD")
+            ? moment(selectedDate).format("YYYY-MM-DD")
+            : event.start}
+        </span>
         <span className="eventTitle">{event.title}</span>
       </div>
       <div className="iconDiv">
