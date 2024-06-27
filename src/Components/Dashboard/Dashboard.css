@@ -42,7 +42,7 @@
 }
 
 .greetingSection {
-  width: 97%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -149,6 +149,11 @@
   font-size: 1.25rem;
 }
 
+.eventDetail {
+  font-size: 1rem;
+  width: 35%;
+}
+
 .noteTitle {
   font-size: 2rem;
   margin-bottom: 0.75rem;
@@ -195,6 +200,8 @@
 
   .greetingSection {
     width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
   .greeting {
     font-size: 1.15rem;

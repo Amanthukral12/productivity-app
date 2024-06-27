@@ -125,9 +125,8 @@ const Dashboard = () => {
   const memoizedGetEvents = useCallback(() => {
     const eventsData = query(
       userEventsCollectionRef,
-      where("start", ">=", today),
-      orderBy("start"),
-      limit(2)
+      where("recurrenceEndDate", ">=", today),
+      limit(3)
     );
 
     return onSnapshot(eventsData, (querySnapshot) => {
@@ -137,6 +136,9 @@ const Dashboard = () => {
         start: doc.data().start,
         end: doc.data().end,
         allDay: doc.data().allDay,
+        isRecurring: doc.data().isRecurring || false,
+        recurrenceFrequency: doc.data().recurrenceFrequency,
+        recurrenceEndDate: doc.data().recurrenceEndDate,
       }));
 
       setEvents(updatedEvents);
@@ -186,8 +188,12 @@ const Dashboard = () => {
                 <div key={event.id} className="singleEvent">
                   <p className="eventTitle">{event.title}</p>
                   <p className="eventDetail">
-                    days left for event :{" "}
-                    {moment(event.start).diff(today, "days")}
+                    {event.isRecurring
+                      ? `Recurring till ${moment(
+                          event.recurrenceEndDate
+                        ).format("DD-MM-YYYY")}`
+                      : `Days left for event :
+                    ${moment(event.recurrenceEndDate).diff(today, "days")}`}
                   </p>
                 </div>
               ))}
