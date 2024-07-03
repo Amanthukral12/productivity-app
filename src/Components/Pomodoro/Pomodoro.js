@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
+import addNotification from "react-push-notification";
 const Pomodoro = () => {
   const [timer, setTimer] = useState(1500);
   const [isActive, setIsActive] = useState(false);
@@ -27,6 +28,13 @@ const Pomodoro = () => {
   useEffect(() => {
     if (timer === 0) {
       audioSoundRef.current.play();
+      addNotification({
+        title: "Timer completed",
+        message: "Your Pomodoro timer is completed",
+        native: true,
+        icon: "../../assets/logo.png",
+        duration: 4000,
+      });
       setIsActive(false);
       clearInterval(intervalId);
       setIntervalId(null);
