@@ -98,9 +98,12 @@
   padding: 0 1.5rem;
   margin: 0rem 1.5rem 1.5rem 1.5rem;
 }
-
+.dashboardTodoPomodoroSection {
+   width: 30%;
+   margin: 0rem 1.5rem 1.5rem 0rem;
+}
 .dashboardTodoSection {
-  width: 30%;
+  width: 100%;
   border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 15px;
   box-sizing: border-box;
@@ -151,7 +154,8 @@
 
 .eventDetail {
   font-size: 1rem;
-  width: 35%;
+  width: 40%;
+  text-align: end;
 }
 
 .noteTitle {
@@ -221,9 +225,14 @@
     width: 100%;
   }
 
-  .dashboardEventsSection, .dashboardNotesSection, .dashboardTodoSection{
+  .dashboardEventsSection, .dashboardNotesSection{
     width: 100%;
     margin: 1rem 0;
+  }
+
+  .dashboardTodoPomodoroSection, .dashboardTodoSection  {
+    width: 100%;
+    margin: 0;
   }
 
   .quickLinksSection {

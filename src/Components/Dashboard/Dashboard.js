@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import moment from "moment/moment";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import Pomodoro from "../Pomodoro/Pomodoro.js";
 const Dashboard = () => {
   const [error, setError] = useState("");
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -26,6 +27,7 @@ const Dashboard = () => {
   const [todos, setTodos] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -221,24 +223,27 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-          <div className="dashboardTodoSection">
-            <header className="header">
-              <h3>Todos</h3>
-              <Link to={"/todo-list"}>
-                <IoMdAddCircleOutline className="dashboardIcon" />
-              </Link>
-            </header>
-            {todos.length === 0 && (
-              <h1 className="dashboardMessage">No Todos found...</h1>
-            )}
-            {todos.map((todo, index) => (
-              <div key={todo.id} className="singleTodo">
-                <p className="todo">
-                  <span>{index + 1}. </span>
-                  {todo.todo}
-                </p>
-              </div>
-            ))}
+          <div className="dashboardTodoPomodoroSection">
+            <div className="dashboardTodoSection">
+              <header className="header">
+                <h3>Todos</h3>
+                <Link to={"/todo-list"}>
+                  <IoMdAddCircleOutline className="dashboardIcon" />
+                </Link>
+              </header>
+              {todos.length === 0 && (
+                <h1 className="dashboardMessage">No Todos found...</h1>
+              )}
+              {todos.map((todo, index) => (
+                <div key={todo.id} className="singleTodo">
+                  <p className="todo">
+                    <span>{index + 1}. </span>
+                    {todo.todo}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <Pomodoro />
           </div>
         </section>
         <section className="quickLinksSection">
