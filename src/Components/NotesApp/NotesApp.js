@@ -38,6 +38,7 @@ const NotesApp = () => {
       await addDoc(userNotesCollectionRef, {
         title: noteObj.title,
         content: noteObj.content,
+        category: noteObj.category,
         timestamp: serverTimestamp(),
       });
     } catch (error) {
@@ -57,6 +58,7 @@ const NotesApp = () => {
           id: doc.id,
           title: doc.data().title,
           content: doc.data().content,
+          category: doc.data().category,
         }));
         if (isMounted) setNotes(updatedNotes);
       });
@@ -92,9 +94,12 @@ const NotesApp = () => {
   };
 
   const updateNote = async (noteObj, id, index) => {
+    console.log(noteObj);
     try {
       let newNotes = [...notes];
       newNotes[index] = noteObj;
+
+      console.log(newNotes);
 
       setNotes(newNotes);
       const userUpdateNoteDoc = doc(
@@ -105,6 +110,7 @@ const NotesApp = () => {
         id: id,
         title: newNotes[index].title,
         content: newNotes[index].content,
+        category: newNotes[index].category,
         timestamp: serverTimestamp(),
       });
 
