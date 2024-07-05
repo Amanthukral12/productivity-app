@@ -38,7 +38,7 @@ const NotesApp = () => {
       await addDoc(userNotesCollectionRef, {
         title: noteObj.title,
         content: noteObj.content,
-        category: noteObj.category,
+        category: noteObj.category || "",
         timestamp: serverTimestamp(),
       });
     } catch (error) {
@@ -94,13 +94,9 @@ const NotesApp = () => {
   };
 
   const updateNote = async (noteObj, id, index) => {
-    console.log(noteObj);
     try {
       let newNotes = [...notes];
       newNotes[index] = noteObj;
-
-      console.log(newNotes);
-
       setNotes(newNotes);
       const userUpdateNoteDoc = doc(
         firestore,
@@ -110,7 +106,7 @@ const NotesApp = () => {
         id: id,
         title: newNotes[index].title,
         content: newNotes[index].content,
-        category: newNotes[index].category,
+        category: newNotes[index].category || "",
         timestamp: serverTimestamp(),
       });
 

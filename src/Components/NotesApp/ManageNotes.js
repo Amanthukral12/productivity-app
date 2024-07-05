@@ -109,14 +109,19 @@ const ManageNotes = ({ addNote, currentNote, formType, updateNote }) => {
           className="titleInput"
         />
         <textarea
-          rows={10}
+          rows={8}
           placeholder="Add a Note..."
           name="content"
           value={content}
           onChange={handleChange}
           className="contentInput"
         />
-        <select name="category" value={category} onChange={handleChange}>
+        <select
+          name="category"
+          className="selectCategory"
+          value={category}
+          onChange={handleChange}
+        >
           <option value="">Select a category</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.name}>
@@ -124,15 +129,20 @@ const ManageNotes = ({ addNote, currentNote, formType, updateNote }) => {
             </option>
           ))}
         </select>
-        <button onClick={() => setShowForm(!showForm)}>
-          Manage Categories
-        </button>
+
         <CategoriesForm
           shown={showForm}
           close={() => setShowForm(!showForm)}
           categories={categories}
+          setCategories={setCategories}
         />
         {setFormType()}
+        <button
+          className="manageCategories"
+          onClick={() => setShowForm(!showForm)}
+        >
+          Manage Categories
+        </button>
       </CardContent>
     </Card>
   );

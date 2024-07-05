@@ -152,8 +152,6 @@ const Dashboard = () => {
     return () => unsubscribe();
   }, [memoizedGetEvents]);
 
-  console.log("object");
-
   return (
     <div className="root">
       <div className="dashboardNavigation">

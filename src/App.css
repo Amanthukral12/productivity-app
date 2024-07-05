@@ -4,8 +4,6 @@
   padding: 0px;
   margin: 0px;
   font-family: "Poppins", sans-serif;
-  overflow: scroll;
-  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {

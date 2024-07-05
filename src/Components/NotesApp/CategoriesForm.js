@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import "./categoryForm.css";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { firestore } from "../../firebase.js";
 import { useAuth } from "../../contexts/AuthContext.js";
-const CategoriesForm = ({ shown, close, categories }) => {
-  const [category, setCategory] = useState();
+import { MdDelete } from "react-icons/md";
+const CategoriesForm = ({ shown, close, categories, setCategories }) => {
+  const [category, setCategory] = useState("");
   const { currentUser } = useAuth();
   const userNotesCategoriesCollectionRef = collection(
     firestore,
@@ -23,21 +34,52 @@ const CategoriesForm = ({ shown, close, categories }) => {
     }
   };
 
+  const deleteCategory = async (categoryId, categoryName) => {
+    try {
+      const notescategoryDoc = doc(
+        firestore,
+        `users/${currentUser.uid}/categories/${categoryId}`
+      );
+      await deleteDoc(notescategoryDoc);
+      const userNotesCollectionRef = collection(
+        firestore,
+        `users/${currentUser.uid}/notes`
+      );
+      const notesData = query(
+        userNotesCollectionRef,
+        where("category", "==", categoryName)
+      );
+      const notesSnapshot = await getDocs(notesData);
+      notesSnapshot.forEach(async (noteDoc) => {
+        const notesDocRef = doc(
+          firestore,
+          `users/${currentUser.uid}/notes/${noteDoc.id}`
+        );
+        await updateDoc(notesDocRef, {
+          category: "",
+        });
+      });
+      setCategories(categories.filter((cat) => cat.id !== categoryId));
+    } catch (error) {
+      console.log("Error deleting category:", error);
+    }
+  };
+
   return shown ? (
     <div
-      className="form-backdrop"
+      className="categoryFormBackdrop"
       onClick={() => {
         close();
       }}
     >
       <div
-        className="form-content"
+        className="categoryFormContent"
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <h1 className="heading"> Manage Categories</h1>
-        <form className="eventForm" onSubmit={(e) => addCategory(e)}>
+        <form className="categoryForm" onSubmit={(e) => addCategory(e)}>
           <label className="label">Title</label>
           <input
             type="text"
@@ -46,17 +88,25 @@ const CategoriesForm = ({ shown, close, categories }) => {
             placeholder="Enter new category"
             className="input"
           />
-          <button className="submitButton" type="submit">
+          <button className="addCategoryButton" type="submit">
             Add Category
           </button>
         </form>
         <div className="categoriesList">
           <h1 className="categoriesHeading">Categories</h1>
-          {categories.map((cat) => (
-            <p className="category" key={cat.id}>
-              {cat.name}
-            </p>
-          ))}
+          {categories.length === 0 ? (
+            <div>No categories added.</div>
+          ) : (
+            <>
+              {categories.map((cat) => (
+                <div className="singleCategory" key={cat.id}>
+                  <p>{cat.name}</p>
+
+                  <MdDelete onClick={() => deleteCategory(cat.id, cat.name)} />
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
