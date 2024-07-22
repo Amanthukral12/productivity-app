@@ -3,59 +3,58 @@ import "./styles.css";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import addNotification from "react-push-notification";
+
 const Pomodoro = () => {
   const [timer, setTimer] = useState(1500);
   const [isActive, setIsActive] = useState(false);
-  const [intervalId, setIntervalId] = useState(null);
+  const workerRef = useRef(null);
 
   const bellSoundUrl =
     "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3";
   const audioSoundRef = useRef();
-  useEffect(() => {
-    let id;
-    if (isActive) {
-      id = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
-      setIntervalId(id);
-    } else if (!isActive && intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(null);
-    }
-    return () => clearInterval(id);
-  }, [isActive]);
 
   useEffect(() => {
-    if (timer === 0) {
-      audioSoundRef.current.play();
-      addNotification({
-        title: "Timer completed",
-        message: "Your Pomodoro timer is completed",
-        native: true,
-        icon: "../../assets/logo.png",
-        duration: 4000,
-      });
-      setIsActive(false);
-      clearInterval(intervalId);
-      setIntervalId(null);
-    }
-  }, [timer, intervalId]);
+    workerRef.current = new Worker("./timerworker.js", { type: "module" });
+    workerRef.current.onmessage = (e) => {
+      const { timer } = e.data;
+      setTimer(timer);
+      if (timer === 0) {
+        audioSoundRef.current.play();
+        addNotification({
+          title: "Timer completed",
+          message: "Your Pomodoro timer is completed",
+          native: true,
+          icon: "../../assets/logo.png",
+          duration: 4000,
+        });
+        setIsActive(false);
+        workerRef.current.postMessage({ action: "pause" });
+      }
+    };
+
+    return () => {
+      workerRef.current.terminate();
+    };
+  }, []);
 
   function startTime() {
     setIsActive(true);
+    workerRef.current.postMessage({ action: "start", timer });
+    console.log("Main thread: started timer");
   }
 
   function pauseTimer() {
     setIsActive(false);
+    workerRef.current.postMessage({ action: "pause" });
   }
   function resetTimer() {
     setIsActive(false);
-    setTimer(1500);
-    setIntervalId(null);
+    workerRef.current.postMessage({ action: "reset" });
   }
 
   function setBreakTimer() {
     setTimer(300);
+    workerRef.current.postMessage({ action: "pause" });
   }
   return (
     <div className="pomodoroRoot">
