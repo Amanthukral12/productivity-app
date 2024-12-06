@@ -1,0 +1,33 @@
+{
+  "name": "productivity-app",
+  "version": "2.0.0",
+  "description": "Backend for productivity app",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && npx tsc",
+    "prestart": "npm run build",
+    "start": "node dist/index.js",
+    "preserve": "npm run build",
+    "serve": "concurrently \"npx tsc -w\" \"nodemon dist/index.js\""
+  },
+  "keywords": [
+    "Node",
+    "backend",
+    "typescript"
+  ],
+  "author": "Aman Thukral",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2"
+  }
+}
