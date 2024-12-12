@@ -26,12 +26,12 @@ model User {
 
 model Session {
   id           String   @id @default(uuid())
+  sessionId    String   @unique @default(uuid())
   userId       Int
   refreshToken String   @unique
   deviceInfo   String?
   createdAt    DateTime @default(now())
   expiresAt    DateTime
   lastUsedAt   DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
