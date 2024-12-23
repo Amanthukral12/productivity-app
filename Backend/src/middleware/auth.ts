@@ -9,7 +9,9 @@ export const authenticateSession = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const accessToken = req.cookies["access-token"];
+  const accessToken =
+    req.cookies?.access_token ||
+    req.header("Authorization")?.replace("Bearer ", "");
 
   if (!accessToken) {
     res.status(401).json({ message: "Unauthorized" });
@@ -17,6 +19,7 @@ export const authenticateSession = async (
   }
 
   const decoded = verifyAccessToken(accessToken);
+
   if (!decoded) {
     res.status(401).json({ message: "Invalid token" });
     return;

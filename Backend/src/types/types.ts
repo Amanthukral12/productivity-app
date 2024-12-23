@@ -25,7 +25,6 @@ export interface SessionDocument {
 export interface VerifyCallbackDocument {
   user?: UserDocument;
   sessionId: string;
-  refreshToken: string;
 }
 
 export type VerifyCallback = (
@@ -61,6 +60,10 @@ export type GoogleStrategyVerifyFnWithRequest = (
 ) => Promise<void> | void;
 
 export interface TokenPayload {
-  userId: string;
+  userId: number;
+  sessionId: string;
+}
+
+export interface RefreshTokenPayload {
   sessionId: string;
 }

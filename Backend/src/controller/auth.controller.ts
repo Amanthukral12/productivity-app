@@ -1,39 +1,69 @@
 import { Request, Response } from "express";
 import prisma from "../db/db";
-import { v4 as uuidv4 } from "uuid";
-import { generateAccessToken } from "../utils/auth";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} from "../utils/auth";
+import { asyncHandler } from "../utils/asyncHandler";
+import { ApiResponse } from "../utils/ApiResponse";
+import { ApiError } from "../utils/ApiError";
 
-export const googleLoginSuccess = async (req: any, res: Response) => {
-  try {
-    const user = req.user;
-    const refreshToken = uuidv4();
-    const deviceInfo = req.deviceInfo;
+export const googleLoginSuccess = asyncHandler(
+  async (req: any, res: Response) => {
+    try {
+      const { user } = req.user;
 
-    const session = await prisma.session.create({
-      data: {
+      const deviceInfo = req.deviceInfo;
+
+      const refreshToken = await generateRefreshToken({
+        sessionId: req.user.sessionId,
+      });
+
+      const session = await prisma.session.create({
+        data: {
+          userId: user.id,
+          refreshToken,
+          deviceInfo,
+          sessionId: req.user.sessionId,
+          expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+      });
+      const accessToken = await generateAccessToken({
         userId: user.id,
-        refreshToken,
-        deviceInfo,
-        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      },
-    });
-    const accessToken = generateAccessToken({
-      userId: user.id,
-      sessionId: session.sessionId,
-    });
-    res.cookie("access_tokem", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 15 * 60 * 1000,
-    });
-    res.redirect("/");
-  } catch (error) {
-    res.status(500).json({ message: "Error Signing in" });
+        sessionId: session.sessionId,
+      });
+      return res
+        .status(200)
+        .cookie("access_token", accessToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          maxAge: 15 * 60 * 1000,
+        })
+        .cookie("refresh_token", refreshToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          maxAge: 30 * 24 * 60 * 60 * 1000,
+        })
+        .json(
+          new ApiResponse(
+            200,
+            { user: user, accessToken },
+            "User logged in successfully"
+          )
+        );
+    } catch (error) {
+      console.log(error);
+      throw new ApiError(401, JSON.stringify(error) || "Error logging in", [
+        "Error logging in",
+      ]);
+    }
   }
-};
+);
 
-export const logout = async (req: Request, res: Response): Promise<void> => {
+export const logout = asyncHandler(async (req: Request, res: Response) => {
   try {
     if (!req.currentSession) {
       res.status(401).json({ message: "No Active session" });
@@ -44,10 +74,88 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
       where: { id: req.currentSession.id },
     });
 
-    res.clearCookie("access_token");
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
 
-    res.status(200).json({ message: "Logged out successfully" });
+    return res
+      .status(200)
+      .clearCookie("access_Token", options)
+      .clearCookie("refresh_Token", options)
+      .json(new ApiResponse(200, {}, "User logged out successfully"));
   } catch (error) {
-    res.status(500).json({ message: "Error logging out" });
+    throw new ApiError(401, "Error logging out", ["Error logging out"]);
   }
-};
+});
+
+export const refreshAccessToken = asyncHandler(
+  async (req: Request, res: Response) => {
+    const incomingRefreshToken =
+      req.cookies?.refresh_token || req.body.refresh_token;
+    if (!incomingRefreshToken) {
+      throw new ApiError(401, "Unauthorized request", [
+        "No refresh token provided",
+      ]);
+    }
+    try {
+      const decodedToken = await verifyRefreshToken(incomingRefreshToken);
+
+      const session = await prisma.session.findUnique({
+        where: { sessionId: decodedToken?.sessionId },
+        include: { user: true },
+      });
+      const options = {
+        httpOnly: true,
+        secure: true,
+      };
+      if (!session) {
+        return res
+          .status(401)
+          .clearCookie("access_Token", options)
+          .clearCookie("refresh_Token", options)
+          .json(new ApiResponse(401, {}, "Invalid session"));
+      }
+      if (session.expiresAt < new Date()) {
+        await prisma.session.delete({
+          where: { id: session.id },
+        });
+        return res
+          .status(401)
+          .clearCookie("access_Token", options)
+          .clearCookie("refresh_Token", options)
+          .json(new ApiResponse(401, {}, "Session Expired"));
+      }
+      const accessToken = await generateAccessToken({
+        userId: session.userId,
+        sessionId: session.sessionId,
+      });
+
+      await prisma.session.update({
+        where: { id: session.id },
+        data: { lastUsedAt: new Date() },
+      });
+
+      res
+        .status(200)
+        .cookie("access_token", accessToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          maxAge: 15 * 60 * 1000,
+        })
+        .json(new ApiResponse(200, { accessToken }, "Access token refreshed"));
+    } catch (error) {
+      console.log(error);
+      const options = {
+        httpOnly: true,
+        secure: true,
+      };
+      res.clearCookie("access_token", options);
+      res.clearCookie("refresh_token", options);
+      throw new ApiError(401, "Invalid refresh token", [
+        "Invalid refresh token",
+      ]);
+    }
+  }
+);

@@ -12,15 +12,18 @@ dotenv.config();
 const prisma = new PrismaClient();
 
 passport.serializeUser((session: any, done) => {
-  done(null, session);
+  done(null, {
+    user: session.user,
+    sessionId: session.sessionId,
+  });
 });
 
-passport.deserializeUser(async (session: any, done) => {
+passport.deserializeUser(async (serializedSession: any, done) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: serializedSession.user.id },
     });
-    done(null, { user, sessionId: session.sessionId });
+    done(null, { user, sessionId: serializedSession.sessionId });
   } catch (error) {
     done(error, null);
   }
@@ -57,21 +60,9 @@ passport.use(
         }
 
         const sessionId = uuidv4();
-        const newRefreshToken = uuidv4();
-
-        await prisma.session.create({
-          data: {
-            userId: user.id,
-            sessionId,
-            refreshToken: newRefreshToken,
-            deviceInfo: req.deviceInfo,
-            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-          },
-        });
         const verifyCallbackDoc: VerifyCallbackDocument = {
           user,
           sessionId,
-          refreshToken: newRefreshToken,
         };
         done(null, verifyCallbackDoc);
       } catch (error) {

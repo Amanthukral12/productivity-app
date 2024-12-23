@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import authRoutes from "./routes/auth.routes";
+import cookieParser from "cookie-parser";
 const app = express();
 
 import dotenv from "dotenv";
@@ -8,6 +9,8 @@ import passport from "./config/passport";
 dotenv.config();
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(
   session({

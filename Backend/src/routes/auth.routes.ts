@@ -1,6 +1,10 @@
 import { Router } from "express";
 import passport from "passport";
-import { googleLoginSuccess, logout } from "../controller/auth.controller";
+import {
+  googleLoginSuccess,
+  logout,
+  refreshAccessToken,
+} from "../controller/auth.controller";
 import { trackDeviceInfo } from "../middleware/deviceInfo";
 import { authenticateSession } from "../middleware/auth";
 
@@ -14,5 +18,6 @@ router.get(
   googleLoginSuccess
 );
 router.route("/logout").post(authenticateSession, logout);
+router.route("/refresh-token").post(authenticateSession, refreshAccessToken);
 
 export default router;
