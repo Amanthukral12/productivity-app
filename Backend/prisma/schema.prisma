@@ -14,14 +14,16 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  googleId  String    @unique
-  email     String    @unique
+  id        Int        @id @default(autoincrement())
+  googleId  String     @unique
+  email     String     @unique
   name      String
   avatar    String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   sessions  Session[]
+  Note      Note[]
+  Category  Category[]
 }
 
 model Session {
@@ -34,4 +36,23 @@ model Session {
   expiresAt    DateTime
   lastUsedAt   DateTime @default(now())
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Note {
+  id         Int        @id @default(autoincrement())
+  title      String
+  content    String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  userId     Int
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories Category[] @relation("NoteToCategory")
+}
+
+model Category {
+  id     Int    @id @default(autoincrement())
+  name   String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notes  Note[] @relation("NoteToCategory")
 }
