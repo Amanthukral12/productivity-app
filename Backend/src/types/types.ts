@@ -1,6 +1,6 @@
 import { Profile } from "passport-google-oauth20";
 
-export interface UserDocument {
+export type UserDocument = {
   id: number;
   googleId: string;
   email: string;
@@ -8,7 +8,7 @@ export interface UserDocument {
   avatar: string | null;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export interface SessionDocument {
   id: string;

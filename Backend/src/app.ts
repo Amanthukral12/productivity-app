@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import authRoutes from "./routes/auth.routes";
+import categoryRoutes from "./routes/category.routes";
 import cookieParser from "cookie-parser";
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/category", categoryRoutes);
 
 export default app;

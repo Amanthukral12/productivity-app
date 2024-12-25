@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyAccessToken } from "../utils/auth";
 import { PrismaClient } from "@prisma/client";
+import { UserDocument } from "../types/types";
 
 const prisma = new PrismaClient();
 
@@ -42,7 +43,7 @@ export const authenticateSession = async (
     data: { lastUsedAt: new Date() },
   });
 
-  req.user = session.user;
+  req.user = session.user as UserDocument;
   req.currentSession = session;
 
   next();

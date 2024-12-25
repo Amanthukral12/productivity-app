@@ -18,6 +18,6 @@ router.get(
   googleLoginSuccess
 );
 router.route("/logout").post(authenticateSession, logout);
-router.route("/refresh-token").post(authenticateSession, refreshAccessToken);
+router.route("/refresh-token").post(refreshAccessToken);
 
 export default router;

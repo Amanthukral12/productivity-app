@@ -55,4 +55,6 @@ model Category {
   userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   notes  Note[] @relation("NoteToCategory")
+
+  @@unique([name, userId])
 }

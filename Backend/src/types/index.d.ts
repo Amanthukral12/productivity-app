@@ -1,11 +1,12 @@
-import { User, Session } from "@prisma/client";
+import { Session } from "@prisma/client";
+import { UserDocument } from "./types";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: User;
+      user?: UserDocument;
       currentSession?: Session & {
-        user: User;
+        user: UserDocument;
       };
     }
   }
