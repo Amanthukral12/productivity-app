@@ -66,3 +66,57 @@ export const addNote = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(400, "Error creating note", ["Error creating note"]);
   }
 });
+
+export const deleteNote = asyncHandler(async (req: Request, res: Response) => {
+  if (!req.user) {
+    throw new ApiError(401, "Unauthorized Access. Please login again.", [
+      "Unauthorized Access. Please login again.",
+    ]);
+  }
+  const userId = (req.user as UserDocument).id;
+
+  const { noteId } = req.params;
+
+  const noteExists = await prisma.note.findFirst({
+    where: {
+      id: Number(noteId),
+      userId,
+    },
+  });
+
+  if (!noteExists) {
+    throw new ApiError(404, "Note not found", ["Note not found"]);
+  }
+
+  await prisma.note.delete({
+    where: {
+      id: Number(noteExists.id),
+      userId,
+    },
+  });
+  return res.status(200).json(new ApiResponse(200, {}, "Note deleted"));
+});
+
+export const getNoteById = asyncHandler(async (req: Request, res: Response) => {
+  if (!req.user) {
+    throw new ApiError(401, "Unauthorized Access. Please login again.", [
+      "Unauthorized Access. Please login again.",
+    ]);
+  }
+  const userId = (req.user as UserDocument).id;
+
+  const { noteId } = req.params;
+
+  const noteExists = await prisma.note.findFirst({
+    where: {
+      id: Number(noteId),
+      userId,
+    },
+  });
+
+  if (!noteExists) {
+    throw new ApiError(404, "Note not found", ["Note not found"]);
+  }
+
+  return res.status(200).json(new ApiResponse(200, noteExists, "Note found"));
+});
