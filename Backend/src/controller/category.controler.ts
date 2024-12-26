@@ -109,3 +109,57 @@ export const getCategories = asyncHandler(
       );
   }
 );
+
+export const updateCategory = asyncHandler(
+  async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new ApiError(401, "Unauthorized Access. Please login again.", [
+        "Unauthorized Access. Please login again.",
+      ]);
+    }
+    const userId = (req.user as UserDocument).id;
+
+    const { categoryId } = req.params;
+
+    if (!categoryId) {
+      throw new ApiError(400, "Category ID is required", [
+        "Category ID is required",
+      ]);
+    }
+
+    const categoryExists = await prisma.category.findFirst({
+      where: {
+        id: Number(categoryId),
+        userId,
+      },
+    });
+
+    if (!categoryExists) {
+      throw new ApiError(404, "Category not found", ["Category not found"]);
+    }
+
+    const { name } = req.body;
+
+    if (name === "" || !name) {
+      throw new ApiError(400, "Category name can not be blank", [
+        "Category name can not be blank",
+      ]);
+    }
+
+    const category = await prisma.category.update({
+      where: {
+        id: Number(categoryId),
+        userId,
+      },
+      data: {
+        name,
+      },
+    });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, category, `${category.name} updated successfully`)
+      );
+  }
+);
