@@ -5,6 +5,7 @@ import {
   deleteNote,
   getNoteById,
   getNotes,
+  updateNote,
 } from "../controller/note.controller";
 
 const router = Router();
@@ -14,6 +15,7 @@ router.route("/add").post(authenticateSession, addNote);
 router
   .route("/:noteId")
   .delete(authenticateSession, deleteNote)
-  .get(authenticateSession, getNoteById);
+  .get(authenticateSession, getNoteById)
+  .put(authenticateSession, updateNote);
 
 export default router;
