@@ -157,3 +157,24 @@ export const getTodos = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(400, "Error fetching todos", ["Error fetching todos"]);
   }
 });
+
+export const getTodoById = asyncHandler(async (req: Request, res: Response) => {
+  if (!req.user) {
+    throw new ApiError(401, "Unauthorized Access. Please login again.", [
+      "Unauthorized Access. Please login again",
+    ]);
+  }
+  const userId = (req.user as UserDocument).id;
+  const { todoId } = req.params;
+
+  const todo = await prisma.todo.findFirst({
+    where: {
+      id: Number(todoId),
+      userId,
+    },
+  });
+  if (!todo) {
+    throw new ApiError(404, "Todo not found", ["Todo not found"]);
+  }
+  return res.status(200).json(new ApiResponse(200, todo, "Todo fetched"));
+});

@@ -3,6 +3,7 @@ import { authenticateSession } from "../middleware/auth";
 import {
   addTodo,
   deleteTodo,
+  getTodoById,
   getTodos,
   updateTodo,
 } from "../controller/todo.controller";
@@ -13,7 +14,8 @@ router.route("/add").post(authenticateSession, addTodo);
 router
   .route("/:todoId")
   .delete(authenticateSession, deleteTodo)
-  .put(authenticateSession, updateTodo);
+  .put(authenticateSession, updateTodo)
+  .get(authenticateSession, getTodoById);
 router.route("/").get(authenticateSession, getTodos);
 
 export default router;
