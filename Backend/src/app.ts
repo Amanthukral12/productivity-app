@@ -3,6 +3,7 @@ import session from "express-session";
 import authRoutes from "./routes/auth.routes";
 import categoryRoutes from "./routes/category.routes";
 import noteRoutes from "./routes/note.routes";
+import todoRoutes from "./routes/todo.routes";
 import cookieParser from "cookie-parser";
 const app = express();
 
@@ -28,5 +29,6 @@ app.use(passport.session());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/notes", noteRoutes);
+app.use("/api/v1/todos", todoRoutes);
 
 export default app;

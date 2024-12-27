@@ -24,6 +24,7 @@ model User {
   sessions  Session[]
   Note      Note[]
   Category  Category[]
+  Todo      Todo[]
 }
 
 model Session {
@@ -57,4 +58,27 @@ model Category {
   notes  Note[] @relation("NoteToCategory")
 
   @@unique([name, userId])
+}
+
+model Todo {
+  id          Int       @id @default(autoincrement())
+  title       String
+  isComplete  Boolean   @default(false)
+  priority    Priority  @default(LOW)
+  dueDate     DateTime?
+  hasReminder Boolean   @default(false)
+  reminderAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
 }
