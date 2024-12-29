@@ -67,3 +67,9 @@ export interface TokenPayload {
 export interface RefreshTokenPayload {
   sessionId: string;
 }
+
+export interface TimeRange {
+  startHour: number;
+  endHour: number;
+  remindersPerDay: number;
+}

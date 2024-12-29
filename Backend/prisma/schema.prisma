@@ -25,6 +25,7 @@ model User {
   Note      Note[]
   Category  Category[]
   Todo      Todo[]
+  Event     Event[]
 }
 
 model Session {
@@ -77,8 +78,53 @@ model Todo {
   @@index([userId])
 }
 
+model Event {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  isAllDay    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  isRecurring Boolean    @default(false)
+  frequency   Frequency?
+  interval    Int?
+  weekDays    String?
+  monthDays   String?
+
+  reminders EventReminder[]
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model EventReminder {
+  id            Int          @id @default(autoincrement())
+  minutesBefore Int
+  reminderType  ReminderType
+  eventId       Int
+  event         Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+}
+
 enum Priority {
   LOW
   MEDIUM
   HIGH
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum ReminderType {
+  PUSH_NOTIFICATION
+  IN_APP
 }
