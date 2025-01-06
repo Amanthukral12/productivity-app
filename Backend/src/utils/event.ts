@@ -41,36 +41,3 @@ export const calculateDailyReminderTimes = (timeRange: TimeRange) => {
   }
   return reminderTimes;
 };
-
-export const calculateNextOccurrences = (event: any, count: number) => {
-  const occurrences: Date[] = [];
-  let currentDate = new Date(event.startDate);
-
-  for (let i = 0; i < count; i++) {
-    if (event.endDate && currentDate > new Date(event.endDate)) break;
-
-    occurrences.push(new Date(currentDate.getTime()));
-    const nextDate = new Date(currentDate.getTime());
-    switch (event.frequency) {
-      case "DAILY":
-        nextDate.setDate(currentDate.getDate() + (event.interval || 1));
-        break;
-      case "WEEKLY":
-        nextDate.setDate(currentDate.getDate() + (event.interval || 1) * 7);
-        break;
-      case "MONTHLY":
-        nextDate.setMonth(currentDate.getMonth() + (event.interval || 1));
-        if (currentDate.getDate() !== nextDate.getDate()) {
-          nextDate.setDate(0);
-        }
-        break;
-      case "YEARLY":
-        currentDate.setFullYear(
-          currentDate.getFullYear() + (event.interval || 1)
-        );
-        break;
-    }
-    currentDate = nextDate;
-  }
-  return occurrences;
-};

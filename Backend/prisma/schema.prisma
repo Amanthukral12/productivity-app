@@ -79,19 +79,20 @@ model Todo {
 }
 
 model Event {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String?
-  startDate   DateTime
-  endDate     DateTime?
-  isAllDay    Boolean    @default(false)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  isRecurring Boolean    @default(false)
-  frequency   Frequency?
-  interval    Int?
-  weekDays    String?
-  monthDays   String?
+  id             Int        @id @default(autoincrement())
+  title          String
+  description    String?
+  startDate      DateTime
+  endDate        DateTime?
+  isAllDay       Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  isRecurring    Boolean    @default(false)
+  frequency      Frequency?
+  interval       Int?
+  weekDays       String?
+  monthDays      String?
+  nextOccurrence DateTime?
 
   reminders EventReminder[]
 
@@ -102,11 +103,13 @@ model Event {
 }
 
 model EventReminder {
-  id            Int          @id @default(autoincrement())
-  minutesBefore Int
-  reminderType  ReminderType
-  eventId       Int
-  event         Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  id             Int          @id @default(autoincrement())
+  minutesBefore  Int
+  reminderType   ReminderType
+  eventId        Int
+  reminderHour   Int          @default(0)
+  reminderMinute Int          @default(0)
+  event          Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@index([eventId])
 }
