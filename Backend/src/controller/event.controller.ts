@@ -86,26 +86,118 @@ export const addEvent = asyncHandler(async (req: Request, res: Response) => {
     throw new ApiError(400, error.message, [error.message]);
   }
 });
-export const getAllEvents = asyncHandler(
+export const getAllEventsForMonth = asyncHandler(
   async (req: Request, res: Response) => {
-    try {
-      if (!req.user) {
-        throw new ApiError(401, "Unauthorized Access. Please login again.", [
-          "Unauthorized Access. Please login again.",
-        ]);
-      }
-      const userId = (req.user as UserDocument).id;
-
-      const events = await prisma.event.findMany({
-        where: { userId },
-        include: { reminders: true },
-      });
-
-      return res
-        .status(200)
-        .json(new ApiResponse(200, { events }, "All occurrences fetched"));
-    } catch (error: any) {
-      throw new ApiError(400, error.message, [error.message]);
+    if (!req.user) {
+      throw new ApiError(401, "Unauthorized Access. Please login again.", [
+        "Unauthorized Access. Please login again.",
+      ]);
     }
+    const userId = (req.user as UserDocument).id;
+
+    const { month, year } = req.query;
+
+    const monthNum = parseInt(month as string);
+    const yearNum = parseInt(year as string);
+
+    if (isNaN(monthNum) || isNaN(yearNum) || monthNum < 1 || monthNum > 12) {
+      throw new ApiError(400, "Invalid month or year", [
+        "Invalid month or year",
+      ]);
+    }
+
+    const startOfMonth = new Date(yearNum, monthNum - 1, 1);
+    const endOfMonth = new Date(yearNum, monthNum, 0);
+
+    const events = await prisma.event.findMany({
+      where: {
+        userId,
+        OR: [
+          {
+            isRecurring: false,
+            AND: [
+              { startDate: { lte: endOfMonth } },
+              { endDate: { gte: startOfMonth } },
+            ],
+          },
+          {
+            isRecurring: true,
+            AND: [
+              { startDate: { lte: endOfMonth } },
+              {
+                OR: [{ endDate: null }, { endDate: { gte: startOfMonth } }],
+              },
+            ],
+          },
+        ],
+      },
+      include: { reminders: true },
+      orderBy: {
+        startDate: "asc",
+      },
+    });
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { events }, "All occurrences fetched"));
+  }
+);
+
+export const deleteEvent = asyncHandler(async (req: Request, res: Response) => {
+  if (!req.user) {
+    throw new ApiError(401, "Unauthorized Access. Please login again.", [
+      "Unauthorized Access. Please login again.",
+    ]);
+  }
+  const userId = (req.user as UserDocument).id;
+  const { eventId } = req.params;
+
+  const eventExists = await prisma.event.findFirst({
+    where: {
+      id: Number(eventId),
+      userId,
+    },
+  });
+
+  if (!eventExists) {
+    throw new ApiError(404, "Event not found", ["Event not found"]);
+  }
+
+  await prisma.event.delete({
+    where: {
+      id: Number(eventExists.id),
+      userId,
+    },
+  });
+
+  return res.status(200).json(new ApiResponse(200, {}, "Event Deleted"));
+});
+
+export const getEventById = asyncHandler(
+  async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new ApiError(401, "Unauthorized Access. Please login again.", [
+        "Unauthorized Access. Please login again.",
+      ]);
+    }
+    const userId = (req.user as UserDocument).id;
+    const { eventId } = req.params;
+
+    const eventExists = await prisma.event.findFirst({
+      where: {
+        id: Number(eventId),
+        userId,
+      },
+      include: {
+        reminders: true,
+      },
+    });
+
+    if (!eventExists) {
+      throw new ApiError(404, "Event not found", ["Event not found"]);
+    }
+    return res
+      .status(200)
+      .json(new ApiResponse(200, eventExists, "Event found"));
   }
 );
