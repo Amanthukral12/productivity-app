@@ -5,6 +5,7 @@ import {
   deleteEvent,
   getAllEventsForMonth,
   getEventById,
+  updateEvent,
 } from "../controller/event.controller";
 
 const router = Router();
@@ -14,6 +15,7 @@ router.route("/").get(authenticateSession, getAllEventsForMonth);
 router
   .route("/:eventId")
   .delete(authenticateSession, deleteEvent)
-  .get(authenticateSession, getEventById);
+  .get(authenticateSession, getEventById)
+  .put(authenticateSession, updateEvent);
 
 export default router;

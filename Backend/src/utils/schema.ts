@@ -9,6 +9,8 @@ const TimeRangeSchema = z.object({
 const ReminderSchema = z.object({
   minutesBefore: z.number().min(0),
   type: z.enum(["PUSH_NOTIFICATION", "IN_APP"]),
+  reminderHour: z.number().min(0).max(23),
+  reminderMinute: z.number().min(0).max(59),
 });
 
 const RecurrenceSchema = z.object({
@@ -18,7 +20,7 @@ const RecurrenceSchema = z.object({
   monthDays: z.array(z.number().min(1).max(31)).optional(),
 });
 
-export const CreateEventSchema = z.object({
+export const EventSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().max(1000).optional(),
   startDate: z.string().transform((str) => new Date(str)),
