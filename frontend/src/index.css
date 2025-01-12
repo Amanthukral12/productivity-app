@@ -1,0 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
+
+*{
+    font-family: "Roboto", serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
