@@ -22,6 +22,16 @@ export interface SessionDocument {
   user: UserDocument;
 }
 
+export interface CustomSession {
+  id: string;
+  sessionId: string;
+  userId: number;
+  deviceInfo: string | null;
+  createdAt: Date;
+  expiresAt: Date;
+  lastUsedAt: Date;
+}
+
 export interface VerifyCallbackDocument {
   user?: UserDocument;
   sessionId: string;

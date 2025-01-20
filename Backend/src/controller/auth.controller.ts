@@ -63,6 +63,60 @@ export const googleLoginSuccess = asyncHandler(
   }
 );
 
+export const getCurrentSession = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      if (!req.user) {
+        throw new ApiError(401, "Unauthorized Access. Please login again.", [
+          "Unauthorized Access. Please login again.",
+        ]);
+      }
+
+      const currentSession = req.currentSession;
+      const currentUser = req.user;
+      res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            { currentSession, currentUser },
+            "Fetched current session successfully"
+          )
+        );
+    } catch (error) {
+      throw new ApiError(
+        401,
+        JSON.stringify(error) || "Error fetching current session",
+        ["Error fetching current session"]
+      );
+    }
+  }
+);
+
+export const getCuurentUser = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      if (!req.user) {
+        throw new ApiError(401, "Unauthorized Access. Please login again.", [
+          "Unauthorized Access. Please login again.",
+        ]);
+      }
+      const currentUser = req.user;
+      res
+        .status(200)
+        .json(
+          new ApiResponse(200, currentUser, "Fetch current user successfully")
+        );
+    } catch (error) {
+      throw new ApiError(
+        401,
+        JSON.stringify(error) || "Error fetching current user",
+        ["Error fetching current user"]
+      );
+    }
+  }
+);
+
 export const logout = asyncHandler(async (req: Request, res: Response) => {
   try {
     if (!req.currentSession) {

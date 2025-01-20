@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyAccessToken } from "../utils/auth";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Session } from "@prisma/client";
 import { UserDocument } from "../types/types";
 
 const prisma = new PrismaClient();
@@ -28,6 +28,9 @@ export const authenticateSession = async (
   const session = await prisma.session.findUnique({
     where: {
       sessionId: decoded.sessionId,
+    },
+    omit: {
+      refreshToken: true,
     },
     include: {
       user: true,

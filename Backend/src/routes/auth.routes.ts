@@ -1,6 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
 import {
+  getCurrentSession,
+  getCuurentUser,
   googleLoginSuccess,
   logout,
   refreshAccessToken,
@@ -10,14 +12,19 @@ import { authenticateSession } from "../middleware/auth";
 
 const router = Router();
 
-router.get("/google", passport.authenticate("google", { scope: ["email"] }));
 router.get(
-  "/google/callback",
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email"] })
+);
+router.get(
+  "/auth/google/callback",
   trackDeviceInfo,
   passport.authenticate("google", { failureRedirect: "/" }),
   googleLoginSuccess
 );
-router.route("/logout").post(authenticateSession, logout);
-router.route("/refresh-token").post(refreshAccessToken);
+router.route("/auth/session").get(authenticateSession, getCurrentSession);
+router.route("/auth/profile").get(authenticateSession, getCuurentUser);
+router.route("/auth/logout").post(authenticateSession, logout);
+router.route("/auth/refresh-token").post(refreshAccessToken);
 
 export default router;
