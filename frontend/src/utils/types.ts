@@ -18,7 +18,3 @@ export interface Session {
   lastUsedAt: Date;
   user: UserDocument;
 }
-export interface AuthState {
-  isAuthenticated: boolean;
-  user: UserDocument | null;
-}

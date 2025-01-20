@@ -1,25 +1,34 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { AuthState } from "../utils/types";
+import { Session, UserDocument } from "../utils/types";
 
-interface AuthStore extends AuthState {
-  setAuthState: (authState: Partial<AuthState>) => void;
-  reset: () => void;
+interface AuthState {
+  user: UserDocument | null;
+  currentSession: Session | null;
+  isAuthenticated: boolean;
+  setUser: (user: UserDocument | null) => void;
+  setCurrentSession: (session: Session | null) => void;
+  logout: () => void;
 }
 
-const useAuthStore = create<AuthStore>()(
+const useAuthStore = create<AuthState>()(
   devtools(
     persist(
       (set) => ({
-        isAuthenticated: false,
         user: null,
-        setAuthState: (authState) =>
-          set((state) => ({ ...state, ...authState })),
-        reset: () => set({ isAuthenticated: false, user: undefined }),
+        currentSession: null,
+        isAuthenticated: false,
+        setUser: (user) => set({ user, isAuthenticated: !!user }),
+        setCurrentSession: (session) => set({ currentSession: session }),
+        logout: () =>
+          set({ user: null, currentSession: null, isAuthenticated: false }),
       }),
       {
         name: "auth-store",
-        partialize: (state) => ({ isAuthenticated: state.isAuthenticated }),
+        partialize: (state) => ({
+          user: state.user,
+          isAuthenticated: state.isAuthenticated,
+        }),
       }
     )
   )
