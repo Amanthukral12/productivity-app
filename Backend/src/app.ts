@@ -6,6 +6,7 @@ import noteRoutes from "./routes/note.routes";
 import todoRoutes from "./routes/todo.routes";
 import eventRoutes from "./routes/event.routes";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 const app = express();
 
 import dotenv from "dotenv";
@@ -20,7 +21,14 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || "",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+  })
+);
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 

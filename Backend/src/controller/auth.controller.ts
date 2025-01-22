@@ -33,6 +33,7 @@ export const googleLoginSuccess = asyncHandler(
         userId: user.id,
         sessionId: session.sessionId,
       });
+
       return res
         .status(200)
         .cookie("access_token", accessToken, {
@@ -47,13 +48,7 @@ export const googleLoginSuccess = asyncHandler(
           sameSite: "none",
           maxAge: 30 * 24 * 60 * 60 * 1000,
         })
-        .json(
-          new ApiResponse(
-            200,
-            { user: user, accessToken },
-            "User logged in successfully"
-          )
-        );
+        .redirect("http://localhost:5173/");
     } catch (error) {
       console.log(error);
       throw new ApiError(401, JSON.stringify(error) || "Error logging in", [

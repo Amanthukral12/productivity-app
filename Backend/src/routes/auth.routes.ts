@@ -19,7 +19,9 @@ router.get(
 router.get(
   "/auth/google/callback",
   trackDeviceInfo,
-  passport.authenticate("google", { failureRedirect: "/" }),
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+  }),
   googleLoginSuccess
 );
 router.route("/auth/session").get(authenticateSession, getCurrentSession);

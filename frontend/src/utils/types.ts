@@ -11,10 +11,16 @@ export interface Session {
   id: string;
   sessionId: string;
   userId: number;
-  refreshToken: string;
   deviceInfo?: string;
   createdAt: Date;
   expiresAt: Date;
   lastUsedAt: Date;
   user: UserDocument;
+}
+
+export interface SessionResponse {
+  data: {
+    currentUser: UserDocument;
+    currentSession: Session;
+  };
 }

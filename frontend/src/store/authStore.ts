@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import { Session, UserDocument } from "../utils/types";
 
 interface AuthState {
@@ -12,25 +12,24 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>()(
-  devtools(
-    persist(
-      (set) => ({
-        user: null,
-        currentSession: null,
-        isAuthenticated: false,
-        setUser: (user) => set({ user, isAuthenticated: !!user }),
-        setCurrentSession: (session) => set({ currentSession: session }),
-        logout: () =>
-          set({ user: null, currentSession: null, isAuthenticated: false }),
+  persist(
+    (set) => ({
+      user: null,
+      currentSession: null,
+      isAuthenticated: false,
+      setUser: (user) => set({ user, isAuthenticated: !!user }),
+      setCurrentSession: (session) => set({ currentSession: session }),
+      logout: () =>
+        set({ user: null, currentSession: null, isAuthenticated: false }),
+    }),
+    {
+      name: "auth-store",
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+        currentSession: state.currentSession,
       }),
-      {
-        name: "auth-store",
-        partialize: (state) => ({
-          user: state.user,
-          isAuthenticated: state.isAuthenticated,
-        }),
-      }
-    )
+    }
   )
 );
 

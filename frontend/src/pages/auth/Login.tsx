@@ -1,6 +1,9 @@
 import { FaGithub, FaGlobe, FaLinkedin, FaTwitter } from "react-icons/fa";
 import image from "../../assets/productivity.webp";
+import { useAuth } from "../../hooks/auth";
+
 const Login = () => {
+  const { initiateGoogleLogin } = useAuth();
   return (
     <div className=" lg:bg-black  h-[100vh] lg:flex lg:justify-center lg:items-center">
       <div className="w-full h-full z-10 lg:w-4/5 lg:h-4/5 flex flex-col-reverse lg:flex-row">
@@ -15,7 +18,7 @@ const Login = () => {
           <div>
             <button
               className="w-full max-w-sm border-2 border-gray-300 focus:border-gray-300 px-10 py-2 rounded-lg font-medium text-xl mt-10 flex items-center gap-2 hover:bg-slate-50"
-              onClick={() => {}}
+              onClick={initiateGoogleLogin}
             >
               <svg viewBox="0 0 24 24" className="w-5 h-5">
                 <path
@@ -52,7 +55,7 @@ const Login = () => {
           <img
             src={image}
             className="h-[150px] w-[200px] lg:h-[250px] lg:w-[300px]"
-            alt="parksaver image"
+            alt="Productivity image"
           />
           <h1 className="text-5xl text-slate-300 font-bold">Produkto</h1>
         </section>
