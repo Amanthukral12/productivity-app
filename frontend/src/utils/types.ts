@@ -24,3 +24,9 @@ export interface SessionResponse {
     currentSession: Session;
   };
 }
+
+export interface Category {
+  id: number;
+  name: string;
+  userId: number;
+}

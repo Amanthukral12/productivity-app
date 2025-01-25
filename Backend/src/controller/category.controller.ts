@@ -21,14 +21,14 @@ export const createCategory = asyncHandler(
       ]);
     }
 
-    const catefogyExists = await prisma.category.findFirst({
+    const categoryExists = await prisma.category.findFirst({
       where: {
         name,
         userId,
       },
     });
 
-    if (catefogyExists) {
+    if (categoryExists) {
       throw new ApiError(400, "Category already exists", [
         "Category already exists",
       ]);
