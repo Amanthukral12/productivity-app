@@ -64,14 +64,23 @@ export const useNotes = () => {
   const updateNotesMutation = useMutation<
     Note,
     Error,
-    { noteId: number; title: string; content: string; categoryIds: number[] }
+    {
+      noteId: number;
+      title?: string | null;
+      content?: string | null;
+      categoryIds?: number[] | null;
+    }
   >({
     mutationFn: async ({ noteId, title, content, categoryIds }) => {
-      const { data } = await api.put<Note>(`/api/v1/notes/${noteId}`, {
-        title,
-        content,
-        categoryIds,
-      });
+      const updatePayload = {
+        ...(title !== undefined && { title }),
+        ...(content !== undefined && { content }),
+        ...(categoryIds !== undefined && { categoryIds }),
+      };
+      const { data } = await api.put<Note>(
+        `/api/v1/notes/${noteId}`,
+        updatePayload
+      );
       return data;
     },
     onSuccess: () => {
