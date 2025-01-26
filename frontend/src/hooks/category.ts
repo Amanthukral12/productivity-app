@@ -47,7 +47,7 @@ export const useCategories = () => {
         queryClient.setQueryData(["categories"], context.previousCategories);
       }
     },
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
   });

@@ -30,3 +30,9 @@ export interface Category {
   name: string;
   userId: number;
 }
+
+export interface Note {
+  title: string;
+  content: string;
+  categoryIds: number[];
+}
