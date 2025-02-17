@@ -2,7 +2,7 @@
     <img src="./src/assets/logo.png" alt="produkto" width="100px" height="100px">
     <br>
     <br>
-     <a href="https://app.netlify.com/sites/getprodukto/deploys"><img src="https://api.netlify.com/api/v1/badges/315a5fbf-9971-4e2f-9f78-ca42e9ab8b6a/deploy-status" alt="Netlify Status"></a>
+    
 
 </p>
 
@@ -13,8 +13,10 @@ A Progressive Web Application to add your Todos and Notes in order to work more 
 <p align="center">
 <img src="./src/assets/produkto.jpg" alt="produkto" >
 <br>
-<img src="./src/assets/produkto1.jpg" alt="produkto">
 </p>
+
+![Feature](https://github.com/user-attachments/assets/2bd0ca49-e585-4335-822b-d41d2ff1f2c7)
+
 
 ## :hatching_chick: Prerequisites
 
