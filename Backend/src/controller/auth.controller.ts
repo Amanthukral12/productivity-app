@@ -184,7 +184,6 @@ export const getAllSessions = asyncHandler(
         "Unauthorized Access. Please login again.",
       ]);
     }
-    console.log(req.user);
 
     const userId = (req.user as UserDocument).id;
 
@@ -202,5 +201,31 @@ export const getAllSessions = asyncHandler(
     return res
       .status(200)
       .json(new ApiResponse(200, sessions, "Sessions fetched successfully"));
+  }
+);
+
+export const updateUserProfile = asyncHandler(
+  async (req: Request, res: Response) => {
+    if (!req.user) {
+      throw new ApiError(401, "Unauthorized Access. Please login again.", [
+        "Unauthorized Access. Please login again.",
+      ]);
+    }
+    const userId = (req.user as UserDocument).id;
+
+    const { name } = req.body;
+
+    const userDetails = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        name: name !== undefined ? name : undefined,
+      },
+    });
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, userDetails, "User updated successfully"));
   }
 );

@@ -7,6 +7,7 @@ import {
   googleLoginSuccess,
   logout,
   refreshAccessToken,
+  updateUserProfile,
 } from "../controller/auth.controller";
 import { trackDeviceInfo } from "../middleware/deviceInfo";
 import { authenticateSession } from "../middleware/auth";
@@ -26,7 +27,10 @@ router.get(
   googleLoginSuccess
 );
 router.route("/auth/session").get(authenticateSession, getCurrentSession);
-router.route("/auth/profile").get(authenticateSession, getCurrentUser);
+router
+  .route("/auth/profile")
+  .get(authenticateSession, getCurrentUser)
+  .put(authenticateSession, updateUserProfile);
 router.route("/auth/allSessions").get(authenticateSession, getAllSessions);
 router.route("/auth/logout").post(authenticateSession, logout);
 router.route("/auth/refresh-token").post(refreshAccessToken);
