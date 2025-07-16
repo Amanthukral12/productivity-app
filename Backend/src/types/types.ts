@@ -1,6 +1,4 @@
-import { Profile } from "passport-google-oauth20";
-
-export type UserDocument = {
+export interface UserDocument {
   id: number;
   googleId: string;
   email: string;
@@ -8,7 +6,7 @@ export type UserDocument = {
   avatar: string | null;
   createdAt: Date;
   updatedAt: Date;
-};
+}
 
 export interface SessionDocument {
   id: string;
@@ -32,17 +30,6 @@ export interface CustomSession {
   lastUsedAt: Date;
 }
 
-export interface VerifyCallbackDocument {
-  user?: UserDocument;
-  sessionId: string;
-}
-
-export type VerifyCallback = (
-  error: any,
-  user?: VerifyCallbackDocument,
-  info?: any
-) => void;
-
 export interface GoogleStrategyOptions {
   clientID: string;
   clientSecret: string;
@@ -54,20 +41,16 @@ export interface GoogleStrategyOptionsWithRequest
   passReqToCallback: true;
 }
 
-export type GoogleStrategyVerifyFn = (
-  accessToken: string,
-  refreshToken: string,
-  profile: Profile,
-  done: VerifyCallback
-) => Promise<void> | void;
+export interface VerifyCallbackDocument {
+  user?: UserDocument;
+  sessionId: string;
+}
 
-export type GoogleStrategyVerifyFnWithRequest = (
-  req: Request,
-  accessToken: string,
-  refreshToken: string,
-  profile: Profile,
-  done: VerifyCallback
-) => Promise<void> | void;
+export type VerifyCallback = (
+  error: any,
+  user?: VerifyCallbackDocument,
+  info?: any
+) => void;
 
 export interface TokenPayload {
   userId: number;

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyAccessToken } from "../utils/auth";
 import { PrismaClient, Session } from "@prisma/client";
+import { ApiError } from "../utils/ApiError";
 import { UserDocument } from "../types/types";
 
 const prisma = new PrismaClient();
@@ -15,15 +16,17 @@ export const authenticateSession = async (
     req.header("Authorization")?.replace("Bearer ", "");
 
   if (!accessToken) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
+    return next(
+      new ApiError(401, "Unauthorized. Please try again", [
+        "Unauthorized. Please try again",
+      ])
+    );
   }
 
   const decoded = verifyAccessToken(accessToken);
 
   if (!decoded) {
-    res.status(401).json({ message: "Invalid token" });
-    return;
+    return next(new ApiError(401, "Invalid token", ["Invalid token"]));
   }
   const session = await prisma.session.findUnique({
     where: {
@@ -38,8 +41,16 @@ export const authenticateSession = async (
   });
 
   if (!session || session.expiresAt < new Date()) {
-    res.status(401).json({ message: "Invalid or expired session" });
-    return;
+    if (session) {
+      await prisma.session.delete({
+        where: {
+          id: session.id,
+        },
+      });
+    }
+    throw new ApiError(401, "Invalid or expired session", [
+      "Invalid or expired session",
+    ]);
   }
   await prisma.session.update({
     where: { id: session.id },
