@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Note } from "../utils/types";
+import { Note } from "../types/types";
 
 interface NotesState {
   selectedNote: Note | null;

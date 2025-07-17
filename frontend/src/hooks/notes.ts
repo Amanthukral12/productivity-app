@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../lib/api";
-import { Note } from "../utils/types";
+import { Note } from "../types/types";
 
 export const useNotes = () => {
   const queryClient = useQueryClient();
 
   const notesQuery = useQuery({
-    queryKey: ["notes"],
+    queryKey: ["note"],
     queryFn: async () => {
       const { data } = await api.get("/api/v1/notes");
       return data.data;
@@ -16,43 +16,65 @@ export const useNotes = () => {
   const createNotesMutation = useMutation<
     Note,
     Error,
-    { title: string; content: string; categoryIds: number[] },
+    Partial<Note>,
     { previousNotes?: Note[] }
   >({
-    mutationFn: async (newNote) => {
-      const { data } = await api.post<Note>("/api/v1/notes/add", newNote);
+    mutationFn: async (formData) => {
+      const { data } = await api.post<Note>("/api/v1/notes/add", formData);
       return data;
     },
     onMutate: async (newNote) => {
-      await queryClient.cancelQueries({ queryKey: ["notes"] });
-      const previousNotes = queryClient.getQueryData<Note[]>(["notes"]);
-      queryClient.setQueryData<Note[]>(["notes"], (old) =>
-        old ? [...old, newNote] : [newNote]
+      await queryClient.cancelQueries({ queryKey: ["note"] });
+      const previousNotes = queryClient.getQueryData<Note[]>(["note"]);
+      queryClient.setQueryData<Note[]>(["note"], (oldNotes) => {
+        return oldNotes
+          ? [...oldNotes, { ...newNote, id: Date.now().toString() } as Note]
+          : [{ ...newNote, id: Date.now().toString() } as Note];
+      });
+      return { previousNotes };
+    },
+    onError: (_, __, context) => {
+      if (context?.previousNotes) {
+        queryClient.setQueryData(["note"], context.previousNotes);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["note"] });
+    },
+  });
+
+  const deleteNoteMutation = useMutation<
+    void,
+    Error,
+    string,
+    { previousNotes?: Note[] }
+  >({
+    mutationFn: async (noteId) => {
+      await api.delete(`/api/v1/notes/${noteId}`);
+    },
+    onMutate: async (noteId) => {
+      await queryClient.cancelQueries({ queryKey: ["note"] });
+      const previousNotes = queryClient.getQueryData<Note[]>(["note"]);
+      queryClient.setQueryData<Note[]>(
+        ["note"],
+        (oldNotes) => oldNotes?.filter((note) => note.id !== noteId) || []
       );
       return { previousNotes };
     },
     onError: (_, __, context) => {
       if (context?.previousNotes) {
-        queryClient.setQueryData(["notes"], context.previousNotes);
+        queryClient.setQueryData(["note"], context.previousNotes);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-    },
-  });
-
-  const deleteNoteMutation = useMutation<void, Error, number>({
-    mutationFn: async (noteId) => {
-      await api.delete(`/api/v1/notes/${noteId}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: ["note"] });
     },
   });
 
   const useNoteByIdQuery = (noteId: number) => {
     return useQuery<Note, Error>({
-      queryKey: ["notes", noteId],
+      queryKey: ["note", noteId],
       queryFn: async () => {
         const { data } = await api.get(`/api/v1/notes/${noteId}`);
         return data.data;
@@ -66,25 +88,33 @@ export const useNotes = () => {
     Error,
     {
       noteId: number;
-      title?: string | null;
-      content?: string | null;
-      categoryIds?: number[] | null;
-    }
+      formData: Partial<Note>;
+    },
+    { previousNotes?: Note[] }
   >({
-    mutationFn: async ({ noteId, title, content, categoryIds }) => {
-      const updatePayload = {
-        ...(title !== undefined && { title }),
-        ...(content !== undefined && { content }),
-        ...(categoryIds !== undefined && { categoryIds }),
-      };
-      const { data } = await api.put<Note>(
-        `/api/v1/notes/${noteId}`,
-        updatePayload
-      );
+    mutationFn: async ({ noteId, formData }) => {
+      const { data } = await api.put(`/api/v1/notes/${noteId}`, formData);
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    onMutate: async ({ noteId, formData }) => {
+      await queryClient.cancelQueries({ queryKey: ["note"] });
+      const previousNotes = queryClient.getQueryData<Note[]>(["note"]);
+      queryClient.setQueryData<Note[]>(
+        ["note"],
+        (oldNotes) =>
+          oldNotes?.map((note) =>
+            Number(note.id) === noteId ? { ...note, formData } : note
+          ) || []
+      );
+      return { previousNotes };
+    },
+    onError: (_, __, context) => {
+      if (context?.previousNotes) {
+        queryClient.setQueryData(["note"], context.previousNotes);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["note"] });
     },
   });
 

@@ -15,6 +15,7 @@ import Dashboard from "./pages/ui/Dashboard.tsx";
 import AuthProvider from "./providers/AuthProvider.tsx";
 import PrivateRoute2 from "./components/PrivateRoute2.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Notes from "./pages/ui/Notes.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route element={<AuthProvider />}>
         <Route element={<PrivateRoute />}>
           <Route path="/" index={true} element={<Dashboard />} />
+          <Route path="/notes" index={true} element={<Notes />} />
         </Route>
       </Route>
     </Route>

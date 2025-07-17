@@ -17,6 +17,9 @@ export const getNotes = asyncHandler(async (req: Request, res: Response) => {
     where: {
       userId,
     },
+    include: {
+      categories: true,
+    },
   });
   return res
     .status(200)
