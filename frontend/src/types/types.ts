@@ -18,6 +18,17 @@ export interface Session {
   user: UserDocument;
 }
 
+export interface CustomSession {
+  id: string;
+  sessionId: string;
+  userId: number;
+  deviceInfo: string | null;
+  expiresAt: Date;
+  lastUsedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface SessionResponse {
   data: {
     currentUser: UserDocument;

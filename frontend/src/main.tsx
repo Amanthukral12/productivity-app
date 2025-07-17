@@ -12,8 +12,9 @@ import Login from "./pages/auth/Login.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import Dashboard from "./pages/ui/Dashboard.tsx";
-import AuthProvider from "./components/AuthProvider.tsx";
+import AuthProvider from "./providers/AuthProvider.tsx";
 import PrivateRoute2 from "./components/PrivateRoute2.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={true} />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAuthStore from "../store/authStore";
 import api from "../lib/api";
-import { SessionResponse, UserDocument } from "../utils/types";
+import { SessionResponse, UserDocument } from "../types/types";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
@@ -22,6 +22,15 @@ export const useAuth = () => {
     staleTime: Infinity,
   });
 
+  const getAllSessionsQuery = useQuery({
+    queryKey: ["sessions"],
+    queryFn: async () => {
+      const { data } = await api.get("/auth/allSessions");
+      return data.data;
+    },
+    enabled: false,
+  });
+
   const profileQuery = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
@@ -30,6 +39,7 @@ export const useAuth = () => {
     },
     enabled: false,
   });
+
   const initiateGoogleLogin = () => {
     window.location.href = "http://localhost:8000/auth/google";
   };
@@ -43,11 +53,31 @@ export const useAuth = () => {
       queryClient.clear();
     },
   });
+
+  const updateUserProfileMutation = useMutation<
+    void,
+    Error,
+    Partial<UserDocument>
+  >({
+    mutationFn: async (formData) => {
+      const { data } = await api.put("/auth/profile", formData);
+      return data;
+    },
+    onSuccess: async (data) => {
+      console.log(data);
+      await queryClient.invalidateQueries({ queryKey: ["session"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   return {
     sessionQuery,
     profileQuery,
     initiateGoogleLogin,
     logoutMutation,
+    getAllSessionsQuery,
+    updateUserProfileMutation,
     isAuthenticated: !!sessionQuery.data?.currentUser,
     user: sessionQuery.data?.currentUser,
     currentSession: sessionQuery.data?.currentSession,
