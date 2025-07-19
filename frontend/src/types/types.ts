@@ -43,6 +43,7 @@ export interface Category {
 }
 
 export interface Note {
+  id: string;
   title: string;
   content: string;
   categoryIds: number[];

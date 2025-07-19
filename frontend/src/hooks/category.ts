@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../lib/api";
-import { Category } from "../utils/types";
+import { Category } from "../types/types";
 
 export const useCategories = () => {
   const queryClient = useQueryClient();
   const categoriesQuery = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["category"],
     queryFn: async () => {
       const { data } = await api.get("/api/v1/category");
       return data.data;
@@ -14,69 +14,114 @@ export const useCategories = () => {
   const createCategoryMutation = useMutation<
     Category,
     Error,
-    { name: string },
+    Partial<Category>,
     { previousCategories?: Category[] }
   >({
-    mutationFn: async (newCategory) => {
+    mutationFn: async (formData) => {
       const { data } = await api.post<Category>(
         "/api/v1/category/add",
-        newCategory
+        formData
       );
 
       return data;
     },
     onMutate: async (newCategory) => {
-      await queryClient.cancelQueries({ queryKey: ["categories"] });
+      await queryClient.cancelQueries({ queryKey: ["category"] });
       const previousCategories = queryClient.getQueryData<Category[]>([
-        "categories",
+        "category",
       ]);
-      //TODO: Check and test again after making the UI
-      const tempCategory: Category = {
-        id: Date.now() * -1,
-        name: newCategory.name,
-        userId: -1,
-      };
 
-      queryClient.setQueryData<Category[]>(["categories"], (old) =>
-        old ? [...old, tempCategory] : [tempCategory]
-      );
+      queryClient.setQueryData<Category[]>(["category"], (oldCategories) => {
+        const optimisticCategory = {
+          ...newCategory,
+          id: Date.now(),
+        } as Category;
+        return oldCategories
+          ? [...oldCategories, optimisticCategory]
+          : [optimisticCategory];
+      });
       return { previousCategories };
     },
     onError: (_, __, context) => {
       if (context?.previousCategories) {
-        queryClient.setQueryData(["categories"], context.previousCategories);
+        queryClient.setQueryData(["category"], context.previousCategories);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+      queryClient.invalidateQueries({ queryKey: ["note"] });
     },
   });
 
   const updateCategoryMutation = useMutation<
     Category,
     Error,
-    { categoryId: number; name: string }
+    { categoryId: number; formData: Partial<Category> },
+    { previousCategories?: Category[] }
   >({
-    mutationFn: async ({ categoryId, name }) => {
+    mutationFn: async ({ categoryId, formData }) => {
       const { data } = await api.patch<Category>(
         `/api/v1/category/${categoryId}`,
-        {
-          name,
-        }
+        formData
       );
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    onMutate: async ({ categoryId, formData }) => {
+      await queryClient.cancelQueries({ queryKey: ["category"] });
+      const previousCategories = queryClient.getQueryData<Category[]>([
+        "category",
+      ]);
+      queryClient.setQueryData<Category[]>(
+        ["category"],
+        (oldCategories) =>
+          oldCategories?.map((category) =>
+            Number(category.id) === categoryId
+              ? { ...category, ...formData }
+              : category
+          ) || []
+      );
+      return { previousCategories };
+    },
+    onError: (_, __, context) => {
+      if (context?.previousCategories) {
+        queryClient.setQueryData(["category"], context.previousCategories);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+      queryClient.invalidateQueries({ queryKey: ["note"] });
     },
   });
 
-  const deleteCategoryMutation = useMutation<void, Error, number>({
+  const deleteCategoryMutation = useMutation<
+    void,
+    Error,
+    number,
+    { previousCategories?: Category[] }
+  >({
     mutationFn: async (categoryId) => {
       await api.delete(`/api/v1/category/${categoryId}`);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    onMutate: async (categoryId) => {
+      await queryClient.cancelQueries({ queryKey: ["category"] });
+      const previousCategories = queryClient.getQueryData<Category[]>([
+        "category",
+      ]);
+      queryClient.setQueryData<Category[]>(
+        ["category"],
+        (oldCategories) =>
+          oldCategories?.filter((category) => category.id !== categoryId) || []
+      );
+      return { previousCategories };
+    },
+    onError: (_, __, context) => {
+      if (context?.previousCategories) {
+        queryClient.setQueryData(["category"], context.previousCategories);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+      queryClient.invalidateQueries({ queryKey: ["note"] });
     },
   });
   return {
