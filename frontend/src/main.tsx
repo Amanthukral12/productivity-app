@@ -17,6 +17,7 @@ import PrivateRoute2 from "./components/PrivateRoute2.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Notes from "./pages/ui/Notes.tsx";
 import Category from "./pages/ui/Category.tsx";
+import Todo from "./pages/ui/Todo.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,8 +28,9 @@ const router = createBrowserRouter(
       <Route element={<AuthProvider />}>
         <Route element={<PrivateRoute />}>
           <Route path="/" index={true} element={<Dashboard />} />
-          <Route path="/notes" index={true} element={<Notes />} />
-          <Route path="/category" index={true} element={<Category />} />
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/todo" element={<Todo />} />
         </Route>
       </Route>
     </Route>

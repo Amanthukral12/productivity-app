@@ -72,18 +72,7 @@ export const useNotes = () => {
     },
   });
 
-  const useNoteByIdQuery = (noteId: number) => {
-    return useQuery<Note, Error>({
-      queryKey: ["note", noteId],
-      queryFn: async () => {
-        const { data } = await api.get(`/api/v1/notes/${noteId}`);
-        return data.data;
-      },
-      enabled: !!noteId,
-    });
-  };
-
-  const updateNotesMutation = useMutation<
+  const updateNoteMutation = useMutation<
     Note,
     Error,
     {
@@ -122,7 +111,6 @@ export const useNotes = () => {
     notesQuery,
     createNotesMutation,
     deleteNoteMutation,
-    useNoteByIdQuery,
-    updateNotesMutation,
+    updateNoteMutation,
   };
 };

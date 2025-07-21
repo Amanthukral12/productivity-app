@@ -48,3 +48,14 @@ export interface Note {
   content: string;
   categoryIds: number[];
 }
+
+export interface Todo {
+  id: number;
+  title: string;
+  isComplete: boolean;
+  priority: "LOW" | "MEDIUM" | "HIGH";
+  dueDate: Date | null;
+  hasReminder: boolean;
+  reminderAt: Date | null;
+  userId: number;
+}
