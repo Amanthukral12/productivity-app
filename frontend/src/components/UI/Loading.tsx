@@ -2,7 +2,7 @@ const Loading = () => {
   return (
     <svg
       aria-hidden="true"
-      className="w-16 h-16 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-black"
+      className="w-16 h-16 m-auto text-gray-200 animate-spin dark:text-gray-300 fill-main"
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

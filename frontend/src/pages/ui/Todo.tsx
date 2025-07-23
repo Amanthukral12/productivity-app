@@ -1,0 +1,38 @@
+import { IoMenu } from "react-icons/io5";
+import Sidebar from "../../components/UI/Sidebar";
+import { useTodos } from "../../hooks/todos";
+import { useState } from "react";
+import NavigationBar from "../../components/UI/NavigationBar";
+import TodoStats from "../../components/UI/TodoStats";
+import FilterBar from "../../components/UI/FilterBar";
+
+const Todo = () => {
+  const { todosQuery } = useTodos();
+  const [showSideBar, setShowSideBar] = useState(false);
+  console.log(todosQuery.data);
+  return (
+    <div className="bg-[#edf7fd] bg-cover min-h-screen lg:h-screen overflow-hidden flex flex-col lg:flex-row w-full text-main">
+      <div className="w-0 lg:w-1/5 z-5">
+        <NavigationBar />
+      </div>
+      <div className="w-full lg:hidden">
+        <IoMenu
+          onClick={() => setShowSideBar(true)}
+          className={`flex lg:hidden h-8 w-8 ml-3 mt-2 text-main ${
+            showSideBar ? "hidden" : ""
+          }`}
+        />
+        <Sidebar
+          shown={showSideBar}
+          close={() => setShowSideBar(!showSideBar)}
+        />
+      </div>
+      <section className="w-full lg:w-4/5 h-full lg:mr-3">
+        <TodoStats />
+        <FilterBar />
+      </section>
+    </div>
+  );
+};
+
+export default Todo;

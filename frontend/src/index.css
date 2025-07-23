@@ -4,3 +4,7 @@
 *{
     font-family: "Roboto", serif;
 }
+
+@theme {
+    --color-main: #3a4d8f;
+}
