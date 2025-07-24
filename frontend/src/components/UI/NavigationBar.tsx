@@ -9,18 +9,18 @@ import { MdEvent } from "react-icons/md";
 const NavigationBar = () => {
   const { user } = useAuthStore();
   return (
-    <div className="hidden bg-[#ffffff] m-3 min-h-[97vh] p-2.5 rounded-2xl lg:flex lg:flex-col items-center z-10 shadow-2xl text-main">
+    <div className="hidden bg-main m-3 min-h-[97vh] p-2.5 rounded-2xl lg:flex lg:flex-col items-center z-10 shadow-2xl text-white">
       <div className="flex flex-col justify-center items-center my-7">
         <img src={image} alt="" className="w-2/5 h-1/2 rounded-3xl" />
-        <h1 className="text-lg lg:text-2xl mt-4 font-bold text-main">
+        <h1 className="text-lg lg:text-2xl mt-4 font-bold text-white">
           Produkto
         </h1>
       </div>
-      <hr className="w-[90%] border-t-2 border-main mb-4" />
+      <hr className="w-[90%] border-t-2 border-white mb-4" />
       <NavLink
         className={({ isActive }) =>
           `p-2.5 w-[90%] text-lg font-bold flex items-center mb-1 ${
-            isActive ? "bg-main !text-white rounded-2xl !shadow-lg" : ""
+            isActive ? "bg-white !text-main rounded-2xl !shadow-lg" : ""
           }`
         }
         to="/"
@@ -31,7 +31,7 @@ const NavigationBar = () => {
       <NavLink
         className={({ isActive }) =>
           `p-2.5 w-[90%] text-lg font-bold flex items-center mb-1 ${
-            isActive ? "bg-main !text-white rounded-2xl !shadow-lg" : ""
+            isActive ? "bg-white !text-main rounded-2xl !shadow-lg" : ""
           }`
         }
         to="/todo"
@@ -42,7 +42,7 @@ const NavigationBar = () => {
       <NavLink
         className={({ isActive }) =>
           `p-2.5 w-[90%] text-lg font-bold flex items-center mb-1 ${
-            isActive ? "bg-main !text-white rounded-2xl !shadow-lg" : ""
+            isActive ? "bg-white !text-main rounded-2xl !shadow-lg" : ""
           }`
         }
         to="/notes"
@@ -53,7 +53,7 @@ const NavigationBar = () => {
       <NavLink
         className={({ isActive }) =>
           `p-2.5 w-[90%] text-lg font-bold flex items-center mb-1 ${
-            isActive ? "bg-main !text-white rounded-2xl !shadow-lg" : ""
+            isActive ? "bg-white !text-main rounded-2xl !shadow-lg" : ""
           }`
         }
         to="/event-reminder"
@@ -64,7 +64,7 @@ const NavigationBar = () => {
       <NavLink
         className={({ isActive }) =>
           `p-2.5 w-[90%] text-lg font-bold flex items-center mb-1 ${
-            isActive ? "bg-main !text-white rounded-2xl !shadow-2xl" : ""
+            isActive ? "bg-white !text-main rounded-2xl !shadow-2xl" : ""
           }`
         }
         to="/profile"
@@ -78,7 +78,7 @@ const NavigationBar = () => {
           className="rounded-full h-16 w-16 mr-3"
           alt=""
         />
-        <h2 className="text-xl text-main font-bold cursor-pointer">
+        <h2 className="text-xl text-white font-bold cursor-pointer">
           {user?.name}
         </h2>
       </div>

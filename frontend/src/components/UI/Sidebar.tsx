@@ -24,21 +24,21 @@ const Sidebar = ({ shown, close }: { shown: boolean; close: () => void }) => {
     >
       <div
         className={`
-          bg-[#D9D9D9] absolute top-0 left-0 w-3/5 min-h-screen p-2 rounded-lg
-          flex flex-col items-center backdrop:blur-sm text-main
+          bg-main absolute top-0 left-0 w-3/5 min-h-screen p-2 rounded-lg
+          flex flex-col items-center backdrop:blur-sm text-white
           transform transition-transform duration-200 ease-in-out
           ${shown ? "translate-x-0" : "-translate-x-full"}
         `}
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside sidebar
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col justify-center items-center my-7">
           <img src={image} alt="" className="w-2/5 h-1/2 rounded-3xl" />
-          <h1 className="text-lg lg:text-2xl mt-4 font-bold text-main">
+          <h1 className="text-lg lg:text-2xl mt-4 font-bold text-white">
             Produkto
           </h1>
         </div>
 
-        <hr className="w-[90%] border-t-2 border-main mb-4" />
+        <hr className="w-[90%] border-t-2 border-white mb-4" />
 
         <NavLink to="/" className={navClass}>
           <FaHome className="h-8 w-8 mr-2.5" /> Home
@@ -73,7 +73,7 @@ const Sidebar = ({ shown, close }: { shown: boolean; close: () => void }) => {
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `p-2.5 w-[90%] text-sm md:text-lg font-bold flex items-center mb-1 ${
-    isActive ? "bg-main !text-white rounded-2xl !shadow-lg" : ""
+    isActive ? "bg-white !text-main rounded-2xl !shadow-lg" : ""
   }`;
 
 export default Sidebar;

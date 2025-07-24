@@ -5,6 +5,16 @@
     font-family: "Roboto", serif;
 }
 
+#root {
+    background-color: #F5F8FF;
+}
+
 @theme {
-    --color-main: #3a4d8f;
+    --color-main: #FF6767;
+    --color-green: #05A301;
+}
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
