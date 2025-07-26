@@ -3,8 +3,20 @@ import { FaRegCircle } from "react-icons/fa";
 import { LuClipboardList } from "react-icons/lu";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { Todo } from "../../types/types";
+import { useTodos } from "../../hooks/todos";
 
 const PendingTodo = ({ pendingTodos }: { pendingTodos: Todo[] }) => {
+  const { updateTodoMutation, deleteTodoMutation } = useTodos();
+  const handleMarkComplete = (todoId: number) => {
+    updateTodoMutation.mutate({
+      todoId,
+      formData: { isComplete: true },
+    });
+  };
+
+  const handleDeleteTodo = (todoId: number) => {
+    deleteTodoMutation.mutate(todoId);
+  };
   return (
     <div className="shadow-md p-2">
       <h2 className="text-lg font-bold text-main mb-2 flex items-center">
@@ -22,7 +34,10 @@ const PendingTodo = ({ pendingTodos }: { pendingTodos: Todo[] }) => {
                   : "border border-[#c3c5ca]"
               }`}
             >
-              <FaRegCircle className="mr-3 mt-1 h-4 w-4 text-green" />
+              <FaRegCircle
+                className="mr-3 mt-1 h-4 w-4 text-green cursor-pointer hover:scale-110 transition"
+                onClick={() => handleMarkComplete(todo.id)}
+              />
               <div className="w-4/5">
                 <p
                   className={`font-medium mb-2 ${
@@ -52,7 +67,10 @@ const PendingTodo = ({ pendingTodos }: { pendingTodos: Todo[] }) => {
                   </div>
                 )}
               </div>
-              <MdOutlineDeleteOutline className="h-6 w-6 cursor-pointer ml-auto my-auto" />
+              <MdOutlineDeleteOutline
+                className="h-6 w-6 cursor-pointer ml-auto my-auto hover:scale-110 transition"
+                onClick={() => handleDeleteTodo(todo.id)}
+              />
             </div>
           ))
         ) : (

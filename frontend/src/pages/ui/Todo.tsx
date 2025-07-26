@@ -34,7 +34,7 @@ const Todo = () => {
       <section className="lg:w-4/5 h-full mx-3 mt-3 lg:mr-3 lg:mx-0 bg-[#F5F8FF] ">
         <FilterBar />
 
-        <div className="flex flex-col md:flex-row gap-4 w-[95%] min-h-[85vh] rounded-sm my-4 px-4 mx-auto bg-[#F5F8FF] border border-[#c3c5ca] pb-4">
+        <div className="flex flex-col md:flex-row gap-4 w-[95%] min-h-[80vh] rounded-sm my-4 px-4 mx-auto bg-[#F5F8FF] border border-[#c3c5ca] pb-4">
           <div className="w-full md:w-1/2 flex flex-col gap-4 mt-4">
             <div className="block md:hidden">
               <TodoStats todos={todos} />

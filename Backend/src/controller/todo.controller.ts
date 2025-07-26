@@ -81,13 +81,22 @@ export const updateTodo = asyncHandler(async (req: Request, res: Response) => {
   const { title, isComplete, priority, dueDate, hasReminder, reminderAt } =
     req.body;
 
+  console.log({
+    title,
+    isComplete,
+    priority,
+    dueDate,
+    hasReminder,
+    reminderAt,
+  });
+
   if (
-    !title &&
-    !isComplete &&
-    !priority &&
-    !dueDate &&
-    !hasReminder &&
-    !reminderAt
+    title === undefined &&
+    isComplete === undefined &&
+    priority === undefined &&
+    dueDate === undefined &&
+    hasReminder === undefined &&
+    reminderAt === undefined
   ) {
     throw new ApiError(400, "No fields to update", ["No fields to update"]);
   }
@@ -113,11 +122,11 @@ export const updateTodo = asyncHandler(async (req: Request, res: Response) => {
         userId,
       },
       data: {
-        title: title || undefined,
-        isComplete: isComplete || undefined,
-        priority: priority || undefined,
+        title: title !== undefined ? title : undefined,
+        isComplete: isComplete !== undefined ? isComplete : undefined,
+        priority: priority !== undefined ? priority : undefined,
         dueDate: dueDate ? new Date(dueDate) : undefined,
-        hasReminder: hasReminder || undefined,
+        hasReminder: hasReminder !== undefined ? hasReminder : undefined,
         reminderAt: reminderAt ? new Date(reminderAt) : undefined,
       },
     });

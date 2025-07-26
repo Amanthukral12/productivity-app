@@ -46,7 +46,7 @@ export const useTodos = () => {
   const deleteTodoMutation = useMutation<
     void,
     Error,
-    string,
+    number,
     { previousTodos?: Todo[] }
   >({
     mutationFn: async (todoId) => {
@@ -56,7 +56,7 @@ export const useTodos = () => {
       await queryClient.cancelQueries({ queryKey: ["todo"] });
       const previousTodos = queryClient.getQueryData<Todo[]>(["todo"]);
       queryClient.setQueryData<Todo[]>(["todo"], (oldTodos) => {
-        return oldTodos?.filter((todo) => todo.id !== Number(todoId)) || [];
+        return oldTodos?.filter((todo) => todo.id !== todoId) || [];
       });
       return { previousTodos };
     },
@@ -73,7 +73,7 @@ export const useTodos = () => {
   const updateTodoMutation = useMutation<
     Todo,
     Error,
-    { todoId: string; formData: Partial<Todo> },
+    { todoId: number; formData: Partial<Todo> },
     { previousTodos?: Todo[] }
   >({
     mutationFn: async ({ todoId, formData }) => {
@@ -81,13 +81,14 @@ export const useTodos = () => {
       return data;
     },
     onMutate: async ({ todoId, formData }) => {
+      console.log({ todoId, formData });
       await queryClient.cancelQueries({ queryKey: ["todo"] });
       const previousTodos = queryClient.getQueryData<Todo[]>(["todo"]);
       queryClient.setQueryData<Todo[]>(
         ["todo"],
         (oldTodos) =>
           oldTodos?.map((todo) =>
-            todo.id === Number(todoId) ? { ...todo, formData } : todo
+            todo.id === todoId ? { ...todo, ...formData } : todo
           ) || []
       );
       return { previousTodos };

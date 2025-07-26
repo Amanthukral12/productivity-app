@@ -36,15 +36,14 @@ const ProgressCircle = ({
         strokeDasharray={`${strokeDasharray}px`}
       ></circle>
       <text
-        x="38px"
-        y="95px"
+        x="80"
+        y="80"
         fill={progressColor}
-        fontSize="40px"
+        fontSize="40"
         fontWeight="bold"
-        style={{
-          transform: "rotate(90deg) translate(0px, -156px)",
-          textAlign: "center",
-        }}
+        textAnchor="middle"
+        alignmentBaseline="middle"
+        transform="rotate(90, 80, 80)"
       >
         {progress ? `${progress}%` : "0%"}
       </text>
